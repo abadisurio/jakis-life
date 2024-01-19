@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/games/stable_sidewalk/bloc/stable_sidewalk_bloc.dart';
+import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
@@ -127,15 +128,17 @@ class _GameProgressState extends State<_GameProgress>
     _animationController
       ..forward()
       ..addListener(() {
-        // log('progress');
         context.read<StableSidewalkBloc>().add(AddWeight());
+        if (_animationController.isCompleted) {
+          context.router.replace(const WinRoute());
+        }
       });
   }
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -155,8 +158,9 @@ class _GameProgressState extends State<_GameProgress>
         builder: (context, child) {
           return BlocListener<StableSidewalkBloc, StableSidewalkState>(
             listener: (context, state) {
+              _animationController.stop();
               if (state.isWin != null) {
-                _animationController.stop();
+                context.router.replace(const LostRoute());
               }
             },
             listenWhen: (prev, curr) => prev.isWin != curr.isWin,
@@ -270,8 +274,8 @@ class _SidewalkState extends State<_Sidewalk> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+    super.dispose();
   }
 
   @override

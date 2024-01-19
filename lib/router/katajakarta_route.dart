@@ -6,6 +6,9 @@ export 'katajakarta_route.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
   @override
+  RouteType get defaultRouteType => const RouteType.cupertino();
+
+  @override
   List<AutoRoute> get routes => [
         AutoRoute(
           page: LobbyRoute.page,
@@ -13,6 +16,12 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: StableSidewalkRoute.page,
+        ),
+        AutoRoute(
+          page: WinRoute.page,
+        ),
+        AutoRoute(
+          page: LostRoute.page,
         ),
         CustomRoute(
           page: PauseRoute.page,

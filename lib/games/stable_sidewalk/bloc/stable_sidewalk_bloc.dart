@@ -8,7 +8,7 @@ part 'stable_sidewalk_state.dart';
 class StableSidewalkBloc
     extends Bloc<StableSidewalkEvent, StableSidewalkState> {
   StableSidewalkBloc()
-      : super(StableSidewalkState(weight: math.Random().nextDouble() * 0.5)) {
+      : super(StableSidewalkState(weight: math.Random().nextDouble())) {
     on<AddWeight>(_onAddWeight);
     on<WeightLeft>(_onWeightLeft);
     on<WeightRight>(_onWeightRight);
@@ -37,7 +37,7 @@ class StableSidewalkBloc
     emit(
       state.copyWith(
         weight: state.weight * 1.02,
-        isWin: isWin >= 30 ? false : null,
+        isWin: isWin >= 50 ? false : null,
       ),
     );
   }

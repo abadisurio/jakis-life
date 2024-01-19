@@ -21,7 +21,7 @@ class TextStyleTheme {
       );
   TextStyle? get titleSmall => _textTheme.titleSmall?.copyWith(
         color: Colors.grey.shade900,
-        fontSize: 24,
+        fontSize: 18,
       );
   TextStyle? get bodyLarge => _textTheme.bodyLarge?.copyWith(
         color: Colors.grey.shade900,
