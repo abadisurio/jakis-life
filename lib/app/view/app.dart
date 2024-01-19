@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:katajakarta/games/games.dart';
 import 'package:katajakarta/l10n/l10n.dart';
+import 'package:katajakarta/screens/screens.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 
 class App extends StatelessWidget {
@@ -36,12 +36,24 @@ class App extends StatelessWidget {
             foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
           ),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            splashFactory: NoSplash.splashFactory,
+            shadowColor: Colors.transparent,
+            animationDuration: Duration.zero,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
         canvasColor: Colors.indigo.shade50,
         textTheme: textTheme,
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const StableSidewalkPage(),
+      home: const LobbyPage(),
       // home: const TimelinePage(),
       // home: const EventPage(),
     );
