@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
 
+@RoutePage()
 class LobbyPage extends StatelessWidget {
   const LobbyPage({super.key});
 
@@ -22,7 +25,9 @@ class _LobbyView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             KJButton(
-              onPressed: () {},
+              onPressed: () {
+                context.router.push(const StableSidewalkRoute());
+              },
               child: Text(
                 'Lets go!',
                 style: TextStyleTheme(context)

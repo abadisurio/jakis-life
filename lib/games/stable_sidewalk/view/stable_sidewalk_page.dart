@@ -1,12 +1,23 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/games/stable_sidewalk/bloc/stable_sidewalk_bloc.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 
+@RoutePage()
 class StableSidewalkPage extends StatelessWidget {
   const StableSidewalkPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _StableSidewalkView();
+  }
+}
+
+class _StableSidewalkView extends StatelessWidget {
+  const _StableSidewalkView();
 
   @override
   Widget build(BuildContext context) {

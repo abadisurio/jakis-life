@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:katajakarta/l10n/l10n.dart';
+import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/screens/screens.dart';
 import 'package:katajakarta/utils/text_theme.dart';
+
+final _kataJakartaRouter = KataJakartaRouter();
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -20,7 +23,7 @@ class App extends StatelessWidget {
       labelMedium: TextStyleTheme.baseLabelStyle,
       labelSmall: TextStyleTheme.baseLabelStyle,
     );
-    return MaterialApp(
+    return MaterialApp.router(
       theme: ThemeData(
         splashColor: Colors.transparent,
         highlightColor: Colors.black12,
@@ -53,7 +56,8 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const LobbyPage(),
+      // home: const LobbyPage(),
+      routerConfig: _kataJakartaRouter.config(),
       // home: const TimelinePage(),
       // home: const EventPage(),
     );
