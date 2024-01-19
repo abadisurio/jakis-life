@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/games/stable_sidewalk/bloc/stable_sidewalk_bloc.dart';
+import 'package:katajakarta/utils/text_theme.dart';
 
 class StableSidewalkPage extends StatelessWidget {
   const StableSidewalkPage({super.key});
@@ -19,11 +20,29 @@ class StableSidewalkPage extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
-                const _Progress(),
+                const _GameProgress(),
                 Expanded(
                   child: Stack(
                     children: [
-                      const Text('text'),
+                      Positioned.fill(
+                        bottom: 400,
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Tap-tap!',
+                                style: TextStyleTheme(context).titleLarge,
+                              ),
+                              Text(
+                                '''Tap kiri atau kanan untuk menyeimbangkan jalan''',
+                                style: TextStyleTheme(context).bodyMedium,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       Center(
                         child: Transform(
                           // Transform widget
@@ -38,15 +57,15 @@ class StableSidewalkPage extends StatelessWidget {
                         top: 100,
                         child: Center(child: _Character()),
                       ),
-                      const Center(child: _GameStatus()),
+                      // const Center(child: _GameStatus()),
                       const Positioned(
                         bottom: 100,
-                        left: 60,
+                        left: 30,
                         child: _LeftButton(),
                       ),
                       const Positioned(
                         bottom: 100,
-                        right: 60,
+                        right: 30,
                         child: _RightButton(),
                       ),
                     ],
@@ -61,32 +80,33 @@ class StableSidewalkPage extends StatelessWidget {
   }
 }
 
-class _GameStatus extends StatelessWidget {
-  const _GameStatus();
+// class _GameStatus extends StatelessWidget {
+//   const _GameStatus();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<StableSidewalkBloc, StableSidewalkState>(
+//       builder: (context, state) {
+//         if (state.isWin != null) {
+//           return Text(state.isWin! ? 'You Win!' : 'You Lose!');
+//         }
+//         return const SizedBox.shrink();
+//       },
+//     );
+//   }
+// }
+
+class _GameProgress extends StatefulWidget {
+  const _GameProgress();
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<StableSidewalkBloc, StableSidewalkState>(
-      builder: (context, state) {
-        if (state.isWin != null) {
-          return Text(state.isWin! ? 'You Win!' : 'You Lose!');
-        }
-        return const SizedBox.shrink();
-      },
-    );
-  }
+  State<_GameProgress> createState() => _GameProgressState();
 }
 
-class _Progress extends StatefulWidget {
-  const _Progress();
-
-  @override
-  State<_Progress> createState() => _ProgressState();
-}
-
-class _ProgressState extends State<_Progress> with TickerProviderStateMixin {
+class _GameProgressState extends State<_GameProgress>
+    with TickerProviderStateMixin {
   late final AnimationController _animationController = AnimationController(
-    duration: const Duration(seconds: 15),
+    duration: const Duration(seconds: 7),
     vsync: this,
   );
   @override
@@ -118,7 +138,12 @@ class _ProgressState extends State<_Progress> with TickerProviderStateMixin {
             }
           },
           listenWhen: (prev, curr) => prev.isWin != curr.isWin,
-          child: LinearProgressIndicator(value: _animationController.value),
+          child: LinearProgressIndicator(
+            value: 1 - _animationController.value,
+            minHeight: 25,
+            color: Colors.black26,
+            backgroundColor: Colors.white24,
+          ),
         );
       },
     );
@@ -150,7 +175,10 @@ class _LeftButtonState extends State<_LeftButton> {
       onLongPressEnd: (detail) {
         timer?.cancel();
       },
-      child: const Icon(Icons.arrow_left_rounded),
+      child: const Icon(
+        Icons.arrow_left_rounded,
+        size: 96,
+      ),
     );
   }
 }
@@ -180,7 +208,10 @@ class _RightButtonState extends State<_RightButton> {
       onLongPressEnd: (detail) {
         timer?.cancel();
       },
-      child: const Icon(Icons.arrow_right_rounded),
+      child: const Icon(
+        Icons.arrow_right_rounded,
+        size: 96,
+      ),
     );
   }
 }
