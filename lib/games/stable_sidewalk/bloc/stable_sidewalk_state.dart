@@ -1,5 +1,16 @@
 part of 'stable_sidewalk_bloc.dart';
 
-sealed class StableSidewalkState {}
+class StableSidewalkState {
+  const StableSidewalkState({
+    required this.weight,
+    this.isWin,
+  });
+  final double weight;
+  final bool? isWin;
 
-final class StableSidewalkInitial extends StableSidewalkState {}
+  StableSidewalkState copyWith({double? weight, bool? isWin}) =>
+      StableSidewalkState(
+        weight: weight ?? this.weight,
+        isWin: isWin ?? this.isWin,
+      );
+}
