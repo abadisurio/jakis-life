@@ -4,7 +4,7 @@ import 'package:katajakarta/router/katajakarta_route.gr.dart';
 export 'katajakarta_route.gr.dart';
 
 @AutoRouterConfig()
-class KataJakartaRouter extends $AppRouter {
+class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
@@ -13,6 +13,13 @@ class KataJakartaRouter extends $AppRouter {
         ),
         AutoRoute(
           page: StableSidewalkRoute.page,
+        ),
+        CustomRoute(
+          page: PauseRoute.page,
+          fullscreenDialog: true,
+          opaque: false,
+          durationInMilliseconds: 0,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
         ),
       ];
 }

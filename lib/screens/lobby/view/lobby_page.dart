@@ -20,26 +20,27 @@ class _LobbyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-        color: Colors.blue.shade100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            KJButton(
-              onPressed: () {
-                context.router.push(const StableSidewalkRoute());
-              },
-              child: Text(
-                'Lets go!',
-                style: TextStyleTheme(context)
-                    .titleLarge
-                    ?.copyWith(fontStyle: FontStyle.italic),
-              ),
+      color: Colors.blue.shade100,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          KJButton(
+            onPressed: () {
+              context.router.push(const StableSidewalkRoute());
+            },
+            child: Text(
+              'Lets go!',
+              style: TextStyleTheme(context)
+                  .titleLarge
+                  ?.copyWith(fontStyle: FontStyle.italic),
             ),
-            KJButton(
-              onPressed: () {},
-              child: const Icon(Icons.settings, size: 36),
-            ),
-          ],
-        ));
+          ),
+          KJButton(
+            onPressed: () {},
+            child: const Icon(Icons.settings, size: 36),
+          ),
+        ],
+      ),
+    );
   }
 }
