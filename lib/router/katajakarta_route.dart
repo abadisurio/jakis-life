@@ -12,10 +12,13 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: LobbyRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: StableSidewalkRoute.page,
+        ),
+        AutoRoute(
+          page: TelorGulungRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: WinRoute.page,
