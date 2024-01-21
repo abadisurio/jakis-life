@@ -18,13 +18,16 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: TelorGulungRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: WinRoute.page,
         ),
         AutoRoute(
           page: LostRoute.page,
+        ),
+        AutoRoute(
+          page: CommuterRushRoute.page,
+          initial: true,
         ),
         CustomRoute(
           page: PauseRoute.page,
