@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class KJButton extends StatelessWidget {
@@ -34,7 +36,14 @@ class KJButton extends StatelessWidget {
           onPressed: onPressed,
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: child,
+            child: Builder(
+              builder: (context) {
+                final too = DefaultTextStyle.of(context);
+                final type = context.findAncestorWidgetOfExactType<Widget>();
+                log('too $too');
+                return child;
+              },
+            ),
           ),
         ),
       ),

@@ -46,6 +46,7 @@ class App extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               splashFactory: NoSplash.splashFactory,
               shadowColor: Colors.transparent,
+              foregroundColor: Colors.white,
               animationDuration: Duration.zero,
               elevation: 0,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
