@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:katajakarta/router/router.dart';
-import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
 
 class PauseButton extends StatelessWidget {
   const PauseButton({super.key});
@@ -29,12 +28,12 @@ class PauseButton extends StatelessWidget {
             minimumSize: Size.zero,
             backgroundColor: Colors.orange.shade200,
           ),
-          onPressed: () async {
-            final isResumed =
-                await context.router.push<bool?>(const PauseRoute());
-            if (context.mounted && (isResumed ?? false)) {
-              context.read<PauseBloc>().add(const PauseGame(isPaused: false));
-            }
+          onPressed: () {
+            context.router.push<bool?>(const PauseRoute());
+            // final isResumed =
+            //     await context.router.push<bool?>(const PauseRoute());
+            // if (context.mounted && (isResumed ?? false)) {
+            // }
           },
           child: const Padding(
             padding: EdgeInsets.all(8),

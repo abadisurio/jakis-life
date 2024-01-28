@@ -15,10 +15,10 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: StableSidewalkRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: TelorGulungRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: CommuterRushRoute.page,
@@ -28,7 +28,7 @@ class AppRouter extends $AppRouter {
           fullscreenDialog: true,
           opaque: false,
           durationInMilliseconds: 0,
-          transitionsBuilder: TransitionsBuilders.fadeIn,
+          transitionsBuilder: TransitionsBuilders.noTransition,
         ),
         CustomRoute(
           page: CutSceneRoute.page,

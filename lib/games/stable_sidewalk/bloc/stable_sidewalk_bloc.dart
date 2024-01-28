@@ -18,14 +18,14 @@ class StableSidewalkBloc
     WeightLeft event,
     Emitter<StableSidewalkState> emit,
   ) {
-    emit(state.copyWith(weight: state.weight - 0.7));
+    emit(state.copyWith(weight: state.weight - 3));
   }
 
   void _onWeightRight(
     WeightRight event,
     Emitter<StableSidewalkState> emit,
   ) {
-    emit(state.copyWith(weight: state.weight + 0.7));
+    emit(state.copyWith(weight: state.weight + 3));
   }
 
   void _onAddWeight(
@@ -33,10 +33,9 @@ class StableSidewalkBloc
     Emitter<StableSidewalkState> emit,
   ) {
     final isWin = state.weight.abs() * 3.14;
-    // log('isWin $isWin');
     emit(
       state.copyWith(
-        weight: state.weight * 1.02,
+        weight: state.weight * 1.03,
         isWin: isWin >= 50 ? false : null,
       ),
     );

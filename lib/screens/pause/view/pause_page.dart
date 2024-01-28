@@ -22,31 +22,42 @@ class _PausePageState extends State<PausePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.black26,
-      child: Center(
-        child: AlertDialog(
-          title: Text(
-            'Game Paused',
-            style: TextStyleTheme(context).titleSmall,
-            textAlign: TextAlign.center,
-          ),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              KJButton(
-                onPressed: () {
-                  context.popRoute(true);
-                },
-                child: Text(
-                  'Continue',
-                  style: TextStyleTheme(context).bodyMedium,
+    return BlocConsumer<PauseBloc, PauseState>(
+      listenWhen: (prev, curr) => !curr.isPaused,
+      listener: (context, state) => context.router.pop(true),
+      buildWhen: (prev, curr) => prev.isPaused != curr.isPaused,
+      builder: (context, state) {
+        return !state.isPaused
+            ? const SizedBox.shrink()
+            : Material(
+                color: Colors.black26,
+                child: Center(
+                  child: AlertDialog(
+                    title: Text(
+                      'Game Paused',
+                      style: TextStyleTheme(context).titleSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        KJButton(
+                          onPressed: () {
+                            context
+                                .read<PauseBloc>()
+                                .add(const PauseGame(isPaused: false));
+                          },
+                          child: Text(
+                            'Continue',
+                            style: TextStyleTheme(context).bodyMedium,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
+              );
+      },
     );
   }
 }

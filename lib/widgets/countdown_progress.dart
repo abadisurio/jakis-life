@@ -7,11 +7,15 @@ class GameProgress extends StatefulWidget {
     required this.onTimeOut,
     required this.duration,
     this.onProgress,
+    this.onPause,
+    this.onResume,
     super.key,
   });
 
   final VoidCallback onTimeOut;
   final VoidCallback? onProgress;
+  final VoidCallback? onPause;
+  final VoidCallback? onResume;
   final Duration duration;
 
   @override
@@ -48,11 +52,11 @@ class _GameProgressState extends State<GameProgress>
     return BlocListener<PauseBloc, PauseState>(
       listener: (context, state) {
         if (state.isPaused) {
+          widget.onPause?.call();
           _animationController.stop();
         } else {
-          Future.delayed(const Duration(milliseconds: 500), () {
-            _animationController.forward();
-          });
+          widget.onResume?.call();
+          _animationController.forward();
         }
       },
       child: AnimatedBuilder(
