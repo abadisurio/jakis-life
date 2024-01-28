@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:katajakarta/router/router.dart';
 
 @RoutePage()
 class CutScenePage extends StatefulWidget {
@@ -23,7 +22,7 @@ class _CutScenePageState extends State<CutScenePage> {
     return Material(
       child: Center(
         child: Text(
-          'isWin ${widget.isWin} previousPageName ${widget.previousPageName == StableSidewalkRoute.name}',
+          'isWin ${widget.isWin} previousPageName ${widget.previousPageName}',
         ),
       ),
     );

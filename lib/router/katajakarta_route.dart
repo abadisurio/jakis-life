@@ -15,10 +15,10 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: StableSidewalkRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: TelorGulungRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: CommuterRushRoute.page,
