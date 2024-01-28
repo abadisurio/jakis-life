@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:katajakarta/games/commuter_rush/commuter_rush.dart';
+import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
 
@@ -16,7 +18,10 @@ class CommuterRushPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _CommuterRushView();
+    return BlocProvider(
+      create: (context) => CommuterRushBloc(),
+      child: const _CommuterRushView(),
+    );
   }
 }
 
@@ -25,33 +30,47 @@ class _CommuterRushView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.blue.shade100,
-      child: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              bottom: 400,
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Pinch the doors',
-                      style: TextStyleTheme(context).titleLarge,
-                    ),
-                    Text(
-                      '''to get the train departed''',
-                      style: TextStyleTheme(context).bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+    return BlocListener<CommuterRushBloc, CommuterRushState>(
+      listener: (context, state) {
+        final isWin = state.leftOffset >= 70 && state.rightOffset >= 70;
+        // if (state.isWin ?? false) {
+        if (isWin) {
+          context.router.replace(
+            CutSceneRoute(
+              isWin: true,
+              previousPageName: context.router.current.name,
+            ),
+          );
+        }
+      },
+      child: Material(
+        color: Colors.blue.shade100,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                bottom: 400,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Pinch the doors',
+                        style: TextStyleTheme(context).titleLarge,
+                      ),
+                      Text(
+                        '''to get the train departed''',
+                        style: TextStyleTheme(context).bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const Positioned(top: 25, right: 25, child: PauseButton()),
-            const Center(child: _Car()),
-          ],
+              const Positioned(top: 25, right: 25, child: PauseButton()),
+              const Center(child: _Car()),
+            ],
+          ),
         ),
       ),
     );

@@ -130,7 +130,12 @@ class _GameProgressState extends State<_GameProgress>
       ..addListener(() {
         context.read<StableSidewalkBloc>().add(AddWeight());
         if (_animationController.isCompleted) {
-          context.router.replace(const WinRoute());
+          context.router.replace(
+            CutSceneRoute(
+              isWin: true,
+              previousPageName: context.router.current.name,
+            ),
+          );
         }
       });
   }
@@ -160,7 +165,12 @@ class _GameProgressState extends State<_GameProgress>
             listener: (context, state) {
               _animationController.stop();
               if (state.isWin != null) {
-                context.router.replace(const LostRoute());
+                context.router.replace(
+                  CutSceneRoute(
+                    isWin: state.isWin!,
+                    previousPageName: context.router.current.name,
+                  ),
+                );
               }
             },
             listenWhen: (prev, curr) => prev.isWin != curr.isWin,

@@ -34,6 +34,14 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
   @override
   Widget build(BuildContext context) {
     final bloc = TelorGulungBloc();
+    if (_totalAngle * 5 >= _radius) {
+      context.router.replace(
+        CutSceneRoute(
+          isWin: true,
+          previousPageName: context.router.current.name,
+        ),
+      );
+    }
     return BlocProvider(
       create: (context) => bloc,
       child: Material(
@@ -93,8 +101,9 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                       child: BlocBuilder<TelorGulungBloc, TelorGulungState>(
                         builder: (context, state) {
                           return CircleAvatar(
-                            backgroundColor: Colors.orange.shade200
-                                .withAlpha(2550 * state.weight.toInt()),
+                            backgroundColor: Colors.orange.shade200.withAlpha(
+                              (255 - state.weight * 5).toInt().clamp(100, 255),
+                            ),
                             radius: _radius - 16,
                             child: CircleAvatar(
                               backgroundColor: Colors.white.withAlpha(200),
@@ -136,7 +145,12 @@ class _GameProgressState extends State<_GameProgress>
       ..addListener(() {
         context.read<TelorGulungBloc>().add(AddWeight());
         if (_animationController.isCompleted) {
-          context.router.replace(const WinRoute());
+          context.router.replace(
+            CutSceneRoute(
+              isWin: false,
+              previousPageName: context.router.current.name,
+            ),
+          );
         }
       });
   }

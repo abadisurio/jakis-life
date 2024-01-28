@@ -27,12 +27,12 @@ class TelorGulungBloc extends Bloc<TelorGulungEvent, TelorGulungState> {
     AddWeight event,
     Emitter<TelorGulungState> emit,
   ) {
-    final isWin = state.weight.abs() * 3.14 >= 50;
+    // final isWin = state.weight.abs() * 3.14 >= 50;
     // log('isWin $isWin');
     emit(
       state.copyWith(
         weight: state.weight * 1.02,
-        isWin: isWin ? false : null,
+        // isWin: isWin ? false : null,
       ),
     );
   }

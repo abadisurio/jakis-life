@@ -19,7 +19,9 @@ class _CarDoorRightState extends State<_CarDoorRight> {
         setState(() {
           _swipeOffset -= 0.1;
         });
-        // timer.cancel();
+        context
+            .read<CommuterRushBloc>()
+            .add(SwipeRightDoor(swipeOffset: _swipeOffset));
       }
     });
   }
@@ -30,7 +32,7 @@ class _CarDoorRightState extends State<_CarDoorRight> {
       right: _swipeOffset,
       child: GestureDetector(
         onHorizontalDragUpdate: (detail) {
-          log('detail $detail');
+          // log('detail $detail');
           if (_swipeOffset <= 75) {
             setState(() {
               _swipeOffset += detail.delta.dx / -4;

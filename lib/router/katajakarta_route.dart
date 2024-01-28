@@ -15,19 +15,13 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: StableSidewalkRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: TelorGulungRoute.page,
         ),
         AutoRoute(
-          page: WinRoute.page,
-        ),
-        AutoRoute(
-          page: LostRoute.page,
-        ),
-        AutoRoute(
           page: CommuterRushRoute.page,
-          initial: true,
         ),
         CustomRoute(
           page: PauseRoute.page,
@@ -35,6 +29,16 @@ class AppRouter extends $AppRouter {
           opaque: false,
           durationInMilliseconds: 0,
           transitionsBuilder: TransitionsBuilders.fadeIn,
+        ),
+        CustomRoute(
+          page: CutSceneRoute.page,
+          transitionsBuilder: TransitionsBuilders.noTransition,
+        ),
+        AutoRoute(
+          page: WinRoute.page,
+        ),
+        AutoRoute(
+          page: LostRoute.page,
         ),
       ];
 }
