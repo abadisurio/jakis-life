@@ -5,8 +5,8 @@ import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
 
 @RoutePage()
-class LostPage extends StatelessWidget {
-  const LostPage({super.key});
+class GameEndPage extends StatelessWidget {
+  const GameEndPage({super.key});
 
   @override
   Widget build(BuildContext context) {

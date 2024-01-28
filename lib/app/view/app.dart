@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:katajakarta/bloc/player_bloc.dart';
 import 'package:katajakarta/l10n/l10n.dart';
 import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
@@ -24,8 +25,15 @@ class App extends StatelessWidget {
       labelMedium: TextStyleTheme.baseLabelStyle,
       labelSmall: TextStyleTheme.baseLabelStyle,
     );
-    return BlocProvider(
-      create: (context) => PauseBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => PauseBloc(),
+        ),
+        BlocProvider(
+          create: (_) => PlayerBloc(),
+        ),
+      ],
       child: MaterialApp.router(
         theme: ThemeData(
           splashColor: Colors.transparent,

@@ -12,9 +12,8 @@ part 'widgets/right_door.dart';
 part 'widgets/left_door.dart';
 part 'widgets/door_case.dart';
 
-@RoutePage()
-class CommuterRushPage extends StatelessWidget {
-  const CommuterRushPage({super.key});
+class CommuterRush extends StatelessWidget {
+  const CommuterRush({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +35,7 @@ class _CommuterRushView extends StatelessWidget {
         // if (state.isWin ?? false) {
         if (isWin) {
           context.router.replace(
-            CutSceneRoute(
-              isWin: true,
-              previousPageName: context.router.current.name,
-            ),
+            CutSceneRoute(isWin: true),
           );
         }
       },

@@ -9,9 +9,8 @@ import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
 
-@RoutePage()
-class StableSidewalkPage extends StatelessWidget {
-  const StableSidewalkPage({super.key});
+class StableSidewalk extends StatelessWidget {
+  const StableSidewalk({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,7 @@ class _StableSidewalkView extends StatelessWidget {
         bloc: bloc,
         listener: (context, state) {
           context.router.replace(
-            CutSceneRoute(
-              isWin: false,
-              previousPageName: context.router.current.name,
-            ),
+            CutSceneRoute(isWin: false),
           );
         },
         listenWhen: (prev, curr) => curr.isWin == false,
@@ -48,10 +44,7 @@ class _StableSidewalkView extends StatelessWidget {
                   GameProgress(
                     onTimeOut: () {
                       context.router.replace(
-                        CutSceneRoute(
-                          isWin: true,
-                          previousPageName: context.router.current.name,
-                        ),
+                        CutSceneRoute(isWin: true),
                       );
                     },
                     onProgress: () {

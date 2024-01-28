@@ -9,9 +9,8 @@ import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
 
-@RoutePage()
-class TelorGulungPage extends StatelessWidget {
-  const TelorGulungPage({super.key});
+class TelorGulung extends StatelessWidget {
+  const TelorGulung({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +42,7 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
           log('isWin: ${state.isWin}');
           if (state.isWin ?? false) {
             context.router.replace(
-              CutSceneRoute(
-                isWin: true,
-                previousPageName: TelorGulungRoute.name,
-              ),
+              CutSceneRoute(isWin: true),
             );
           }
         },
@@ -60,10 +56,7 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                 GameProgress(
                   onTimeOut: () {
                     context.router.replace(
-                      CutSceneRoute(
-                        isWin: false,
-                        previousPageName: context.router.current.name,
-                      ),
+                      CutSceneRoute(isWin: false),
                     );
                   },
                   onProgress: () {

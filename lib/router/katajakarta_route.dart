@@ -12,16 +12,11 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: LobbyRoute.page,
-        ),
-        AutoRoute(
-          page: StableSidewalkRoute.page,
           initial: true,
         ),
-        AutoRoute(
-          page: TelorGulungRoute.page,
-        ),
-        AutoRoute(
-          page: CommuterRushRoute.page,
+        CustomRoute(
+          page: GameRandomizerRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
         ),
         CustomRoute(
           page: PauseRoute.page,
@@ -34,11 +29,15 @@ class AppRouter extends $AppRouter {
           page: CutSceneRoute.page,
           transitionsBuilder: TransitionsBuilders.noTransition,
         ),
+        CustomRoute(
+          page: LifeCountRoute.page,
+          transitionsBuilder: TransitionsBuilders.noTransition,
+        ),
         AutoRoute(
           page: WinRoute.page,
         ),
         AutoRoute(
-          page: LostRoute.page,
+          page: GameEndRoute.page,
         ),
       ];
 }

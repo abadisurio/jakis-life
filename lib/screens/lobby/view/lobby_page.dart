@@ -26,7 +26,7 @@ class _LobbyView extends StatelessWidget {
         children: [
           KJButton(
             onPressed: () {
-              context.router.push(const TelorGulungRoute());
+              context.router.push(const GameRandomizerRoute());
             },
             child: Text(
               'Lets go!',
