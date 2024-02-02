@@ -44,6 +44,12 @@ class _CommuterRushView extends StatelessWidget {
         child: SafeArea(
           child: Stack(
             children: [
+              GameProgress(
+                onTimeOut: () {
+                  context.router.replace(CutSceneRoute(isWin: false));
+                },
+                duration: const Duration(seconds: 10),
+              ),
               Positioned.fill(
                 bottom: 400,
                 child: Center(

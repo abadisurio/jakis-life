@@ -40,16 +40,17 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
   }
 
   Widget _randomizeGame() {
-    return switch (math.Random().nextInt(3)) {
+    return switch (math.Random().nextInt(4)) {
       0 => const TelorGulung(),
       1 => const StableSidewalk(),
       2 => const CommuterRush(),
+      3 => const LitterPicker(),
       int() => const SizedBox.shrink(),
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    return game;
+    return const LitterPicker();
   }
 }
