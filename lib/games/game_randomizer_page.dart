@@ -26,31 +26,34 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
   void initState() {
     _playerBloc = context.read<PlayerBloc>();
     _previousGameName = _playerBloc.state.currentGame;
-    log('_previousGameName $_previousGameName');
     do {
       game = _randomizeGame();
-    } while (game.runtimeType.toString() == _playerBloc.state.currentGame);
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    // log('previousGameName: ${game.runtimeType}');
-    // });
+    } while (game.runtimeType.toString() == _previousGameName);
     context
         .read<PlayerBloc>()
         .add(UpdateCurrentGame(gameName: game.runtimeType.toString()));
+    log('game.runtimeType.toString() ${game.runtimeType}');
     super.initState();
   }
 
   Widget _randomizeGame() {
-    return switch (math.Random().nextInt(4)) {
+    return switch (math.Random().nextInt(5)) {
       0 => const TelorGulung(),
       1 => const StableSidewalk(),
       2 => const CommuterRush(),
       3 => const LitterPicker(),
+      4 => const CollectSocket(),
       int() => const SizedBox.shrink(),
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    return const LitterPicker();
+    // return const TelorGulung();
+    // return const StableSidewalk();
+    // return const CommuterRush();
+    // return const LitterPicker();
+    // return const CollectSocket();
+    return game;
   }
 }

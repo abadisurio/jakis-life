@@ -12,6 +12,10 @@ class DecreaseLife extends PlayerEvent {
   const DecreaseLife();
 }
 
+class ResetLife extends PlayerEvent {
+  const ResetLife();
+}
+
 class UpdateCurrentGame extends PlayerEvent {
   const UpdateCurrentGame({required this.gameName});
 

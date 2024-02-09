@@ -29,6 +29,7 @@ class _LifeCountViewState extends State<_LifeCountView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
         if (_lifeCount <= 0) {
+          context.read<PlayerBloc>().add(const ResetLife());
           context.router.replace(const GameEndRoute());
         } else {
           context.router.replace(const GameRandomizerRoute());

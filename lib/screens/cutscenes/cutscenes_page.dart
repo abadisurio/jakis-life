@@ -18,16 +18,19 @@ class CutScenePage extends StatefulWidget {
 }
 
 class _CutScenePageState extends State<CutScenePage> {
+  String? currentGameName;
   @override
   void initState() {
+    final bloc = context.read<PlayerBloc>();
     if (!widget.isWin) {
-      context.read<PlayerBloc>().add(const DecreaseLife());
+      bloc.add(const DecreaseLife());
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
         context.router.replace(const LifeCountRoute());
       });
     });
+    currentGameName = bloc.state.currentGame;
     super.initState();
   }
 
@@ -36,7 +39,7 @@ class _CutScenePageState extends State<CutScenePage> {
     return Material(
       child: Center(
         child: Text(
-          'isWin ${widget.isWin} previousPageName ',
+          'isWin ${widget.isWin} previousPageName $currentGameName',
         ),
       ),
     );
