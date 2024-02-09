@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
+import 'package:rive/rive.dart';
 
 @RoutePage()
 class LobbyPage extends StatelessWidget {
@@ -21,23 +22,32 @@ class _LobbyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.blue.shade100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          KJButton(
-            onPressed: () {
-              context.router.push(const GameRandomizerRoute());
-            },
-            child: Text(
-              'Lets go!',
-              style: TextStyleTheme(context)
-                  .titleLarge
-                  ?.copyWith(fontStyle: FontStyle.italic),
+          const RiveAnimation.asset('assets/rive/monas_test.riv'),
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                KJButton(
+                  onPressed: () {
+                    context.router.push(const GameRandomizerRoute());
+                  },
+                  child: Text(
+                    'Lets go!',
+                    style: TextStyleTheme(context)
+                        .titleLarge
+                        ?.copyWith(fontStyle: FontStyle.italic),
+                  ),
+                ),
+                KJButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.settings, size: 36),
+                ),
+              ],
             ),
-          ),
-          KJButton(
-            onPressed: () {},
-            child: const Icon(Icons.settings, size: 36),
           ),
         ],
       ),
