@@ -37,12 +37,13 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
   }
 
   Widget _randomizeGame() {
-    return switch (math.Random().nextInt(5)) {
+    return switch (math.Random().nextInt(6)) {
       0 => const TelorGulung(),
       1 => const StableSidewalk(),
       2 => const CommuterRush(),
       3 => const LitterPicker(),
       4 => const CollectSocket(),
+      5 => const BatteryParry(),
       int() => const SizedBox.shrink(),
     };
   }
@@ -54,6 +55,17 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
     // return const CommuterRush();
     // return const LitterPicker();
     // return const CollectSocket();
-    return game;
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) => false,
+      child: const BatteryParry(),
+      // child: const TelorGulung(),
+      // child: const StableSidewalk(,
+      // child: const CommuterRush(),
+      // child: const LitterPicker(),
+      // child: const CollectSocket(),
+      // child: game,
+    );
+    // return game;
   }
 }

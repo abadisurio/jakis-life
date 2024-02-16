@@ -1,3 +1,4 @@
+export 'battery_parry/battery_parry.dart';
 export 'collect_socket/collect_socket.dart';
 export 'commuter_rush/commuter_rush.dart';
 export 'litter_picker/litter_picker.dart';
