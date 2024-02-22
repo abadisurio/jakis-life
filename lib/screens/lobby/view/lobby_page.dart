@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:katajakarta/gen/assets.gen.dart';
 import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
-import 'package:rive/rive.dart';
 
 @RoutePage()
 class LobbyPage extends StatelessWidget {
@@ -25,28 +25,33 @@ class _LobbyView extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          const RiveAnimation.asset('assets/rive/monas_test.riv'),
-          Padding(
-            padding: const EdgeInsets.only(top: 100),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                KJButton(
-                  onPressed: () {
-                    context.router.push(const GameRandomizerRoute());
-                  },
-                  child: Text(
-                    'Lets go!',
-                    style: TextStyleTheme(context)
-                        .titleLarge
-                        ?.copyWith(fontStyle: FontStyle.italic),
+          Assets.rive.monasTest.rive(),
+          Assets.svg.jakiTitle.svg(width: 300),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 100),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  KJButton(
+                    onPressed: () {
+                      context.router.push(const GameRandomizerRoute());
+                    },
+                    child: Text(
+                      'Lets go!',
+                      style: TextStyleTheme(context)
+                          .titleLarge
+                          ?.copyWith(fontStyle: FontStyle.italic),
+                    ),
                   ),
-                ),
-                KJButton(
-                  onPressed: () {},
-                  child: const Icon(Icons.settings, size: 36),
-                ),
-              ],
+                  KJButton(
+                    onPressed: () {},
+                    child: const Icon(Icons.settings, size: 36),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/games/litter_picker/litter_picker.dart';
+import 'package:katajakarta/gen/assets.gen.dart';
 import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
@@ -33,14 +34,20 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
     return Material(
       color: Colors.green.shade100,
       child: SafeArea(
-        child: BlocSelector<LitterPickerBloc, LitterPickerState, int>(
-          selector: (state) => state.litterCount,
-          builder: (context, litterCount) {
+        child: BlocBuilder<LitterPickerBloc, LitterPickerState>(
+          buildWhen: (prev, curr) {
+            return prev.litterCount != curr.litterCount ||
+                prev.organicCount != curr.organicCount;
+          },
+          builder: (context, state) {
             return Stack(
               children: [
                 ...List.generate(
-                  litterCount,
-                  (index) => _Litter(litterIndex: index),
+                  state.litterCount,
+                  (index) => _Litter(
+                    litterIndex: index,
+                    isOrganic: index < state.organicCount,
+                  ),
                 ),
                 GameProgress(
                   onTimeOut: () {
@@ -58,8 +65,9 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Tap on the litter',
+                          'Tap on the anorganic ones',
                           style: TextStyleTheme(context).titleLarge,
+                          textAlign: TextAlign.center,
                         ),
                         Text(
                           '''to clean it''',
@@ -79,10 +87,47 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
   }
 }
 
-class _Litter extends StatelessWidget {
-  const _Litter({required this.litterIndex});
+class _Litter extends StatefulWidget {
+  const _Litter({
+    required this.litterIndex,
+    required this.isOrganic,
+  });
+
+  final bool isOrganic;
 
   final int litterIndex;
+
+  @override
+  State<_Litter> createState() => _LitterState();
+}
+
+class _LitterState extends State<_Litter> {
+  late Widget _litter;
+  final littersAnorganic = [
+    Assets.svg.anorganicBottleGlass,
+    Assets.svg.anorganicMilk,
+    Assets.svg.anorganicNewspaper,
+    Assets.svg.anorganicSodaCan,
+  ];
+
+  final littersOrganic = [
+    Assets.svg.organicApple,
+    Assets.svg.organicBone,
+    Assets.svg.organicEggShell,
+    Assets.svg.organicFishBone,
+  ];
+
+  @override
+  void initState() {
+    if (widget.isOrganic) {
+      _litter = littersOrganic.elementAt(math.Random().nextInt(3)).svg();
+    } else {
+      _litter = littersAnorganic
+          .elementAt(math.Random().nextInt(littersAnorganic.length))
+          .svg();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,32 +142,68 @@ class _Litter extends StatelessWidget {
       child: Center(
         child: GestureDetector(
           onTap: () {
-            context
-                .read<LitterPickerBloc>()
-                .add(PickLitter(litterIndex: litterIndex));
+            if (!widget.isOrganic) {
+              context
+                  .read<LitterPickerBloc>()
+                  .add(PickLitter(litterIndex: widget.litterIndex));
+            } else {
+              context.router.replace(
+                CutSceneRoute(isWin: false),
+              );
+            }
           },
           child: BlocBuilder<LitterPickerBloc, LitterPickerState>(
             buildWhen: (prev, curr) {
-              if (curr.litterPickedCount >= curr.litterCount) {
+              if (curr.litterPickedCount >=
+                  curr.litterCount - curr.organicCount) {
                 context.router.replace(
                   CutSceneRoute(isWin: true),
                 );
               }
               return prev.litterPicked != curr.litterPicked &&
-                  curr.litterPicked == litterIndex;
+                  curr.litterPicked == widget.litterIndex;
             },
             builder: (context, state) {
-              return state.litterPicked == litterIndex
+              return state.litterPicked == widget.litterIndex
                   ? const SizedBox.shrink()
-                  : Icon(
-                      Icons.delete,
-                      size: 100,
-                      color: Colors.green.shade800,
+                  : SizedBox.square(
+                      dimension: 100,
+                      child: _litter,
                     );
             },
           ),
         ),
       ),
     );
+  }
+}
+
+class _LitterKind extends StatefulWidget {
+  const _LitterKind();
+
+  @override
+  State<_LitterKind> createState() => _LitterKindState();
+}
+
+class _LitterKindState extends State<_LitterKind> {
+  final litters = [
+    {Assets.svg.anorganicBottleGlass: false},
+    {Assets.svg.anorganicMilk: false},
+    {Assets.svg.anorganicNewspaper: false},
+    {Assets.svg.anorganicSodaCan: false},
+    {Assets.svg.organicApple: true},
+    {Assets.svg.organicBone: true},
+    {Assets.svg.organicEggShell: true},
+    {Assets.svg.organicFishBone: true},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

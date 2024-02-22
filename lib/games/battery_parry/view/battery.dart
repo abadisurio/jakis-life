@@ -119,12 +119,12 @@ class __BatteryState extends State<_Battery> with TickerProviderStateMixin {
         },
         child: GestureDetector(
           onPanUpdate: _flickBattery,
-          child: const SizedBox(
+          child: SizedBox(
             height: _iconSize,
             width: _iconSize,
-            child: Icon(
-              Icons.battery_2_bar,
-              size: _iconSize - 2,
+            child: Transform.rotate(
+              angle: Random().nextDouble() * 2,
+              child: Assets.svg.b3Battery.svg(),
             ),
           ),
         ),

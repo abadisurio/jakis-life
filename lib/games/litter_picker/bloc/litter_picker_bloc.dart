@@ -5,7 +5,13 @@ part 'litter_picker_state.dart';
 
 class LitterPickerBloc extends Bloc<LitterPickerEvent, LitterPickerState> {
   LitterPickerBloc()
-      : super(const LitterPickerState(litterCount: 5, litterPickedCount: 0)) {
+      : super(
+          const LitterPickerState(
+            litterCount: 5,
+            litterPickedCount: 0,
+            organicCount: 2,
+          ),
+        ) {
     on<PickLitter>(_onPickLitter);
   }
 
