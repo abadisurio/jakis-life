@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/games/telor_gulung/telor_gulung.dart';
+import 'package:katajakarta/gen/assets.gen.dart';
 import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
@@ -55,14 +56,20 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
               children: [
                 GameProgress(
                   onTimeOut: () {
-                    context.router.replace(
-                      CutSceneRoute(isWin: false),
-                    );
+                    // context.router.replace(
+                    //   CutSceneRoute(isWin: false),
+                    // );
                   },
                   onProgress: () {
                     bloc.add(AddWeight());
                   },
                   duration: const Duration(seconds: 7),
+                ),
+                SizedBox.square(
+                  dimension: 200,
+                  child: Assets.rive.telorGulung.rive(
+                      // stateMachines: ['Gulung', ''],
+                      ),
                 ),
                 const Positioned(top: 50, right: 25, child: PauseButton()),
                 Center(

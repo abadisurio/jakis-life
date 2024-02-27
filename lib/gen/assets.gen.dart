@@ -19,8 +19,12 @@ class $AssetsRiveGen {
   RiveGenImage get monasTest =>
       const RiveGenImage('assets/rive/monas_test.riv');
 
+  /// File path: assets/rive/telor_gulung.riv
+  RiveGenImage get telorGulung =>
+      const RiveGenImage('assets/rive/telor_gulung.riv');
+
   /// List of all assets
-  List<RiveGenImage> get values => [monasTest];
+  List<RiveGenImage> get values => [monasTest, telorGulung];
 }
 
 class $AssetsSvgGen {
@@ -30,17 +34,17 @@ class $AssetsSvgGen {
   SvgGenImage get anorganicBottleGlass =>
       const SvgGenImage('assets/svg/anorganic_bottle_glass.svg');
 
-  /// File path: assets/svg/anorganic_milk.svg
-  SvgGenImage get anorganicMilk =>
-      const SvgGenImage('assets/svg/anorganic_milk.svg');
-
-  /// File path: assets/svg/anorganic_newspaper.svg
-  SvgGenImage get anorganicNewspaper =>
-      const SvgGenImage('assets/svg/anorganic_newspaper.svg');
+  /// File path: assets/svg/anorganic_plastic_bag.svg
+  SvgGenImage get anorganicPlasticBag =>
+      const SvgGenImage('assets/svg/anorganic_plastic_bag.svg');
 
   /// File path: assets/svg/anorganic_soda_can.svg
   SvgGenImage get anorganicSodaCan =>
       const SvgGenImage('assets/svg/anorganic_soda_can.svg');
+
+  /// File path: assets/svg/anorganic_tuna_can.svg
+  SvgGenImage get anorganicTunaCan =>
+      const SvgGenImage('assets/svg/anorganic_tuna_can.svg');
 
   /// File path: assets/svg/b3_battery.svg
   SvgGenImage get b3Battery => const SvgGenImage('assets/svg/b3_battery.svg');
@@ -73,9 +77,9 @@ class $AssetsSvgGen {
   /// List of all assets
   List<SvgGenImage> get values => [
         anorganicBottleGlass,
-        anorganicMilk,
-        anorganicNewspaper,
+        anorganicPlasticBag,
         anorganicSodaCan,
+        anorganicTunaCan,
         b3Battery,
         b3Bulb,
         b3Cigs,

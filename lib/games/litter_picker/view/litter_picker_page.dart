@@ -105,8 +105,8 @@ class _LitterState extends State<_Litter> {
   late Widget _litter;
   final littersAnorganic = [
     Assets.svg.anorganicBottleGlass,
-    Assets.svg.anorganicMilk,
-    Assets.svg.anorganicNewspaper,
+    Assets.svg.anorganicPlasticBag,
+    Assets.svg.anorganicTunaCan,
     Assets.svg.anorganicSodaCan,
   ];
 
@@ -188,8 +188,8 @@ class _LitterKind extends StatefulWidget {
 class _LitterKindState extends State<_LitterKind> {
   final litters = [
     {Assets.svg.anorganicBottleGlass: false},
-    {Assets.svg.anorganicMilk: false},
-    {Assets.svg.anorganicNewspaper: false},
+    {Assets.svg.anorganicPlasticBag: false},
+    {Assets.svg.anorganicTunaCan: false},
     {Assets.svg.anorganicSodaCan: false},
     {Assets.svg.organicApple: true},
     {Assets.svg.organicBone: true},
