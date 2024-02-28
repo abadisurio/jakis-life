@@ -1,6 +1,6 @@
 part of 'player_bloc.dart';
 
-class PlayerState {
+class PlayerState extends Equatable {
   const PlayerState({
     this.currentGame,
     this.life = 3,
@@ -21,4 +21,11 @@ class PlayerState {
         point: point ?? this.point,
         currentGame: currentGame ?? this.currentGame,
       );
+
+  @override
+  List<Object?> get props => [
+        life,
+        point,
+        currentGame,
+      ];
 }

@@ -12,6 +12,30 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/about_hazard.png
+  AssetGenImage get aboutHazard =>
+      const AssetGenImage('assets/images/about_hazard.png');
+
+  /// File path: assets/images/about_inorganic.png
+  AssetGenImage get aboutInorganic =>
+      const AssetGenImage('assets/images/about_inorganic.png');
+
+  /// File path: assets/images/about_krl.png
+  AssetGenImage get aboutKrl =>
+      const AssetGenImage('assets/images/about_krl.png');
+
+  /// File path: assets/images/about_telor.png
+  AssetGenImage get aboutTelor =>
+      const AssetGenImage('assets/images/about_telor.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [aboutHazard, aboutInorganic, aboutKrl, aboutTelor];
+}
+
 class $AssetsRiveGen {
   const $AssetsRiveGen();
 
@@ -94,8 +118,83 @@ class $AssetsSvgGen {
 class Assets {
   Assets._();
 
+  static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
+}
+
+class AssetGenImage {
+  const AssetGenImage(this._assetName);
+
+  final String _assetName;
+
+  Image image({
+    Key? key,
+    AssetBundle? bundle,
+    ImageFrameBuilder? frameBuilder,
+    ImageErrorWidgetBuilder? errorBuilder,
+    String? semanticLabel,
+    bool excludeFromSemantics = false,
+    double? scale,
+    double? width,
+    double? height,
+    Color? color,
+    Animation<double>? opacity,
+    BlendMode? colorBlendMode,
+    BoxFit? fit,
+    AlignmentGeometry alignment = Alignment.center,
+    ImageRepeat repeat = ImageRepeat.noRepeat,
+    Rect? centerSlice,
+    bool matchTextDirection = false,
+    bool gaplessPlayback = false,
+    bool isAntiAlias = false,
+    String? package,
+    FilterQuality filterQuality = FilterQuality.low,
+    int? cacheWidth,
+    int? cacheHeight,
+  }) {
+    return Image.asset(
+      _assetName,
+      key: key,
+      bundle: bundle,
+      frameBuilder: frameBuilder,
+      errorBuilder: errorBuilder,
+      semanticLabel: semanticLabel,
+      excludeFromSemantics: excludeFromSemantics,
+      scale: scale,
+      width: width,
+      height: height,
+      color: color,
+      opacity: opacity,
+      colorBlendMode: colorBlendMode,
+      fit: fit,
+      alignment: alignment,
+      repeat: repeat,
+      centerSlice: centerSlice,
+      matchTextDirection: matchTextDirection,
+      gaplessPlayback: gaplessPlayback,
+      isAntiAlias: isAntiAlias,
+      package: package,
+      filterQuality: filterQuality,
+      cacheWidth: cacheWidth,
+      cacheHeight: cacheHeight,
+    );
+  }
+
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
 }
 
 class SvgGenImage {
@@ -164,7 +263,7 @@ class RiveGenImage {
     Alignment? alignment,
     Widget? placeHolder,
     bool antialiasing = true,
-    List<RiveAnimationController<dynamic>> controllers = const [],
+    List<RiveAnimationController<void>> controllers = const [],
     OnInitCallback? onInit,
   }) {
     return RiveAnimation.asset(
