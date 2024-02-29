@@ -34,53 +34,63 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
     return Material(
       color: Colors.green.shade100,
       child: SafeArea(
-        child: BlocBuilder<LitterPickerBloc, LitterPickerState>(
-          buildWhen: (prev, curr) {
-            return prev.litterCount != curr.litterCount ||
-                prev.organicCount != curr.organicCount;
+        child: BlocListener<LitterPickerBloc, LitterPickerState>(
+          listener: (context, state) {
+            if (state.litterPickedCount >=
+                state.litterCount - state.organicCount) {
+              context.router.replace(
+                CutSceneRoute(isWin: true),
+              );
+            }
           },
-          builder: (context, state) {
-            return Stack(
-              children: [
-                ...List.generate(
-                  state.litterCount,
-                  (index) => _Litter(
-                    litterIndex: index,
-                    isOrganic: index < state.organicCount,
-                  ),
-                ),
-                GameProgress(
-                  onTimeOut: () {
-                    context.router.replace(
-                      CutSceneRoute(isWin: false),
-                    );
-                  },
-                  duration: const Duration(seconds: 7),
-                ),
-                const Positioned(top: 50, right: 25, child: PauseButton()),
-                Positioned.fill(
-                  bottom: 400,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Tap on the anorganic ones',
-                          style: TextStyleTheme(context).titleLarge,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          '''to clean it''',
-                          style: TextStyleTheme(context).bodyLarge,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+          child: BlocBuilder<LitterPickerBloc, LitterPickerState>(
+            buildWhen: (prev, curr) {
+              return prev.litterCount != curr.litterCount ||
+                  prev.organicCount != curr.organicCount;
+            },
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  ...List.generate(
+                    state.litterCount,
+                    (index) => _Litter(
+                      litterIndex: index,
+                      isOrganic: index < state.organicCount,
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                  GameProgress(
+                    onTimeOut: () {
+                      context.router.replace(
+                        CutSceneRoute(isWin: false),
+                      );
+                    },
+                    duration: const Duration(seconds: 7),
+                  ),
+                  const Positioned(top: 50, right: 25, child: PauseButton()),
+                  Positioned.fill(
+                    bottom: 400,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Tap on the anorganic ones',
+                            style: TextStyleTheme(context).titleLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            '''to clean it''',
+                            style: TextStyleTheme(context).bodyLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -154,12 +164,6 @@ class _LitterState extends State<_Litter> {
           },
           child: BlocBuilder<LitterPickerBloc, LitterPickerState>(
             buildWhen: (prev, curr) {
-              if (curr.litterPickedCount >=
-                  curr.litterCount - curr.organicCount) {
-                context.router.replace(
-                  CutSceneRoute(isWin: true),
-                );
-              }
               return prev.litterPicked != curr.litterPicked &&
                   curr.litterPicked == widget.litterIndex;
             },

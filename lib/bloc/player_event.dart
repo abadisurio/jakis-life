@@ -22,6 +22,12 @@ class UpdateCurrentGame extends PlayerEvent {
   final String gameName;
 }
 
+class UpdateCurrentGameWin extends PlayerEvent {
+  const UpdateCurrentGameWin({required this.isWin});
+
+  final bool isWin;
+}
+
 class UpdatePoint extends PlayerEvent {
   const UpdatePoint();
 }

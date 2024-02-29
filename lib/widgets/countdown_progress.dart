@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
@@ -36,6 +38,7 @@ class _GameProgressState extends State<GameProgress>
       ..addListener(() {
         widget.onProgress?.call();
         if (_animationController.isCompleted) {
+          log('widget.onTimeOut.call');
           widget.onTimeOut.call();
         }
       });

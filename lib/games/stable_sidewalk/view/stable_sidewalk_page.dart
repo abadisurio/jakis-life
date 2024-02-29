@@ -26,79 +26,70 @@ class _StableSidewalkView extends StatelessWidget {
     final bloc = StableSidewalkBloc();
     return BlocProvider(
       create: (_) => bloc,
-      child: BlocListener<StableSidewalkBloc, StableSidewalkState>(
-        bloc: bloc,
-        listener: (context, state) {
-          context.router.replace(
-            CutSceneRoute(isWin: false),
-          );
-        },
-        listenWhen: (prev, curr) => curr.isWin == false,
-        child: Material(
-          color: Colors.blue.shade100,
-          child: SizedBox.fromSize(
-            size: MediaQuery.of(context).size,
-            child: SafeArea(
-              child: Stack(
-                children: [
-                  GameProgress(
-                    onTimeOut: () {
-                      context.router.replace(
-                        CutSceneRoute(isWin: true),
-                      );
-                    },
-                    onProgress: () {
-                      bloc.add(AddWeight());
-                    },
-                    duration: const Duration(seconds: 10),
-                  ),
-                  const Positioned(top: 50, right: 25, child: PauseButton()),
-                  Positioned.fill(
-                    bottom: 400,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Tap-tap!',
-                            style: TextStyleTheme(context).titleLarge,
-                          ),
-                          Text(
-                            '''Tap kiri atau kanan untuk menyeimbangkan jalan''',
-                            style: TextStyleTheme(context).bodyLarge,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+      child: Material(
+        color: Colors.blue.shade100,
+        child: SizedBox.fromSize(
+          size: MediaQuery.of(context).size,
+          child: SafeArea(
+            child: Stack(
+              children: [
+                GameProgress(
+                  onTimeOut: () {
+                    context.router.replace(
+                      CutSceneRoute(isWin: true),
+                    );
+                  },
+                  onProgress: () {
+                    bloc.add(AddWeight());
+                  },
+                  duration: const Duration(seconds: 10),
+                ),
+                const Positioned(top: 50, right: 25, child: PauseButton()),
+                Positioned.fill(
+                  bottom: 400,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Tap-tap!',
+                          style: TextStyleTheme(context).titleLarge,
+                        ),
+                        Text(
+                          '''Tap kiri atau kanan untuk menyeimbangkan jalan''',
+                          style: TextStyleTheme(context).bodyLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
-                  Center(
-                    child: Transform(
-                      // Transform widget
-                      alignment: FractionalOffset.center,
-                      transform: Matrix4.identity()
-                        ..setEntry(3, 2, 0.05) // perspective
-                        ..rotateX(-0.2), // changed
-                      child: const _Sidewalk(),
-                    ),
+                ),
+                Center(
+                  child: Transform(
+                    // Transform widget
+                    alignment: FractionalOffset.center,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.05) // perspective
+                      ..rotateX(-0.2), // changed
+                    child: const _Sidewalk(),
                   ),
-                  const Positioned.fill(
-                    top: 100,
-                    child: Center(child: _Character()),
-                  ),
-                  // const Center(child: _GameStatus()),
-                  const Positioned(
-                    bottom: 100,
-                    left: 30,
-                    child: _LeftButton(),
-                  ),
-                  const Positioned(
-                    bottom: 100,
-                    right: 30,
-                    child: _RightButton(),
-                  ),
-                ],
-              ),
+                ),
+                const Positioned.fill(
+                  top: 100,
+                  child: Center(child: _Character()),
+                ),
+                // const Center(child: _GameStatus()),
+                const Positioned(
+                  bottom: 100,
+                  left: 30,
+                  child: _LeftButton(),
+                ),
+                const Positioned(
+                  bottom: 100,
+                  right: 30,
+                  child: _RightButton(),
+                ),
+              ],
             ),
           ),
         ),
@@ -218,9 +209,9 @@ class _SidewalkState extends State<_Sidewalk> with TickerProviderStateMixin {
         if (state.isPaused) {
           _animationController.stop();
         } else {
-          Future.delayed(const Duration(milliseconds: 500), () {
-            _animationController.forward();
-          });
+          _animationController.forward();
+          // Future.delayed(const Duration(milliseconds: 500), () {
+          // });
         }
       },
       child: SizedBox(
@@ -283,26 +274,34 @@ class _Character extends StatefulWidget {
 class __CharacterState extends State<_Character> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StableSidewalkBloc, StableSidewalkState>(
-      builder: (context, sidewalkState) {
-        return BlocBuilder<PauseBloc, PauseState>(
-          builder: (context, pauseState) {
-            return AnimatedRotation(
-              turns: 0.01 * sidewalkState.weight * 3.14,
-              duration: pauseState.isPaused
-                  ? Duration.zero
-                  : const Duration(milliseconds: 500),
-              // angle: 0.1 * state.weight,
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.red,
-                height: 200,
-                width: 80,
-              ),
-            );
-          },
+    return BlocListener<StableSidewalkBloc, StableSidewalkState>(
+      listener: (context, state) {
+        context.router.replace(
+          CutSceneRoute(isWin: false),
         );
       },
+      listenWhen: (prev, curr) => curr.isWin == false,
+      child: BlocBuilder<StableSidewalkBloc, StableSidewalkState>(
+        builder: (context, sidewalkState) {
+          return BlocBuilder<PauseBloc, PauseState>(
+            builder: (context, pauseState) {
+              return AnimatedRotation(
+                turns: 0.01 * sidewalkState.weight * 3.14,
+                duration: pauseState.isPaused
+                    ? Duration.zero
+                    : const Duration(milliseconds: 500),
+                // angle: 0.1 * state.weight,
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  color: Colors.red,
+                  height: 200,
+                  width: 80,
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

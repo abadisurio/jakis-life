@@ -21,10 +21,8 @@ class _CutScenePageState extends State<CutScenePage> {
   String? currentGameName;
   @override
   void initState() {
-    final bloc = context.read<PlayerBloc>();
-    if (!widget.isWin) {
-      bloc.add(const DecreaseLife());
-    }
+    final bloc = context.read<PlayerBloc>()
+      ..add(UpdateCurrentGameWin(isWin: widget.isWin));
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
         context.router.replace(const LifeCountRoute());

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:katajakarta/bloc/player_bloc.dart';
 import 'package:katajakarta/router/katajakarta_route.dart';
+import 'package:katajakarta/utils/text_theme.dart';
 
 @RoutePage()
 class LifeCountPage extends StatelessWidget {
@@ -25,7 +28,16 @@ class _LifeCountViewState extends State<_LifeCountView> {
   late int _lifeCount;
   @override
   void initState() {
-    _lifeCount = context.read<PlayerBloc>().state.life;
+    log('LifeCountPage mounted');
+    final state = context.read<PlayerBloc>().state;
+    _lifeCount = state.life;
+
+    if (state.isCurrentGameWin) {
+      context.read<PlayerBloc>().add(const IncreaseLife());
+    } else {
+      context.read<PlayerBloc>().add(const DecreaseLife());
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
         if (_lifeCount <= 0) {
@@ -42,9 +54,68 @@ class _LifeCountViewState extends State<_LifeCountView> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
-        child: Text('Life $_lifeCount'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Life $_lifeCount'),
+          const _PointCount(),
+        ],
       ),
     );
+  }
+}
+
+class _PointCount extends StatefulWidget {
+  const _PointCount();
+
+  @override
+  State<_PointCount> createState() => _PointCountState();
+}
+
+class _PointCountState extends State<_PointCount>
+    with TickerProviderStateMixin {
+  late final _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+  late int _prevPoint;
+  late int _point;
+
+  @override
+  void initState() {
+    final state = context.read<PlayerBloc>().state;
+    _point = state.point;
+    _prevPoint = _point;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    log('_point $_point');
+    return BlocListener<PlayerBloc, PlayerState>(
+      listener: (context, state) {
+        setState(() {
+          _point = state.point;
+        });
+        _animationController.forward();
+      },
+      child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          final point =
+              _prevPoint + (_point - _prevPoint) * _animationController.value;
+          return Text(
+            '${point.toInt()}',
+            style: TextStyleTheme(context).bodyMedium,
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }

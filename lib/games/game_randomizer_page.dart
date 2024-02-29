@@ -59,12 +59,12 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
       canPop: false,
       onPopInvoked: (_) => false,
       // child: const BatteryParry(),
-      // child: const TelorGulung(),
+      child: const TelorGulung(),
       // child: const StableSidewalk(,
       // child: const CommuterRush(),
       // child: const LitterPicker(),
       // child: const CollectSocket(),
-      child: game,
+      // child: game,
     );
     // return game;
   }

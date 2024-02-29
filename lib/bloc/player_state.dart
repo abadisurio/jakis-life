@@ -4,22 +4,26 @@ class PlayerState extends Equatable {
   const PlayerState({
     this.currentGame,
     this.life = 3,
+    this.isCurrentGameWin = false,
     this.point = 0,
   });
 
   final int life;
   final int point;
+  final bool isCurrentGameWin;
   final String? currentGame;
 
   PlayerState copyWith({
     int? life,
     int? point,
     String? currentGame,
+    bool? isCurrentGameWin,
   }) =>
       PlayerState(
         life: life ?? this.life,
         point: point ?? this.point,
         currentGame: currentGame ?? this.currentGame,
+        isCurrentGameWin: isCurrentGameWin ?? this.isCurrentGameWin,
       );
 
   @override
@@ -27,5 +31,6 @@ class PlayerState extends Equatable {
         life,
         point,
         currentGame,
+        isCurrentGameWin,
       ];
 }
