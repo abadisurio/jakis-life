@@ -46,10 +46,7 @@ class _LobbyView extends StatelessWidget {
                           ?.copyWith(fontStyle: FontStyle.italic),
                     ),
                   ),
-                  KJButton(
-                    onPressed: () {},
-                    child: const Icon(Icons.settings, size: 36),
-                  ),
+                  const BacksoundPauseButton(),
                 ],
               ),
             ),

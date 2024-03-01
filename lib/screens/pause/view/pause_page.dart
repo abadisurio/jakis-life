@@ -65,16 +65,24 @@ class _PausePageState extends State<PausePage> {
                               ),
                             ),
                           ),
-                        KJButton(
-                          onPressed: () {
-                            context
-                                .read<PauseBloc>()
-                                .add(const PauseGame(isPaused: false));
-                          },
-                          child: Text(
-                            'Resume',
-                            style: TextStyleTheme(context).bodyMedium,
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: KJButton(
+                                onPressed: () {
+                                  context
+                                      .read<PauseBloc>()
+                                      .add(const PauseGame(isPaused: false));
+                                },
+                                child: Text(
+                                  'Resume',
+                                  style: TextStyleTheme(context).bodyMedium,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            const BacksoundPauseButton(),
+                          ],
                         ),
                       ],
                     ),
