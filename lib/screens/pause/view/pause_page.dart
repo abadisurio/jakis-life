@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:katajakarta/bloc/player_bloc.dart';
-import 'package:katajakarta/gen/assets.gen.dart';
-import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
-import 'package:katajakarta/utils/text_theme.dart';
-import 'package:katajakarta/widgets/widgets.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/gen/assets.gen.dart';
+import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
+import 'package:jakislife/utils/text_theme.dart';
+import 'package:jakislife/widgets/widgets.dart';
 
 @RoutePage<bool?>()
 class PausePage extends StatefulWidget {

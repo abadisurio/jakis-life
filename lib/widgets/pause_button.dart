@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import 'package:katajakarta/router/router.dart';
+import 'package:jakislife/router/router.dart';
 
 class PauseButton extends StatelessWidget {
   const PauseButton({super.key});

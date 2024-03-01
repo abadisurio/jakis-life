@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:katajakarta/games/commuter_rush/commuter_rush.dart';
-import 'package:katajakarta/router/router.dart';
-import 'package:katajakarta/utils/text_theme.dart';
-import 'package:katajakarta/widgets/widgets.dart';
+import 'package:jakislife/games/commuter_rush/commuter_rush.dart';
+import 'package:jakislife/router/router.dart';
+import 'package:jakislife/utils/text_theme.dart';
+import 'package:jakislife/widgets/widgets.dart';
 
 part 'widgets/right_door.dart';
 part 'widgets/left_door.dart';

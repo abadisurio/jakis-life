@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
+import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
 
 class GameProgress extends StatefulWidget {
   const GameProgress({

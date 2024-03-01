@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:katajakarta/router/router.dart';
-import 'package:katajakarta/utils/text_theme.dart';
-import 'package:katajakarta/widgets/widgets.dart';
+import 'package:jakislife/router/router.dart';
+import 'package:jakislife/utils/text_theme.dart';
+import 'package:jakislife/widgets/widgets.dart';
 
 @RoutePage()
 class WinPage extends StatelessWidget {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:katajakarta/bloc/player_bloc.dart';
-import 'package:katajakarta/l10n/l10n.dart';
-import 'package:katajakarta/router/router.dart';
-import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
-import 'package:katajakarta/utils/text_theme.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/l10n/l10n.dart';
+import 'package:jakislife/router/jakislife_route.dart';
+import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
+import 'package:jakislife/utils/text_theme.dart';
 
-final _kataJakartaRouter = AppRouter();
+final _jakisLifeRouter = AppRouter();
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -69,7 +69,7 @@ class App extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         // home: const LobbyPage(),
-        routerConfig: _kataJakartaRouter.config(),
+        routerConfig: _jakisLifeRouter.config(),
         // home: const TimelinePage(),
         // home: const EventPage(),
       ),

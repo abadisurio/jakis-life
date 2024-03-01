@@ -4,12 +4,12 @@ import 'dart:math' hide log;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:katajakarta/gen/assets.gen.dart';
-import 'package:katajakarta/router/router.dart';
-import 'package:katajakarta/screens/pause/bloc/pause_bloc.dart';
+import 'package:jakislife/gen/assets.gen.dart';
+import 'package:jakislife/router/router.dart';
+import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
 
-import 'package:katajakarta/utils/text_theme.dart';
-import 'package:katajakarta/widgets/widgets.dart';
+import 'package:jakislife/utils/text_theme.dart';
+import 'package:jakislife/widgets/widgets.dart';
 
 part 'battery.dart';
 

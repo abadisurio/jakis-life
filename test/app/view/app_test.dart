@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:katajakarta/app/app.dart';
+import 'package:jakislife/app/app.dart';
 
 void main() {
   group('App', () {

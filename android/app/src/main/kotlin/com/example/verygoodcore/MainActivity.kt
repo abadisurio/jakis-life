@@ -1,4 +1,4 @@
-package com.example.verygoodcore.katajakarta
+package com.eternalenterprise.jakislife
 
 import io.flutter.embedding.android.FlutterActivity
 

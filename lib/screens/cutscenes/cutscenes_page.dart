@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:katajakarta/bloc/player_bloc.dart';
-import 'package:katajakarta/gen/assets.gen.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/gen/assets.gen.dart';
 import 'package:rive/rive.dart';
 
 @RoutePage()

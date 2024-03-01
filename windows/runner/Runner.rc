@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example.verygoodcore.katajakarta" "\0"
-            VALUE "FileDescription", "katajakarta" "\0"
+            VALUE "CompanyName", "com.eternalenterprise.jakislife" "\0"
+            VALUE "FileDescription", "jakislife" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "katajakarta" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.example.verygoodcore.katajakarta. All rights reserved." "\0"
-            VALUE "OriginalFilename", "katajakarta.exe" "\0"
-            VALUE "ProductName", "Katajakarta" "\0"
+            VALUE "InternalName", "jakislife" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.eternalenterprise.jakislife. All rights reserved." "\0"
+            VALUE "OriginalFilename", "jakislife.exe" "\0"
+            VALUE "ProductName", "Jaki's Life" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
