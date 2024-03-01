@@ -39,6 +39,9 @@ class $AssetsImagesGen {
 class $AssetsRiveGen {
   const $AssetsRiveGen();
 
+  /// File path: assets/rive/jaki.riv
+  RiveGenImage get jaki => const RiveGenImage('assets/rive/jaki.riv');
+
   /// File path: assets/rive/monas_test.riv
   RiveGenImage get monasTest =>
       const RiveGenImage('assets/rive/monas_test.riv');
@@ -47,8 +50,13 @@ class $AssetsRiveGen {
   RiveGenImage get telorGulung =>
       const RiveGenImage('assets/rive/telor_gulung.riv');
 
+  /// File path: assets/rive/telor_gulung_success.riv
+  RiveGenImage get telorGulungSuccess =>
+      const RiveGenImage('assets/rive/telor_gulung_success.riv');
+
   /// List of all assets
-  List<RiveGenImage> get values => [monasTest, telorGulung];
+  List<RiveGenImage> get values =>
+      [jaki, monasTest, telorGulung, telorGulungSuccess];
 }
 
 class $AssetsSvgGen {
@@ -263,7 +271,7 @@ class RiveGenImage {
     Alignment? alignment,
     Widget? placeHolder,
     bool antialiasing = true,
-    List<RiveAnimationController<void>> controllers = const [],
+    List<RiveAnimationController<dynamic>> controllers = const [],
     OnInitCallback? onInit,
   }) {
     return RiveAnimation.asset(

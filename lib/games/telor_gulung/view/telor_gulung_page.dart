@@ -9,6 +9,7 @@ import 'package:katajakarta/gen/assets.gen.dart';
 import 'package:katajakarta/router/router.dart';
 import 'package:katajakarta/utils/text_theme.dart';
 import 'package:katajakarta/widgets/widgets.dart';
+import 'package:rive/rive.dart';
 
 class TelorGulung extends StatelessWidget {
   const TelorGulung({super.key});
@@ -29,7 +30,16 @@ class _TelurGulungView extends StatefulWidget {
 class _TelurGulungViewState extends State<_TelurGulungView> {
   double _prevAtan = 0;
   double _totalAngle = 0;
+  SMINumber? _numSize;
   static const double _radius = 120;
+
+  void _onRiveInit(Artboard artboard) {
+    final controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    artboard.addController(controller!);
+    _numSize = controller.findInput<double>('numSize') as SMINumber?;
+    _numSize?.change(0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +75,8 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                   },
                   duration: const Duration(seconds: 7),
                 ),
-                SizedBox.square(
-                  dimension: 200,
-                  child: Assets.rive.telorGulung.rive(
-                      // stateMachines: ['Gulung', ''],
-                      ),
+                Assets.rive.telorGulung.rive(
+                  onInit: _onRiveInit,
                 ),
                 const Positioned(top: 50, right: 25, child: PauseButton()),
                 Center(
@@ -90,63 +97,45 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                   ),
                 ),
                 Center(
-                  child: Transform.rotate(
-                    angle: _totalAngle % (2 * math.pi),
-                    child: GestureDetector(
-                      onPanDown: (detail) {
-                        _prevAtan = -math.atan2(
-                          _radius - detail.localPosition.dx,
-                          _radius - detail.localPosition.dy,
-                        );
-                      },
-                      onPanUpdate: _totalAngle * 5 >= _radius
-                          ? null
-                          : (dragUpdateDetails) {
-                              final atan = -math.atan2(
-                                _radius - dragUpdateDetails.localPosition.dx,
-                                _radius - dragUpdateDetails.localPosition.dy,
-                              );
-                              // still not accurate because we rely on
-                              // conditional values to calculate
-                              final difference = (atan.isNegative
-                                      ? 2 * math.pi + atan
-                                      : atan) -
-                                  _prevAtan;
+                  child: GestureDetector(
+                    onPanDown: (detail) {
+                      _prevAtan = -math.atan2(
+                        _radius - detail.localPosition.dx,
+                        _radius - detail.localPosition.dy,
+                      );
+                    },
+                    onPanUpdate: _totalAngle * 5 >= _radius
+                        ? null
+                        : (dragUpdateDetails) {
+                            final atan = -math.atan2(
+                              _radius - dragUpdateDetails.localPosition.dx,
+                              _radius - dragUpdateDetails.localPosition.dy,
+                            );
+                            // still not accurate because we rely on
+                            // conditional values to calculate
+                            final difference =
+                                (atan.isNegative ? 2 * math.pi + atan : atan) -
+                                    _prevAtan;
 
-                              _totalAngle +=
-                                  difference.abs() > 1 ? 0 : difference;
-                              setState(() {
-                                _prevAtan =
-                                    atan.isNegative ? 2 * math.pi + atan : atan;
-                              });
-                              bloc.add(
-                                WeightRight(
-                                  isWin:
-                                      _totalAngle * 5 >= _radius ? true : null,
-                                ),
-                              );
-                            },
-                      child: CircleAvatar(
-                        radius: _radius,
-                        backgroundColor: Colors.grey.shade400,
-                        child: BlocBuilder<TelorGulungBloc, TelorGulungState>(
-                          builder: (context, state) {
-                            return CircleAvatar(
-                              backgroundColor: Colors.orange.shade200.withAlpha(
-                                (255 - state.weight * 5)
-                                    .toInt()
-                                    .clamp(100, 255),
-                              ),
-                              radius: _radius - 16,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white.withAlpha(200),
-                                radius: (_totalAngle * 5).clamp(1, _radius),
+                            _totalAngle +=
+                                difference.abs() > 1 ? 0 : difference;
+                            setState(() {
+                              _prevAtan =
+                                  atan.isNegative ? 2 * math.pi + atan : atan;
+                            });
+                            _numSize
+                                ?.change((_totalAngle * 3.6).clamp(1, _radius));
+                            bloc.add(
+                              WeightRight(
+                                isWin: _totalAngle * 5 >= _radius ? true : null,
                               ),
                             );
                           },
-                        ),
-                      ),
+                    child: CircleAvatar(
+                      radius: _radius * 1.8,
+                      backgroundColor: Colors.yellow.shade100.withOpacity(0.3),
                     ),
+                    // child: const _Telor(),
                   ),
                 ),
               ],
