@@ -1,0 +1,2 @@
+json_key_file("../secrets/playstore/jakislife-dev-2b74a3f75784.json")
+package_name("com.eternalenterprise.jakislife")
