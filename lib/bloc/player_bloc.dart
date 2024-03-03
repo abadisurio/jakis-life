@@ -8,15 +8,15 @@ part 'player_state.dart';
 
 class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc() : super(const PlayerState()) {
-    on<IncreaseLife>(_onIncreaseLife);
+    on<IncreasePoint>(_onIncreasePoint);
     on<DecreaseLife>(_onDecreaseLife);
     on<ResetLife>(_onResetLife);
     on<UpdateCurrentGame>(_onUpdateCurrentGame);
     on<UpdateCurrentGameWin>(_onUpdateCurrentGameWin);
   }
 
-  void _onIncreaseLife(
-    IncreaseLife event,
+  void _onIncreasePoint(
+    IncreasePoint event,
     Emitter<PlayerState> emit,
   ) {
     emit(state.copyWith(point: state.point + Random().nextInt(80) + 50));
@@ -33,7 +33,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     ResetLife event,
     Emitter<PlayerState> emit,
   ) {
-    emit(state.copyWith(life: 3));
+    emit(state.copyWith(life: 3, point: 0));
   }
 
   void _onUpdateCurrentGame(

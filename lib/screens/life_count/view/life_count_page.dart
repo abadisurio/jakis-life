@@ -33,7 +33,7 @@ class _LifeCountViewState extends State<_LifeCountView> {
     _lifeCount = state.life;
 
     if (state.isCurrentGameWin) {
-      context.read<PlayerBloc>().add(const IncreaseLife());
+      context.read<PlayerBloc>().add(const IncreasePoint());
     } else {
       context.read<PlayerBloc>().add(const DecreaseLife());
     }

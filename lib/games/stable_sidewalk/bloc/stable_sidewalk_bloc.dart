@@ -7,25 +7,33 @@ part 'stable_sidewalk_state.dart';
 
 class StableSidewalkBloc
     extends Bloc<StableSidewalkEvent, StableSidewalkState> {
-  StableSidewalkBloc()
-      : super(StableSidewalkState(weight: math.Random().nextDouble())) {
+  StableSidewalkBloc({
+    required int level,
+  })  : _level = level,
+        super(
+          StableSidewalkState(
+            weight: math.Random().nextDouble() + level * 0.5,
+          ),
+        ) {
     on<AddWeight>(_onAddWeight);
     on<WeightLeft>(_onWeightLeft);
     on<WeightRight>(_onWeightRight);
   }
 
+  final int _level;
+
   void _onWeightLeft(
     WeightLeft event,
     Emitter<StableSidewalkState> emit,
   ) {
-    emit(state.copyWith(weight: state.weight - 3));
+    emit(state.copyWith(weight: state.weight - (2 + _level * 0.2)));
   }
 
   void _onWeightRight(
     WeightRight event,
     Emitter<StableSidewalkState> emit,
   ) {
-    emit(state.copyWith(weight: state.weight + 3));
+    emit(state.copyWith(weight: state.weight + (2 + _level * 0.2)));
   }
 
   void _onAddWeight(

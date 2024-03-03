@@ -3,6 +3,9 @@ part of '../commuter_rush_page.dart';
 class _DoorCase extends StatelessWidget {
   const _DoorCase();
 
+  double get height => 180;
+  double get width => 75;
+
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
@@ -11,8 +14,8 @@ class _DoorCase extends StatelessWidget {
         BlendMode.srcOut,
       ),
       child: SizedBox(
-        height: 180,
-        width: 75,
+        height: height,
+        width: width,
         child: Stack(
           alignment: Alignment.center,
           children: [

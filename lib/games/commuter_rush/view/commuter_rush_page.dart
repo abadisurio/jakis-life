@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
 import 'package:jakislife/games/commuter_rush/commuter_rush.dart';
 import 'package:jakislife/router/router.dart';
 import 'package:jakislife/utils/text_theme.dart';
@@ -87,6 +88,7 @@ class _Car extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
+        const SizedBox(height: 220, child: Center(child: Passenger())),
         const Positioned(top: 40, child: _CarDoor()),
         IgnorePointer(
           child: ColorFiltered(
@@ -125,7 +127,6 @@ class _Car extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.cover,
                       child: SizedBox(
-                        // width: 1000,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(3, (index) {

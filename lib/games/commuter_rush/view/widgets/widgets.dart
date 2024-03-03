@@ -1,1 +1,1 @@
-export 'passenger_widget.dart';
+export 'passenger.dart';

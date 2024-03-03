@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
 import 'package:jakislife/games/litter_picker/litter_picker.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
@@ -14,8 +15,9 @@ class LitterPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final level = context.read<PlayerBloc>().state.point ~/ 100;
     return BlocProvider(
-      create: (_) => LitterPickerBloc(),
+      create: (_) => LitterPickerBloc(level: level),
       child: const _LitterPickerView(),
     );
   }
@@ -31,6 +33,7 @@ class _LitterPickerView extends StatefulWidget {
 class _LitterPickerViewState extends State<_LitterPickerView> {
   @override
   Widget build(BuildContext context) {
+    final level = context.read<PlayerBloc>().state.point ~/ 100;
     return Material(
       color: Colors.green.shade100,
       child: SafeArea(
@@ -64,7 +67,7 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
                         CutSceneRoute(isWin: false),
                       );
                     },
-                    duration: const Duration(seconds: 7),
+                    duration: Duration(seconds: (10 - level).clamp(2, 10)),
                   ),
                   const Positioned(top: 50, right: 25, child: PauseButton()),
                   Positioned.fill(
@@ -113,19 +116,6 @@ class _Litter extends StatefulWidget {
 
 class _LitterState extends State<_Litter> {
   late Widget _litter;
-  final littersAnorganic = [
-    Assets.svg.anorganicBottleGlass,
-    Assets.svg.anorganicPlasticBag,
-    Assets.svg.anorganicTunaCan,
-    Assets.svg.anorganicSodaCan,
-  ];
-
-  final littersOrganic = [
-    Assets.svg.organicApple,
-    Assets.svg.organicBone,
-    Assets.svg.organicEggShell,
-    Assets.svg.organicFishBone,
-  ];
 
   @override
   void initState() {
@@ -143,9 +133,9 @@ class _LitterState extends State<_Litter> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final randomHeight =
-        math.Random().nextInt(size.height.toInt()) - size.height / 2;
+        math.Random().nextInt(size.height.toInt()) - size.height / 2.5;
     final randomWidth =
-        math.Random().nextInt(size.width.toInt()) - size.width / 2;
+        math.Random().nextInt(size.width.toInt()) - size.width / 2.5;
     return Positioned.fill(
       top: randomHeight + 200,
       left: randomWidth,
@@ -211,3 +201,17 @@ class _LitterKindState extends State<_LitterKind> {
     return const Placeholder();
   }
 }
+
+final littersAnorganic = [
+  Assets.svg.anorganicBottleGlass,
+  Assets.svg.anorganicPlasticBag,
+  Assets.svg.anorganicTunaCan,
+  Assets.svg.anorganicSodaCan,
+];
+
+final littersOrganic = [
+  Assets.svg.organicApple,
+  Assets.svg.organicBone,
+  Assets.svg.organicEggShell,
+  Assets.svg.organicFishBone,
+];

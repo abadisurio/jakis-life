@@ -4,8 +4,8 @@ abstract class PlayerEvent {
   const PlayerEvent();
 }
 
-class IncreaseLife extends PlayerEvent {
-  const IncreaseLife();
+class IncreasePoint extends PlayerEvent {
+  const IncreasePoint();
 }
 
 class DecreaseLife extends PlayerEvent {

@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:math' hide log;
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
 import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
@@ -32,12 +34,14 @@ class _BatteryParryView extends StatefulWidget {
 class _BatteryParryViewState extends State<_BatteryParryView> {
   final _batteries = <_Battery>[];
   int _flickCount = 0;
-  static const _batteriesCount = 5;
+  late final _level = context.read<PlayerBloc>().state.point ~/ 200;
+  late int _batteriesCount;
   late Stream<int> _stream;
   late StreamSubscription<void> _streamSubscription;
 
   @override
   void initState() {
+    _batteriesCount = 3 + _level;
     _stream = Stream.periodic(const Duration(milliseconds: 1000), (i) => i)
         .take(_batteriesCount);
     _streamSubscription = _stream.listen(_addBattery);
@@ -86,7 +90,7 @@ class _BatteryParryViewState extends State<_BatteryParryView> {
       },
       listenWhen: (prev, curr) => prev.isPaused != curr.isPaused,
       child: Material(
-        color: Colors.green.shade100,
+        color: Colors.blue.shade100,
         child: SafeArea(
           child: Stack(
             children: [
@@ -102,12 +106,20 @@ class _BatteryParryViewState extends State<_BatteryParryView> {
                         style: TextStyleTheme(context).titleLarge,
                       ),
                       Text(
-                        '''the batteries from the river''',
+                        '''the batteries from the ground''',
                         style: TextStyleTheme(context).bodyLarge,
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  color: Colors.green.shade200,
+                  height: 120,
+                  width: double.infinity,
                 ),
               ),
               ..._batteries,

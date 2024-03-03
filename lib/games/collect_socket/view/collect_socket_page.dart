@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
 import 'package:jakislife/router/router.dart';
 import 'package:jakislife/utils/text_theme.dart';
 import 'package:jakislife/widgets/widgets.dart';
@@ -55,6 +57,7 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
 
   @override
   Widget build(BuildContext context) {
+    late final level = context.read<PlayerBloc>().state.point ~/ 200;
     return Material(
       color: Colors.green.shade100,
       child: SafeArea(
@@ -62,11 +65,11 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
           children: [
             GameProgress(
               onTimeOut: () {
-                // context.router.replace(
-                //   CutSceneRoute(isWin: false),
-                // );
+                context.router.replace(
+                  CutSceneRoute(isWin: false),
+                );
               },
-              duration: const Duration(seconds: 7),
+              duration: Duration(seconds: (10 - level).clamp(1, 10)),
             ),
             const Positioned(top: 50, right: 25, child: PauseButton()),
             Positioned.fill(

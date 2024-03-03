@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jakislife/bloc/player_bloc.dart';
 import 'package:jakislife/games/telor_gulung/telor_gulung.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
@@ -31,6 +32,7 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
   double _prevAtan = 0;
   double _totalAngle = 0;
   SMINumber? _numSize;
+  late final _level = context.read<PlayerBloc>().state.point ~/ 100;
   static const double _radius = 120;
 
   void _onRiveInit(Artboard artboard) {
@@ -66,14 +68,14 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
               children: [
                 GameProgress(
                   onTimeOut: () {
-                    // context.router.replace(
-                    //   CutSceneRoute(isWin: false),
-                    // );
+                    context.router.replace(
+                      CutSceneRoute(isWin: false),
+                    );
                   },
                   onProgress: () {
                     bloc.add(AddWeight());
                   },
-                  duration: const Duration(seconds: 7),
+                  duration: Duration(milliseconds: 10000 - _level * 20),
                 ),
                 Assets.rive.telorGulung.rive(
                   onInit: _onRiveInit,

@@ -10,6 +10,8 @@ class _CarDoorRight extends StatefulWidget {
 class _CarDoorRightState extends State<_CarDoorRight> {
   double _swipeOffset = 10;
   late Timer timer;
+  late final _level = context.read<PlayerBloc>().state.point ~/ 200;
+  final doorCase = const _DoorCase();
 
   @override
   void initState() {
@@ -29,13 +31,12 @@ class _CarDoorRightState extends State<_CarDoorRight> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: _swipeOffset,
+      right: _swipeOffset.clamp(0, doorCase.width),
       child: GestureDetector(
         onHorizontalDragUpdate: (detail) {
-          // log('detail $detail');
           if (_swipeOffset <= 75) {
             setState(() {
-              _swipeOffset += detail.delta.dx / -4;
+              _swipeOffset += detail.delta.dx / -(1 + _level);
             });
           }
         },
@@ -43,7 +44,7 @@ class _CarDoorRightState extends State<_CarDoorRight> {
           color: Colors.transparent,
           padding: const EdgeInsets.only(right: 150),
           width: 225,
-          child: const _DoorCase(),
+          child: doorCase,
         ),
       ),
     );

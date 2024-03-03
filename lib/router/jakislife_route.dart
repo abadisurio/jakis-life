@@ -12,11 +12,10 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: LobbyRoute.page,
-          // initial: true,
+          initial: true,
         ),
         AutoRoute(
           page: BadgeRoute.page,
-          initial: true,
         ),
         CustomRoute(
           page: GameRandomizerRoute.page,

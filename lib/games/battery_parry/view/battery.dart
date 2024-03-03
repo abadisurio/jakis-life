@@ -10,19 +10,21 @@ class _Battery extends StatefulWidget {
   final VoidCallback onFlick;
 
   @override
-  State<_Battery> createState() => __BatteryState();
+  State<_Battery> createState() => _BatteryState();
 }
 
-class __BatteryState extends State<_Battery> with TickerProviderStateMixin {
+class _BatteryState extends State<_Battery> with TickerProviderStateMixin {
+  late final _level = context.read<PlayerBloc>().state.point;
   static const _totalDuration = 5000;
+  late final duration = (_totalDuration - _level * 2).clamp(1000, 5000);
   Offset? _flick;
   late final AnimationController _distanceController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: _totalDuration),
+    duration: Duration(milliseconds: duration),
   );
   late final AnimationController _gravityController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: _totalDuration),
+    duration: Duration(milliseconds: duration),
   );
   late final CurvedAnimation _distance = CurvedAnimation(
     parent: _distanceController,
@@ -41,6 +43,7 @@ class __BatteryState extends State<_Battery> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    log('_distanceController ${_distanceController.duration}');
     _distanceController.forward();
     _gravityController.forward();
     _initialY = Random().nextInt(50) * 10 + 200.0;
