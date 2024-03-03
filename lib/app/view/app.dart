@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_google_wallet/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jakislife/app/app.dart';
 import 'package:jakislife/bloc/player_bloc.dart';
@@ -71,7 +72,10 @@ class App extends StatelessWidget {
           canvasColor: Colors.indigo.shade50,
           textTheme: textTheme,
         ),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: const [
+          ...AppLocalizations.localizationsDelegates,
+          I18nGoogleWallet.delegate,
+        ],
         supportedLocales: AppLocalizations.supportedLocales,
         // home: const LobbyPage(),
         routerConfig: _jakisLifeRouter.config(),

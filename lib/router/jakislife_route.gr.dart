@@ -8,77 +8,98 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
-import 'package:jakislife/games/game_randomizer_page.dart' as _i3;
-import 'package:jakislife/screens/cutscenes/cutscenes_page.dart' as _i1;
-import 'package:jakislife/screens/game_end/view/game_end_page.dart' as _i2;
-import 'package:jakislife/screens/life_count/view/life_count_page.dart' as _i4;
-import 'package:jakislife/screens/lobby/view/lobby_page.dart' as _i5;
-import 'package:jakislife/screens/pause/view/pause_page.dart' as _i6;
-import 'package:jakislife/screens/win/view/win_page.dart' as _i7;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
+import 'package:jakislife/games/game_randomizer_page.dart' as _i4;
+import 'package:jakislife/screens/badge/view/badge_page.dart' as _i1;
+import 'package:jakislife/screens/cutscenes/cutscenes_page.dart' as _i2;
+import 'package:jakislife/screens/game_end/view/game_end_page.dart' as _i3;
+import 'package:jakislife/screens/life_count/view/life_count_page.dart' as _i5;
+import 'package:jakislife/screens/lobby/view/lobby_page.dart' as _i6;
+import 'package:jakislife/screens/pause/view/pause_page.dart' as _i7;
+import 'package:jakislife/screens/win/view/win_page.dart' as _i8;
 
-abstract class $AppRouter extends _i8.RootStackRouter {
+abstract class $AppRouter extends _i9.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i9.PageFactory> pagesMap = {
+    BadgeRoute.name: (routeData) {
+      return _i9.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i1.BadgePage(),
+      );
+    },
     CutSceneRoute.name: (routeData) {
       final args = routeData.argsAs<CutSceneRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.CutScenePage(
+        child: _i2.CutScenePage(
           isWin: args.isWin,
           key: args.key,
         ),
       );
     },
     GameEndRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.GameEndPage(),
+        child: const _i3.GameEndPage(),
       );
     },
     GameRandomizerRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.GameRandomizerPage(),
+        child: const _i4.GameRandomizerPage(),
       );
     },
     LifeCountRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.LifeCountPage(),
+        child: const _i5.LifeCountPage(),
       );
     },
     LobbyRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.LobbyPage(),
+        child: const _i6.LobbyPage(),
       );
     },
     PauseRoute.name: (routeData) {
-      return _i8.AutoRoutePage<bool?>(
+      return _i9.AutoRoutePage<bool?>(
         routeData: routeData,
-        child: const _i6.PausePage(),
+        child: const _i7.PausePage(),
       );
     },
     WinRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.WinPage(),
+        child: const _i8.WinPage(),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.CutScenePage]
-class CutSceneRoute extends _i8.PageRouteInfo<CutSceneRouteArgs> {
+/// [_i1.BadgePage]
+class BadgeRoute extends _i9.PageRouteInfo<void> {
+  const BadgeRoute({List<_i9.PageRouteInfo>? children})
+      : super(
+          BadgeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BadgeRoute';
+
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i2.CutScenePage]
+class CutSceneRoute extends _i9.PageRouteInfo<CutSceneRouteArgs> {
   CutSceneRoute({
     required bool isWin,
-    _i9.Key? key,
-    List<_i8.PageRouteInfo>? children,
+    _i10.Key? key,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           CutSceneRoute.name,
           args: CutSceneRouteArgs(
@@ -90,8 +111,8 @@ class CutSceneRoute extends _i8.PageRouteInfo<CutSceneRouteArgs> {
 
   static const String name = 'CutSceneRoute';
 
-  static const _i8.PageInfo<CutSceneRouteArgs> page =
-      _i8.PageInfo<CutSceneRouteArgs>(name);
+  static const _i9.PageInfo<CutSceneRouteArgs> page =
+      _i9.PageInfo<CutSceneRouteArgs>(name);
 }
 
 class CutSceneRouteArgs {
@@ -102,7 +123,7 @@ class CutSceneRouteArgs {
 
   final bool isWin;
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
@@ -111,9 +132,9 @@ class CutSceneRouteArgs {
 }
 
 /// generated route for
-/// [_i2.GameEndPage]
-class GameEndRoute extends _i8.PageRouteInfo<void> {
-  const GameEndRoute({List<_i8.PageRouteInfo>? children})
+/// [_i3.GameEndPage]
+class GameEndRoute extends _i9.PageRouteInfo<void> {
+  const GameEndRoute({List<_i9.PageRouteInfo>? children})
       : super(
           GameEndRoute.name,
           initialChildren: children,
@@ -121,13 +142,13 @@ class GameEndRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'GameEndRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.GameRandomizerPage]
-class GameRandomizerRoute extends _i8.PageRouteInfo<void> {
-  const GameRandomizerRoute({List<_i8.PageRouteInfo>? children})
+/// [_i4.GameRandomizerPage]
+class GameRandomizerRoute extends _i9.PageRouteInfo<void> {
+  const GameRandomizerRoute({List<_i9.PageRouteInfo>? children})
       : super(
           GameRandomizerRoute.name,
           initialChildren: children,
@@ -135,13 +156,13 @@ class GameRandomizerRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'GameRandomizerRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.LifeCountPage]
-class LifeCountRoute extends _i8.PageRouteInfo<void> {
-  const LifeCountRoute({List<_i8.PageRouteInfo>? children})
+/// [_i5.LifeCountPage]
+class LifeCountRoute extends _i9.PageRouteInfo<void> {
+  const LifeCountRoute({List<_i9.PageRouteInfo>? children})
       : super(
           LifeCountRoute.name,
           initialChildren: children,
@@ -149,13 +170,13 @@ class LifeCountRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'LifeCountRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.LobbyPage]
-class LobbyRoute extends _i8.PageRouteInfo<void> {
-  const LobbyRoute({List<_i8.PageRouteInfo>? children})
+/// [_i6.LobbyPage]
+class LobbyRoute extends _i9.PageRouteInfo<void> {
+  const LobbyRoute({List<_i9.PageRouteInfo>? children})
       : super(
           LobbyRoute.name,
           initialChildren: children,
@@ -163,13 +184,13 @@ class LobbyRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'LobbyRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.PausePage]
-class PauseRoute extends _i8.PageRouteInfo<void> {
-  const PauseRoute({List<_i8.PageRouteInfo>? children})
+/// [_i7.PausePage]
+class PauseRoute extends _i9.PageRouteInfo<void> {
+  const PauseRoute({List<_i9.PageRouteInfo>? children})
       : super(
           PauseRoute.name,
           initialChildren: children,
@@ -177,13 +198,13 @@ class PauseRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'PauseRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.WinPage]
-class WinRoute extends _i8.PageRouteInfo<void> {
-  const WinRoute({List<_i8.PageRouteInfo>? children})
+/// [_i8.WinPage]
+class WinRoute extends _i9.PageRouteInfo<void> {
+  const WinRoute({List<_i9.PageRouteInfo>? children})
       : super(
           WinRoute.name,
           initialChildren: children,
@@ -191,5 +212,5 @@ class WinRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'WinRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
