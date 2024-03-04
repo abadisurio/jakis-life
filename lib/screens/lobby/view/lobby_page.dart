@@ -40,13 +40,30 @@ class _LobbyView extends StatelessWidget {
                       context.router.push(const GameRandomizerRoute());
                     },
                     child: Text(
-                      'Lets go!',
+                      "Let's go!",
                       style: TextStyleTheme(context)
                           .titleLarge
                           ?.copyWith(fontStyle: FontStyle.italic),
                     ),
                   ),
-                  const BacksoundPauseButton(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      KJButton(
+                        onPressed: () {
+                          context.router.push(const LobbyMultiplayerRoute());
+                        },
+                        child: Text(
+                          'Multiplayer',
+                          style: TextStyleTheme(context)
+                              .titleSmall
+                              ?.copyWith(fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const BacksoundPauseButton(),
+                    ],
+                  ),
                 ],
               ),
             ),

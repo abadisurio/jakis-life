@@ -15,6 +15,10 @@ class AppRouter extends $AppRouter {
           initial: true,
         ),
         AutoRoute(
+          page: LobbyMultiplayerRoute.page,
+          // initial: true,
+        ),
+        AutoRoute(
           page: BadgeRoute.page,
         ),
         CustomRoute(
