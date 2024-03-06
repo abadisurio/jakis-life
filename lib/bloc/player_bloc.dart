@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
+
 import 'dart:math' show Random;
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:jakislife/model/model.dart';
 
 part 'player_event.dart';
 part 'player_state.dart';
@@ -12,14 +14,47 @@ part 'player_state.dart';
 class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc() : super(const PlayerState()) {
     on<PlayerSignIn>(_onPlayerSignIn);
+    on<PlayerSignOut>(_onPlayerSignOut);
     on<IncreasePoint>(_onIncreasePoint);
     on<DecreaseLife>(_onDecreaseLife);
     on<ResetLife>(_onResetLife);
     on<UpdateCurrentGame>(_onUpdateCurrentGame);
     on<UpdateCurrentGameWin>(_onUpdateCurrentGameWin);
+    _initialize();
   }
 
-  // static const _storage = FlutterSecureStorage();
+  static const _keyStorageUserGoogle = 'stored_user_google';
+
+  OAuthCredential? _currentCredential;
+
+  Future<void> _initialize() async {
+    final credential = await _storage.read(
+      key: _keyStorageUserGoogle,
+      aOptions: _secureStorageAndroidOptions,
+    );
+    log('credential $credential');
+    if (credential != null) {
+      final credentialJson = json.decode(credential) as Map;
+      final providerId = credentialJson['providerId'] as String?;
+      final signInMethod = credentialJson['signInMethod'] as String?;
+      final accessToken = credentialJson['accessToken'] as String?;
+      if (providerId != null && signInMethod != null && accessToken != null) {
+        _currentCredential = OAuthCredential(
+          providerId: providerId,
+          signInMethod: signInMethod,
+          accessToken: accessToken,
+        );
+        add(const PlayerSignIn());
+      }
+    }
+  }
+
+  static const _storage = FlutterSecureStorage();
+  static const _secureStorageAndroidOptions = AndroidOptions(
+    encryptedSharedPreferences: true,
+    // sharedPreferencesName: 'Test2',
+    // preferencesKeyPrefix: 'Test'
+  );
 
   void _onIncreasePoint(
     IncreasePoint event,
@@ -60,25 +95,43 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     PlayerSignIn event,
     Emitter<PlayerState> emit,
   ) async {
-    // Trigger the authentication flow
-    final googleUser = await GoogleSignIn().signIn();
+    late OAuthCredential credential;
+    if (_currentCredential == null) {
+      // Trigger the authentication flow
+      final googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
-    final googleAuth = await googleUser?.authentication;
+      // Obtain the auth details from the request
+      final googleAuth = await googleUser?.authentication;
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      if (googleAuth != null) {
+        // Create a new credential
+        credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-    // Once signed in, return the UserCredential
-    final userCred =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    if (userCred.user != null) {
-      final uss = JakisLifeUser(id: userCred.user!.uid, score: 0);
-      log('uss ${uss.toJson()}');
-      // _storage.write(key: 'stored_user_google', value: value)
+        await _storage.write(
+          key: _keyStorageUserGoogle,
+          value: json.encode(credential.asMap()),
+          aOptions: _secureStorageAndroidOptions,
+        );
+      }
+    } else {
+      credential = _currentCredential!;
     }
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    emit(state.copyWith(isSignedIn: true));
+  }
+
+  Future<void> _onPlayerSignOut(
+    PlayerSignOut event,
+    Emitter<PlayerState> emit,
+  ) async {
+    await FirebaseAuth.instance.signOut();
+    await _storage.delete(
+      key: _keyStorageUserGoogle,
+      aOptions: _secureStorageAndroidOptions,
+    );
+    emit(state.copyWith(isSignedIn: false));
   }
 }

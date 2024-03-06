@@ -3,6 +3,7 @@ import 'dart:math' show pi;
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/flutter_google_wallet_plugin.dart';
@@ -27,12 +28,13 @@ class LobbyMultiplayerPage extends StatefulWidget {
 }
 
 class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
-  late bool _isUnlocked;
+  // late bool _isUnlocked;
   @override
   void initState() {
-    final state = context.read<PlayerBloc>().state;
-    _isUnlocked = state.isMultiplayerUnlocked;
-    log('_isUnlocked $_isUnlocked');
+    // final state = context.read<PlayerBloc>().state;
+    // _isUnlocked = state.isMultiplayerUnlocked;
+    // log('state ${state.currentUser}');
+    // log('_isUnlocked $_isUnlocked');
     super.initState();
   }
 
@@ -67,6 +69,19 @@ class _LobbyMultiplayerView extends StatelessWidget {
               },
               child: Text(
                 'Start Grinding!',
+                style: TextStyleTheme(context).titleSmall?.copyWith(
+                      color: Colors.black,
+                    ),
+              ),
+            ),
+          ),
+          Center(
+            child: KJButton(
+              onPressed: () {
+                context.read<PlayerBloc>().add(const PlayerSignOut());
+              },
+              child: Text(
+                'Sign Out',
                 style: TextStyleTheme(context).titleSmall?.copyWith(
                       color: Colors.black,
                     ),

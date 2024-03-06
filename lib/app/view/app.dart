@@ -38,6 +38,7 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => PlayerBloc(),
+          lazy: false,
         ),
       ],
       child: MaterialApp.router(

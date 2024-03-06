@@ -8,6 +8,10 @@ class PlayerSignIn extends PlayerEvent {
   const PlayerSignIn();
 }
 
+class PlayerSignOut extends PlayerEvent {
+  const PlayerSignOut();
+}
+
 class IncreasePoint extends PlayerEvent {
   const IncreasePoint();
 }
