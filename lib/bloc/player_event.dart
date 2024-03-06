@@ -4,6 +4,10 @@ abstract class PlayerEvent {
   const PlayerEvent();
 }
 
+class PlayerSignIn extends PlayerEvent {
+  const PlayerSignIn();
+}
+
 class IncreasePoint extends PlayerEvent {
   const IncreasePoint();
 }

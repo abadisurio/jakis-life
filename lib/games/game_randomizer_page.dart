@@ -57,10 +57,10 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
       // child: const TelorGulung(),
       // child: const StableSidewalk(),
       // child: const CommuterRush(),
-      child: const LitterPicker(),
+      // child: const LitterPicker(),
       // child: const CollectSocket(),
       // child: const CutScenePage(isWin: true),
-      // child: game,
+      child: game,
     );
     // return game;
   }

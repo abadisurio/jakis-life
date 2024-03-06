@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "596541657923",
+    "project_id": "jakislife-dev",
+    "storage_bucket": "jakislife-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596541657923:android:37e952bb2f46bae52dd5f6",
+        "android_client_info": {
+          "package_name": "com.eternalenterprise.jakislife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596541657923-9aspmmrf430vj3t881r6567luf8ccpve.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eternalenterprise.jakislife",
+            "certificate_hash": "0bbb9f0a4d38fae39e20c3a40283d89dbe5acf15"
+          }
+        },
+        {
+          "client_id": "596541657923-grmh9in233u908q4dqfe9qt6bq37pi5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eternalenterprise.jakislife",
+            "certificate_hash": "2306141ca25bdb7ba69fe6209ffb31e8d715bb40"
+          }
+        },
+        {
+          "client_id": "596541657923-47fbkd4cnq9omo52r2s76fknum1nuj5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXKi7KPoaUlfGJXMkxXxjiOkRkEjEuiSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596541657923-3f780shsbdmsedsbusbe04hlf95iqisg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "596541657923-9efaa11otd230fefq84sm0l8mk39tntj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eternalenterprise.jakislife"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

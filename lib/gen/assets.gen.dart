@@ -31,9 +31,13 @@ class $AssetsImagesGen {
   AssetGenImage get aboutTelor =>
       const AssetGenImage('assets/images/about_telor.png');
 
+  /// File path: assets/images/jaki_round.png
+  AssetGenImage get jakiRound =>
+      const AssetGenImage('assets/images/jaki_round.png');
+
   /// List of all assets
   List<AssetGenImage> get values =>
-      [aboutHazard, aboutInorganic, aboutKrl, aboutTelor];
+      [aboutHazard, aboutInorganic, aboutKrl, aboutTelor, jakiRound];
 }
 
 class $AssetsRiveGen {

@@ -5,25 +5,36 @@ class PlayerState extends Equatable {
     this.currentGame,
     this.life = 3,
     this.isCurrentGameWin = false,
+    this.isMultiplayerUnlocked = false,
     this.point = 0,
+    this.currentPlayer,
   });
+
+  User? get currentUser => FirebaseAuth.instance.currentUser;
 
   final int life;
   final int point;
   final bool isCurrentGameWin;
+  final bool isMultiplayerUnlocked;
   final String? currentGame;
+  final User? currentPlayer;
 
   PlayerState copyWith({
     int? life,
     int? point,
     String? currentGame,
     bool? isCurrentGameWin,
+    bool? isMultiplayerUnlocked,
+    User? currentPlayer,
   }) =>
       PlayerState(
         life: life ?? this.life,
         point: point ?? this.point,
         currentGame: currentGame ?? this.currentGame,
         isCurrentGameWin: isCurrentGameWin ?? this.isCurrentGameWin,
+        isMultiplayerUnlocked:
+            isMultiplayerUnlocked ?? this.isMultiplayerUnlocked,
+        currentPlayer: currentPlayer ?? this.currentPlayer,
       );
 
   @override
@@ -32,5 +43,7 @@ class PlayerState extends Equatable {
         point,
         currentGame,
         isCurrentGameWin,
+        currentPlayer,
+        isMultiplayerUnlocked,
       ];
 }
