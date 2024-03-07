@@ -1,21 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'jakislife_user.freezed.dart';
-part 'jakislife_user.g.dart';
+part 'jakislife_player.freezed.dart';
+part 'jakislife_player.g.dart';
 
 @freezed
-class JakisLifeUser with _$JakisLifeUser {
+class JakisLifePlayer with _$JakisLifePlayer {
   @JsonSerializable(
     explicitToJson: true,
     includeIfNull: false,
     fieldRename: FieldRename.snake,
   )
-  factory JakisLifeUser({
+  factory JakisLifePlayer({
     required String id,
     int? score,
     @JsonKey(defaultValue: false) bool? showOnePiece,
-  }) = _JakisLifeUser;
+  }) = _JakisLifePlayer;
 
-  factory JakisLifeUser.fromJson(Map<String, dynamic> json) =>
-      _$JakisLifeUserFromJson(json);
+  factory JakisLifePlayer.fromJson(Map<String, dynamic> json) =>
+      _$JakisLifePlayerFromJson(json);
 }

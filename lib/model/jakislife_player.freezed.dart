@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'jakislife_user.dart';
+part of 'jakislife_player.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-JakisLifeUser _$JakisLifeUserFromJson(Map<String, dynamic> json) {
-  return _JakisLifeUser.fromJson(json);
+JakisLifePlayer _$JakisLifePlayerFromJson(Map<String, dynamic> json) {
+  return _JakisLifePlayer.fromJson(json);
 }
 
 /// @nodoc
-mixin _$JakisLifeUser {
+mixin _$JakisLifePlayer {
   String get id => throw _privateConstructorUsedError;
   int? get score => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: false)
@@ -27,15 +27,15 @@ mixin _$JakisLifeUser {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $JakisLifeUserCopyWith<JakisLifeUser> get copyWith =>
+  $JakisLifePlayerCopyWith<JakisLifePlayer> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $JakisLifeUserCopyWith<$Res> {
-  factory $JakisLifeUserCopyWith(
-          JakisLifeUser value, $Res Function(JakisLifeUser) then) =
-      _$JakisLifeUserCopyWithImpl<$Res, JakisLifeUser>;
+abstract class $JakisLifePlayerCopyWith<$Res> {
+  factory $JakisLifePlayerCopyWith(
+          JakisLifePlayer value, $Res Function(JakisLifePlayer) then) =
+      _$JakisLifePlayerCopyWithImpl<$Res, JakisLifePlayer>;
   @useResult
   $Res call(
       {String id,
@@ -44,9 +44,9 @@ abstract class $JakisLifeUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$JakisLifeUserCopyWithImpl<$Res, $Val extends JakisLifeUser>
-    implements $JakisLifeUserCopyWith<$Res> {
-  _$JakisLifeUserCopyWithImpl(this._value, this._then);
+class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
+    implements $JakisLifePlayerCopyWith<$Res> {
+  _$JakisLifePlayerCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -78,11 +78,11 @@ class _$JakisLifeUserCopyWithImpl<$Res, $Val extends JakisLifeUser>
 }
 
 /// @nodoc
-abstract class _$$JakisLifeUserImplCopyWith<$Res>
-    implements $JakisLifeUserCopyWith<$Res> {
-  factory _$$JakisLifeUserImplCopyWith(
-          _$JakisLifeUserImpl value, $Res Function(_$JakisLifeUserImpl) then) =
-      __$$JakisLifeUserImplCopyWithImpl<$Res>;
+abstract class _$$JakisLifePlayerImplCopyWith<$Res>
+    implements $JakisLifePlayerCopyWith<$Res> {
+  factory _$$JakisLifePlayerImplCopyWith(_$JakisLifePlayerImpl value,
+          $Res Function(_$JakisLifePlayerImpl) then) =
+      __$$JakisLifePlayerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -92,11 +92,11 @@ abstract class _$$JakisLifeUserImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$JakisLifeUserImplCopyWithImpl<$Res>
-    extends _$JakisLifeUserCopyWithImpl<$Res, _$JakisLifeUserImpl>
-    implements _$$JakisLifeUserImplCopyWith<$Res> {
-  __$$JakisLifeUserImplCopyWithImpl(
-      _$JakisLifeUserImpl _value, $Res Function(_$JakisLifeUserImpl) _then)
+class __$$JakisLifePlayerImplCopyWithImpl<$Res>
+    extends _$JakisLifePlayerCopyWithImpl<$Res, _$JakisLifePlayerImpl>
+    implements _$$JakisLifePlayerImplCopyWith<$Res> {
+  __$$JakisLifePlayerImplCopyWithImpl(
+      _$JakisLifePlayerImpl _value, $Res Function(_$JakisLifePlayerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$JakisLifeUserImplCopyWithImpl<$Res>
     Object? score = freezed,
     Object? showOnePiece = freezed,
   }) {
-    return _then(_$JakisLifeUserImpl(
+    return _then(_$JakisLifePlayerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -127,14 +127,14 @@ class __$$JakisLifeUserImplCopyWithImpl<$Res>
 
 @JsonSerializable(
     explicitToJson: true, includeIfNull: false, fieldRename: FieldRename.snake)
-class _$JakisLifeUserImpl implements _JakisLifeUser {
-  _$JakisLifeUserImpl(
+class _$JakisLifePlayerImpl implements _JakisLifePlayer {
+  _$JakisLifePlayerImpl(
       {required this.id,
       this.score,
       @JsonKey(defaultValue: false) this.showOnePiece});
 
-  factory _$JakisLifeUserImpl.fromJson(Map<String, dynamic> json) =>
-      _$$JakisLifeUserImplFromJson(json);
+  factory _$JakisLifePlayerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JakisLifePlayerImplFromJson(json);
 
   @override
   final String id;
@@ -146,14 +146,14 @@ class _$JakisLifeUserImpl implements _JakisLifeUser {
 
   @override
   String toString() {
-    return 'JakisLifeUser(id: $id, score: $score, showOnePiece: $showOnePiece)';
+    return 'JakisLifePlayer(id: $id, score: $score, showOnePiece: $showOnePiece)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$JakisLifeUserImpl &&
+            other is _$JakisLifePlayerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.score, score) || other.score == score) &&
             (identical(other.showOnePiece, showOnePiece) ||
@@ -167,26 +167,27 @@ class _$JakisLifeUserImpl implements _JakisLifeUser {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$JakisLifeUserImplCopyWith<_$JakisLifeUserImpl> get copyWith =>
-      __$$JakisLifeUserImplCopyWithImpl<_$JakisLifeUserImpl>(this, _$identity);
+  _$$JakisLifePlayerImplCopyWith<_$JakisLifePlayerImpl> get copyWith =>
+      __$$JakisLifePlayerImplCopyWithImpl<_$JakisLifePlayerImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$JakisLifeUserImplToJson(
+    return _$$JakisLifePlayerImplToJson(
       this,
     );
   }
 }
 
-abstract class _JakisLifeUser implements JakisLifeUser {
-  factory _JakisLifeUser(
+abstract class _JakisLifePlayer implements JakisLifePlayer {
+  factory _JakisLifePlayer(
           {required final String id,
           final int? score,
           @JsonKey(defaultValue: false) final bool? showOnePiece}) =
-      _$JakisLifeUserImpl;
+      _$JakisLifePlayerImpl;
 
-  factory _JakisLifeUser.fromJson(Map<String, dynamic> json) =
-      _$JakisLifeUserImpl.fromJson;
+  factory _JakisLifePlayer.fromJson(Map<String, dynamic> json) =
+      _$JakisLifePlayerImpl.fromJson;
 
   @override
   String get id;
@@ -197,6 +198,6 @@ abstract class _JakisLifeUser implements JakisLifeUser {
   bool? get showOnePiece;
   @override
   @JsonKey(ignore: true)
-  _$$JakisLifeUserImplCopyWith<_$JakisLifeUserImpl> get copyWith =>
+  _$$JakisLifePlayerImplCopyWith<_$JakisLifePlayerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

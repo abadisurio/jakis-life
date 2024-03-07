@@ -1,18 +1,22 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
 import 'dart:math' show Random;
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jakislife/model/model.dart';
 
 part 'player_event.dart';
 part 'player_state.dart';
 
 class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc() : super(const PlayerState()) {
+    on<PlayerInitialize>(_onPlayerInitialize);
     on<PlayerSignIn>(_onPlayerSignIn);
     on<PlayerSignOut>(_onPlayerSignOut);
     on<IncreasePoint>(_onIncreasePoint);
@@ -20,41 +24,98 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<ResetLife>(_onResetLife);
     on<UpdateCurrentGame>(_onUpdateCurrentGame);
     on<UpdateCurrentGameWin>(_onUpdateCurrentGameWin);
-    _initialize();
   }
 
-  static const _keyStorageUserGoogle = 'stored_user_google';
-
-  OAuthCredential? _currentCredential;
-
-  Future<void> _initialize() async {
-    final credential = await _storage.read(
-      key: _keyStorageUserGoogle,
-      aOptions: _secureStorageAndroidOptions,
-    );
-    log('credential $credential');
-    if (credential != null) {
-      final credentialJson = json.decode(credential) as Map;
-      final providerId = credentialJson['providerId'] as String?;
-      final signInMethod = credentialJson['signInMethod'] as String?;
-      final accessToken = credentialJson['accessToken'] as String?;
-      if (providerId != null && signInMethod != null && accessToken != null) {
-        _currentCredential = OAuthCredential(
-          providerId: providerId,
-          signInMethod: signInMethod,
-          accessToken: accessToken,
-        );
-        add(const PlayerSignIn());
-      }
-    }
-  }
+  static const _keyStoredUserGoogle = 'stored_user_google';
+  static const _keyStoredUserJakisLife = 'stored_user_jakislife';
 
   static const _storage = FlutterSecureStorage();
   static const _secureStorageAndroidOptions = AndroidOptions(
     encryptedSharedPreferences: true,
-    // sharedPreferencesName: 'Test2',
-    // preferencesKeyPrefix: 'Test'
   );
+  OAuthCredential? _currentCredential;
+  // JakisLifePlayer? _jakisLifePlayer;
+
+  Future<void> _initialize() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      final credential = await _storage.read(
+        key: _keyStoredUserGoogle,
+        aOptions: _secureStorageAndroidOptions,
+      );
+      log('credential $credential');
+      if (credential != null) {
+        final credentialJson = json.decode(credential) as Map;
+        final providerId = credentialJson['providerId'] as String?;
+        final signInMethod = credentialJson['signInMethod'] as String?;
+        final accessToken = credentialJson['accessToken'] as String?;
+        if (providerId != null && signInMethod != null && accessToken != null) {
+          _currentCredential = OAuthCredential(
+            providerId: providerId,
+            signInMethod: signInMethod,
+            accessToken: accessToken,
+          );
+          add(const PlayerSignIn());
+        }
+      }
+    }
+  }
+
+  Future<JakisLifePlayer?> _getJakisLifePlayer() async {
+    final stringJakisLifePlayer = await _storage.read(
+      key: _keyStoredUserJakisLife,
+      aOptions: _secureStorageAndroidOptions,
+    );
+
+    log('stringJakisLifePlayer $stringJakisLifePlayer');
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final col = FirebaseFirestore.instance.collection('player');
+    final doc = col.doc(currentUser?.uid);
+    late JakisLifePlayer jakisLifePlayer;
+    if (stringJakisLifePlayer == null) {
+      final snapshot = await doc.get();
+      if (snapshot.exists) {
+        jakisLifePlayer = JakisLifePlayer.fromJson({
+          'id': currentUser?.uid,
+          ...snapshot.data() ?? {},
+        });
+      } else {
+        const playerId = 'jakislife';
+        // if (stringJakisLifePlayer == null) return null;
+        jakisLifePlayer = JakisLifePlayer(id: playerId, score: 0);
+        unawaited(
+          Future(() async {
+            await doc.set(
+              jakisLifePlayer.toJson()..remove('id'),
+              SetOptions(merge: true),
+            );
+
+            await _storage.write(
+              key: _keyStoredUserJakisLife,
+              value: json.encode(jakisLifePlayer.toJson()),
+              aOptions: _secureStorageAndroidOptions,
+            );
+          }),
+        );
+      }
+    } else {
+      jakisLifePlayer = JakisLifePlayer.fromJson(
+        json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
+      );
+    }
+
+    log('jakisLifePlayer $jakisLifePlayer');
+    return jakisLifePlayer;
+  }
+
+  Future<void> _onPlayerInitialize(
+    PlayerInitialize event,
+    Emitter<PlayerState> emit,
+  ) async {
+    await _initialize();
+    final player = await _getJakisLifePlayer();
+    emit(state.copyWith(point: player?.score));
+  }
 
   void _onIncreasePoint(
     IncreasePoint event,
@@ -111,7 +172,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         );
 
         await _storage.write(
-          key: _keyStorageUserGoogle,
+          key: _keyStoredUserGoogle,
           value: json.encode(credential.asMap()),
           aOptions: _secureStorageAndroidOptions,
         );
@@ -129,7 +190,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   ) async {
     await FirebaseAuth.instance.signOut();
     await _storage.delete(
-      key: _keyStorageUserGoogle,
+      key: _keyStoredUserGoogle,
       aOptions: _secureStorageAndroidOptions,
     );
     emit(state.copyWith(isSignedIn: false));

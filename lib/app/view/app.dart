@@ -37,7 +37,7 @@ class App extends StatelessWidget {
           create: (_) => PauseBloc(),
         ),
         BlocProvider(
-          create: (_) => PlayerBloc(),
+          create: (_) => PlayerBloc()..add(const PlayerInitialize()),
           lazy: false,
         ),
       ],

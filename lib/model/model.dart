@@ -1,1 +1,1 @@
-export 'jakislife_user.dart';
+export 'jakislife_player.dart';
