@@ -114,7 +114,12 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   ) async {
     await _initialize();
     final player = await _getJakisLifePlayer();
-    emit(state.copyWith(point: player?.score));
+    emit(
+      state.copyWith(
+        point: player?.score,
+        isSignedIn: FirebaseAuth.instance.currentUser != null,
+      ),
+    );
   }
 
   void _onIncreasePoint(

@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:app_links/app_links.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -5,15 +9,18 @@ import 'package:equatable/equatable.dart';
 part 'app_event.dart';
 part 'app_state.dart';
 
+final _appLinks = AppLinks();
+
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppState()) {
     on<ToggleBacksoundPlayPause>(_onToggleBacksoundPlayPause);
     _initialize();
   }
   final _audioPlayer = AudioPlayer(playerId: 'jakis_theme');
-
+  late StreamSubscription<dynamic> _linkSubscription;
   void _initialize() {
     // _startBacksound();
+    _getAppLink();
   }
 
   // Future<void> _startBacksound() async {
@@ -22,6 +29,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   //     AssetSource(Assets.sounds.jakisTheme),
   //   );
   // }
+
+  Future<void> _getAppLink() async {
+    // final uri = await _appLinks.getInitialAppLink();
+    _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
+      log('uri $uri');
+      // Do something (navigation, ...)
+    });
+  }
 
   Future<void> _onToggleBacksoundPlayPause(
     ToggleBacksoundPlayPause event,

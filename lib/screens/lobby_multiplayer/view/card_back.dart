@@ -27,43 +27,50 @@ class _CardBackState extends State<_CardBack> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade700,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(32),
-      height: _Card.height,
-      width: _Card.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ClipRRect(
+    return BlocBuilder<PlayerBloc, PlayerState>(
+      buildWhen: (prev, curr) => prev.isSignedIn != curr.isSignedIn,
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade700,
             borderRadius: BorderRadius.circular(16),
-            child: CachedNetworkImage(
-              imageUrl:
-                  'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=testingg',
-            ),
           ),
-          const SizedBox(height: 32),
-          // Text(
-          //   'Back',
-          //   style: TextStyleTheme(context)
-          //       .titleMedium
-          //       ?.copyWith(color: Colors.white),
-          // ),
-          if (_isWalletAvailable ?? false)
-            AddToGoogleWalletButton(
-              locale: const Locale('en', 'US'),
-              onPress: () {
-                _flutterGoogleWalletPlugin.savePasses(
-                  jsonPass: _exampleJsonPass,
-                  addToGoogleWalletRequestCode: 2,
-                );
-              },
-            ),
-        ],
-      ),
+          padding: const EdgeInsets.all(32),
+          height: _Card.height,
+          width: _Card.width,
+          child: !state.isSignedIn
+              ? null
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://jakislife-dev.web.app/?start-multiplayer=${state.currentUser?.uid}',
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // Text(
+                    //   'Back',
+                    //   style: TextStyleTheme(context)
+                    //       .titleMedium
+                    //       ?.copyWith(color: Colors.white),
+                    // ),
+                    if (_isWalletAvailable ?? false)
+                      AddToGoogleWalletButton(
+                        locale: const Locale('en', 'US'),
+                        onPress: () {
+                          _flutterGoogleWalletPlugin.savePasses(
+                            jsonPass: _exampleJsonPass,
+                            addToGoogleWalletRequestCode: 2,
+                          );
+                        },
+                      ),
+                  ],
+                ),
+        );
+      },
     );
   }
 }
