@@ -7,6 +7,16 @@ class AppEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AppInitialize extends AppEvent {
+  const AppInitialize();
+}
+
+class AppLinkUpdateQuery extends AppEvent {
+  const AppLinkUpdateQuery({this.query});
+
+  final Map<String, String>? query;
+}
+
 class ToggleBacksoundPlayPause extends AppEvent {
   const ToggleBacksoundPlayPause({this.isPaused});
 

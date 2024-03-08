@@ -61,9 +61,14 @@ abstract class $AppRouter extends _i10.RootStackRouter {
       );
     },
     LobbyMultiplayerRoute.name: (routeData) {
+      final args = routeData.argsAs<LobbyMultiplayerRouteArgs>(
+          orElse: () => const LobbyMultiplayerRouteArgs());
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.LobbyMultiplayerPage(),
+        child: _i6.LobbyMultiplayerPage(
+          key: args.key,
+          invitedId: args.invitedId,
+        ),
       );
     },
     LobbyRoute.name: (routeData) {
@@ -183,16 +188,41 @@ class LifeCountRoute extends _i10.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.LobbyMultiplayerPage]
-class LobbyMultiplayerRoute extends _i10.PageRouteInfo<void> {
-  const LobbyMultiplayerRoute({List<_i10.PageRouteInfo>? children})
-      : super(
+class LobbyMultiplayerRoute
+    extends _i10.PageRouteInfo<LobbyMultiplayerRouteArgs> {
+  LobbyMultiplayerRoute({
+    _i11.Key? key,
+    String? invitedId,
+    List<_i10.PageRouteInfo>? children,
+  }) : super(
           LobbyMultiplayerRoute.name,
+          args: LobbyMultiplayerRouteArgs(
+            key: key,
+            invitedId: invitedId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'LobbyMultiplayerRoute';
 
-  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+  static const _i10.PageInfo<LobbyMultiplayerRouteArgs> page =
+      _i10.PageInfo<LobbyMultiplayerRouteArgs>(name);
+}
+
+class LobbyMultiplayerRouteArgs {
+  const LobbyMultiplayerRouteArgs({
+    this.key,
+    this.invitedId,
+  });
+
+  final _i11.Key? key;
+
+  final String? invitedId;
+
+  @override
+  String toString() {
+    return 'LobbyMultiplayerRouteArgs{key: $key, invitedId: $invitedId}';
+  }
 }
 
 /// generated route for

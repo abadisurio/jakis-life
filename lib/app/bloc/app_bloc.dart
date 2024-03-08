@@ -16,15 +16,11 @@ final _appLinks = AppLinks();
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppState()) {
     on<ToggleBacksoundPlayPause>(_onToggleBacksoundPlayPause);
-    _initialize();
+    on<AppInitialize>(_onAppInitialize);
+    on<AppLinkUpdateQuery>(_onAppUpdateAppLink);
   }
   final _audioPlayer = AudioPlayer(playerId: 'jakis_theme');
   late StreamSubscription<dynamic> _linkSubscription;
-  void _initialize() {
-    // _startBacksound();
-    _getAppLink();
-    _setupNotification();
-  }
 
   // Future<void> _startBacksound() async {
   //   await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -33,10 +29,25 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   //   );
   // }
 
-  Future<void> _getAppLink() async {
-    // final uri = await _appLinks.getInitialAppLink();
-    _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
-      log('uri $uri');
+  Future<void> _initializeAppLink() async {
+    // String host = Platform.isAndroid ? 'https://127.0.0.1:5001' : 'localhost';
+    final initialUri = await _appLinks.getInitialAppLink();
+    log('uri1 ${initialUri?.queryParameters['start-multiplayer']}');
+    add(AppLinkUpdateQuery(query: initialUri?.queryParameters));
+    // _appLinks.
+    _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
+      add(const AppLinkUpdateQuery(query: {}));
+      log('uri2 ${uri.queryParameters['start-multiplayer']}');
+      add(AppLinkUpdateQuery(query: uri.queryParameters));
+      // final response = await FirebaseFunctions.instance
+      //     .httpsCallable('createMultiplayer')
+      //     .call<Map<String, dynamic>>(
+      //   {
+      //     'inviterId': '22',
+      //     'invitedId': '99',
+      //   },
+      // );
+      // log('response $response');
       // Do something (navigation, ...)
     });
   }
@@ -55,6 +66,22 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       //   arguments: MessageArguments(message, true),
       // );
     });
+  }
+
+  void _onAppInitialize(
+    AppInitialize event,
+    Emitter<AppState> emit,
+  ) {
+    _initializeAppLink();
+    _setupNotification();
+  }
+
+  Future<void> _onAppUpdateAppLink(
+    AppLinkUpdateQuery event,
+    Emitter<AppState> emit,
+  ) async {
+    log('event.query ${event.query}');
+    emit(state.copyWith(appLinkQuery: event.query));
   }
 
   Future<void> _onToggleBacksoundPlayPause(

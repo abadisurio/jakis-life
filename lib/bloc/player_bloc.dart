@@ -7,12 +7,15 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jakislife/model/model.dart';
 
 part 'player_event.dart';
 part 'player_state.dart';
+
+final _googleSignIn = GoogleSignIn();
 
 class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc() : super(const PlayerState()) {
@@ -61,48 +64,108 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<JakisLifePlayer?> _getJakisLifePlayer() async {
+  Future<JakisLifePlayer?> _updateJakisLifePlayer() async {
     final stringJakisLifePlayer = await _storage.read(
       key: _keyStoredUserJakisLife,
       aOptions: _secureStorageAndroidOptions,
     );
+    final localJakislifePlayer = stringJakisLifePlayer == null
+        ? null
+        : JakisLifePlayer.fromJson(
+            json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
+          );
 
-    log('stringJakisLifePlayer $stringJakisLifePlayer');
     final currentUser = FirebaseAuth.instance.currentUser;
-    final col = FirebaseFirestore.instance.collection('player');
+    final col = FirebaseFirestore.instance.collection('players');
     final doc = col.doc(currentUser?.uid);
     late JakisLifePlayer jakisLifePlayer;
-    if (stringJakisLifePlayer == null) {
+
+    Future<void> writeToFirestore(JakisLifePlayer jakisLifePlayer) async {
+      await doc.set(
+        jakisLifePlayer.toJson()..remove('id'),
+        SetOptions(merge: true),
+      );
+    }
+
+    Future<void> createNewPlayer() async {
+      const playerId = 'jakislife';
+      jakisLifePlayer = JakisLifePlayer(
+        id: playerId,
+        score: 0,
+      );
+      await _storage.write(
+        key: _keyStoredUserJakisLife,
+        value: json.encode(jakisLifePlayer.toJson()),
+        aOptions: _secureStorageAndroidOptions,
+      );
+    }
+
+    log('stringJakisLifePlayer $stringJakisLifePlayer');
+    log('currentUser $currentUser');
+    if (currentUser == null && localJakislifePlayer == null) {
+      await createNewPlayer();
+    }
+    if (currentUser == null && localJakislifePlayer != null) {
+      jakisLifePlayer = localJakislifePlayer;
+    }
+
+    if (currentUser != null && localJakislifePlayer == null) {
+      final doc = col.doc(currentUser.uid);
       final snapshot = await doc.get();
+      final fcmToken = await FirebaseMessaging.instance.getToken();
       if (snapshot.exists) {
         jakisLifePlayer = JakisLifePlayer.fromJson({
-          'id': currentUser?.uid,
+          'id': currentUser.uid,
+          'fcmToken': fcmToken,
           ...snapshot.data() ?? {},
         });
       } else {
-        const playerId = 'jakislife';
-        // if (stringJakisLifePlayer == null) return null;
-        jakisLifePlayer = JakisLifePlayer(id: playerId, score: 0);
-        unawaited(
-          Future(() async {
-            await doc.set(
-              jakisLifePlayer.toJson()..remove('id'),
-              SetOptions(merge: true),
-            );
-
-            await _storage.write(
-              key: _keyStoredUserJakisLife,
-              value: json.encode(jakisLifePlayer.toJson()),
-              aOptions: _secureStorageAndroidOptions,
-            );
-          }),
-        );
+        await createNewPlayer();
       }
-    } else {
-      jakisLifePlayer = JakisLifePlayer.fromJson(
-        json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
-      );
     }
+
+    if (currentUser != null && localJakislifePlayer != null) {
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      jakisLifePlayer = localJakislifePlayer.copyWith(fcmToken: fcmToken);
+      await writeToFirestore(jakisLifePlayer);
+    }
+
+    // if (stringJakisLifePlayer == null) {
+    //   final snapshot = await doc.get();
+    //   if (snapshot.exists) {
+    //     jakisLifePlayer = JakisLifePlayer.fromJson({
+    //       'id': currentUser?.uid,
+    //       ...snapshot.data() ?? {},
+    //     });
+    //   } else {
+    //     const playerId = 'jakislife';
+    //     final fcmToken = await FirebaseMessaging.instance.getToken();
+    //     // if (stringJakisLifePlayer == null) return null;
+    //     jakisLifePlayer = JakisLifePlayer(
+    //       id: playerId,
+    //       score: 0,
+    //       fcmToken: fcmToken,
+    //     );
+    //     unawaited(
+    //       Future(() async {
+    //         await doc.set(
+    //           jakisLifePlayer.toJson()..remove('id'),
+    //           SetOptions(merge: true),
+    //         );
+
+    //         await _storage.write(
+    //           key: _keyStoredUserJakisLife,
+    //           value: json.encode(jakisLifePlayer.toJson()),
+    //           aOptions: _secureStorageAndroidOptions,
+    //         );
+    //       }),
+    //     );
+    //   }
+    // } else {
+    //   jakisLifePlayer = JakisLifePlayer.fromJson(
+    //     json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
+    //   );
+    // }
 
     log('jakisLifePlayer $jakisLifePlayer');
     return jakisLifePlayer;
@@ -113,7 +176,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     Emitter<PlayerState> emit,
   ) async {
     await _initialize();
-    final player = await _getJakisLifePlayer();
+    final player = await _updateJakisLifePlayer();
     emit(
       state.copyWith(
         point: player?.score,
@@ -164,7 +227,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     late OAuthCredential credential;
     if (_currentCredential == null) {
       // Trigger the authentication flow
-      final googleUser = await GoogleSignIn().signIn();
+
+      final googleUser = await _googleSignIn.signIn();
 
       // Obtain the auth details from the request
       final googleAuth = await googleUser?.authentication;
@@ -193,7 +257,9 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     PlayerSignOut event,
     Emitter<PlayerState> emit,
   ) async {
+    await _googleSignIn.disconnect();
     await FirebaseAuth.instance.signOut();
+
     await _storage.delete(
       key: _keyStoredUserGoogle,
       aOptions: _secureStorageAndroidOptions,

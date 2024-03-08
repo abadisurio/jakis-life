@@ -30,7 +30,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => AppBloc(),
+          create: (_) => AppBloc()..add(const AppInitialize()),
           lazy: false,
         ),
         BlocProvider(

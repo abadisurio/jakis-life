@@ -22,6 +22,7 @@ JakisLifePlayer _$JakisLifePlayerFromJson(Map<String, dynamic> json) {
 mixin _$JakisLifePlayer {
   String get id => throw _privateConstructorUsedError;
   int? get score => throw _privateConstructorUsedError;
+  String? get fcmToken => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: false)
   bool? get showOnePiece => throw _privateConstructorUsedError;
 
@@ -40,6 +41,7 @@ abstract class $JakisLifePlayerCopyWith<$Res> {
   $Res call(
       {String id,
       int? score,
+      String? fcmToken,
       @JsonKey(defaultValue: false) bool? showOnePiece});
 }
 
@@ -58,6 +60,7 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
   $Res call({
     Object? id = null,
     Object? score = freezed,
+    Object? fcmToken = freezed,
     Object? showOnePiece = freezed,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +72,10 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int?,
+      fcmToken: freezed == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
+              as String?,
       showOnePiece: freezed == showOnePiece
           ? _value.showOnePiece
           : showOnePiece // ignore: cast_nullable_to_non_nullable
@@ -88,6 +95,7 @@ abstract class _$$JakisLifePlayerImplCopyWith<$Res>
   $Res call(
       {String id,
       int? score,
+      String? fcmToken,
       @JsonKey(defaultValue: false) bool? showOnePiece});
 }
 
@@ -104,6 +112,7 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? score = freezed,
+    Object? fcmToken = freezed,
     Object? showOnePiece = freezed,
   }) {
     return _then(_$JakisLifePlayerImpl(
@@ -115,6 +124,10 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int?,
+      fcmToken: freezed == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
+              as String?,
       showOnePiece: freezed == showOnePiece
           ? _value.showOnePiece
           : showOnePiece // ignore: cast_nullable_to_non_nullable
@@ -131,6 +144,7 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
   _$JakisLifePlayerImpl(
       {required this.id,
       this.score,
+      this.fcmToken,
       @JsonKey(defaultValue: false) this.showOnePiece});
 
   factory _$JakisLifePlayerImpl.fromJson(Map<String, dynamic> json) =>
@@ -141,12 +155,14 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
   @override
   final int? score;
   @override
+  final String? fcmToken;
+  @override
   @JsonKey(defaultValue: false)
   final bool? showOnePiece;
 
   @override
   String toString() {
-    return 'JakisLifePlayer(id: $id, score: $score, showOnePiece: $showOnePiece)';
+    return 'JakisLifePlayer(id: $id, score: $score, fcmToken: $fcmToken, showOnePiece: $showOnePiece)';
   }
 
   @override
@@ -156,13 +172,16 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
             other is _$JakisLifePlayerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.score, score) || other.score == score) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken) &&
             (identical(other.showOnePiece, showOnePiece) ||
                 other.showOnePiece == showOnePiece));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, score, showOnePiece);
+  int get hashCode =>
+      Object.hash(runtimeType, id, score, fcmToken, showOnePiece);
 
   @JsonKey(ignore: true)
   @override
@@ -183,6 +202,7 @@ abstract class _JakisLifePlayer implements JakisLifePlayer {
   factory _JakisLifePlayer(
           {required final String id,
           final int? score,
+          final String? fcmToken,
           @JsonKey(defaultValue: false) final bool? showOnePiece}) =
       _$JakisLifePlayerImpl;
 
@@ -193,6 +213,8 @@ abstract class _JakisLifePlayer implements JakisLifePlayer {
   String get id;
   @override
   int? get score;
+  @override
+  String? get fcmToken;
   @override
   @JsonKey(defaultValue: false)
   bool? get showOnePiece;

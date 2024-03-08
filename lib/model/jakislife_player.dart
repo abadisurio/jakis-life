@@ -13,6 +13,7 @@ class JakisLifePlayer with _$JakisLifePlayer {
   factory JakisLifePlayer({
     required String id,
     int? score,
+    String? fcmToken,
     @JsonKey(defaultValue: false) bool? showOnePiece,
   }) = _JakisLifePlayer;
 

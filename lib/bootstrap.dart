@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,10 +37,15 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform(Environment.development),
   );
+
+  // final host = Platform.isAndroid ? '127.0.0.1' : 'localhost';
+  // FirebaseFunctions.instanceFor(region: 'us-central1')
+  //     .useFunctionsEmulator(host, 5001);
+
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  if (!kIsWeb) {
+  if (!kIsWeb && !Platform.isIOS) {
     await setupFlutterNotifications();
   }
 
@@ -55,5 +61,5 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   showFlutterNotification(message);
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  print('Handling a background message ${message.messageId}');
+  // print('Handling a background message ${message.messageId}');
 }

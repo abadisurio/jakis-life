@@ -11,6 +11,7 @@ _$JakisLifePlayerImpl _$$JakisLifePlayerImplFromJson(
     _$JakisLifePlayerImpl(
       id: json['id'] as String,
       score: json['score'] as int?,
+      fcmToken: json['fcm_token'] as String?,
       showOnePiece: json['show_one_piece'] as bool? ?? false,
     );
 
@@ -27,6 +28,7 @@ Map<String, dynamic> _$$JakisLifePlayerImplToJson(
   }
 
   writeNotNull('score', instance.score);
+  writeNotNull('fcm_token', instance.fcmToken);
   writeNotNull('show_one_piece', instance.showOnePiece);
   return val;
 }

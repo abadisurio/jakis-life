@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math' show pi;
 
 import 'package:auto_route/auto_route.dart';
@@ -19,7 +20,9 @@ part 'card_front.dart';
 
 @RoutePage()
 class LobbyMultiplayerPage extends StatefulWidget {
-  const LobbyMultiplayerPage({super.key});
+  const LobbyMultiplayerPage({super.key, this.invitedId});
+
+  final String? invitedId;
 
   @override
   State<LobbyMultiplayerPage> createState() => _LobbyMultiplayerPageState();
@@ -29,6 +32,7 @@ class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
   // late bool _isUnlocked;
   @override
   void initState() {
+    log('invitedId wkwk ${widget.invitedId}');
     // final state = context.read<PlayerBloc>().state;
     // _isUnlocked = state.isMultiplayerUnlocked;
     // log('state ${state.currentUser}');
