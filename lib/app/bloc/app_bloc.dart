@@ -72,6 +72,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppInitialize event,
     Emitter<AppState> emit,
   ) {
+    // _startBacksound();
     _initializeAppLink();
     _setupNotification();
   }

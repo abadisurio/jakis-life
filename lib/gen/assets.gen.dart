@@ -67,7 +67,7 @@ class $AssetsSoundsGen {
   const $AssetsSoundsGen();
 
   /// File path: assets/sounds/jakis_theme.mp3
-  String get jakisTheme => 'assets/sounds/jakis_theme.mp3';
+  String get jakisTheme => 'sounds/jakis_theme.mp3';
 
   /// List of all assets
   List<String> get values => [jakisTheme];

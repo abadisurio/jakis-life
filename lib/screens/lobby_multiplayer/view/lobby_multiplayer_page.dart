@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/flutter_google_wallet_plugin.dart';
 import 'package:flutter_google_wallet/widget/add_to_google_wallet_button.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/flutter_notifications.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
 import 'package:jakislife/utils/text_theme.dart';
@@ -37,6 +39,20 @@ class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
     // _isUnlocked = state.isMultiplayerUnlocked;
     // log('state ${state.currentUser}');
     // log('_isUnlocked $_isUnlocked');
+    // showFlutterNotification();
+    flutterLocalNotificationsPlugin.show(
+      100101,
+      'notification.title',
+      'notification.body',
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+          icon: 'mipmap/ic_launcher',
+        ),
+      ),
+    );
     super.initState();
   }
 
