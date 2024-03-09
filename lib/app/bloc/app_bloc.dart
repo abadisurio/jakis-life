@@ -52,29 +52,29 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  Future<void> _setupNotification() async {
-    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    log('initialMessage $initialMessage');
+  // Future<void> _setupNotification() async {
+  //   final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+  //   log('initialMessage $initialMessage');
 
-    FirebaseMessaging.onMessage.listen(showFlutterNotification);
+  //   FirebaseMessaging.onMessage.listen(showFlutterNotification);
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log('message $message');
-      // Navigator.pushNamed(
-      //   context,
-      //   '/message',
-      //   arguments: MessageArguments(message, true),
-      // );
-    });
-  }
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //     log('message $message');
+  //     // Navigator.pushNamed(
+  //     //   context,
+  //     //   '/message',
+  //     //   arguments: MessageArguments(message, true),
+  //     // );
+  //   });
+  // }
 
   void _onAppInitialize(
     AppInitialize event,
     Emitter<AppState> emit,
   ) {
     // _startBacksound();
+    // _setupNotification();
     _initializeAppLink();
-    _setupNotification();
   }
 
   Future<void> _onAppUpdateAppLink(

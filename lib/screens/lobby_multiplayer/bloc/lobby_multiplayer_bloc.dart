@@ -22,6 +22,21 @@ class LobbyMultiplayerBloc
     log('wkwkwk');
     final currentUser = FirebaseAuth.instance.currentUser;
     try {
+      // await flutterLocalNotificationsPlugin.show(
+      //   3217362,
+      //   'notification.title',
+      //   'notification.body',
+      //   NotificationDetails(
+      //     android: AndroidNotificationDetails(
+      //       channel.id,
+      //       channel.name,
+      //       channelDescription: channel.description,
+      //       icon: 'mipmap/ic_launcher',
+      //     ),
+      //   ),
+      //   payload: 'testtt',
+      // );
+
       final response = await FirebaseFunctions.instance
           .httpsCallable('createMultiplayer')
           .call<Map<String, dynamic>>(

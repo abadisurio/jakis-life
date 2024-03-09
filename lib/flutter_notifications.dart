@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -70,6 +71,25 @@ Future<void> setupFlutterNotifications() async {
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
   );
 
+  /// Receive a notification when the app is in the background
+  /// and terminated (in Android)
+  FirebaseMessaging.onBackgroundMessage(
+    _firebaseMessagingOnBackgroundReceive,
+  );
+
+  /// Receive a notification when the app is in the foreground
+  FirebaseMessaging.onMessage.listen((remoteMessage) {
+    log('remoteMessage onMessage $remoteMessage');
+    showFlutterNotification(remoteMessage);
+  });
+
+  /// Open apps with remote message when app is opened
+  /// and running in the background but not terminated
+  FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) {
+    log('remoteMessage onMessageOpenedApp $remoteMessage');
+    showFlutterNotification(remoteMessage);
+  });
+
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
@@ -110,4 +130,42 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
       'notification action tapped with input: ${notificationResponse.input}',
     );
   }
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingOnBackgroundReceive(
+  RemoteMessage remoteMessage,
+) async {
+  log('remoteMessage onBackgroundReceive $remoteMessage');
+  showFlutterNotification(remoteMessage);
+  // final prefs = await SharedPreferences.getInstance();
+  // final env = Environment.values.elementAt(prefs.getInt('env') ?? 0);
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform(env),
+  // );
+  // final data = remoteMessage.data;
+  // final analyticsLabel = data['analytics_label'] as String?;
+  // if (remoteMessage.data['route_name'] != null) {
+  //   await prefs.setString(
+  //     SharedPreferenceKey.redirectRoute,
+  //     remoteMessage.data['route_name'].toString(),
+  //   );
+  // }
+
+  // // Prevent analytics called within dev env
+  // if (env != Environment.development) {
+  //   await Amplitude.getInstance().init(AnalyticsConstants.amplitudeKey);
+  //   try {
+  //     if (analyticsLabel != null) {
+  //       await AnalyticsUtil.trackEvent(
+  //         AnalyticsConstants.evNotificationBackgroundReceiveCustom,
+  //         {
+  //           AnalyticsConstants.epMessage: analyticsLabel,
+  //         },
+  //       );
+  //     }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 }

@@ -62,8 +62,8 @@ class _LobbyView extends StatelessWidget {
                           onPressed: () {
                             context.router.push(
                               LobbyMultiplayerRoute(
-                                invitedId: 'Y935X8whcEQ0Ns1KT3OwO37bPUq1',
-                              ),
+                                  // invitedId: 'Y935X8whcEQ0Ns1KT3OwO37bPUq1',
+                                  ),
                             );
                           },
                           child: Text(
