@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/flutter_google_wallet_plugin.dart';
 import 'package:flutter_google_wallet/widget/add_to_google_wallet_button.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:jakislife/bloc/player_bloc.dart';
-import 'package:jakislife/flutter_notifications.dart';
+
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
+import 'package:jakislife/screens/lobby_multiplayer/bloc/lobby_multiplayer_bloc.dart';
 import 'package:jakislife/utils/text_theme.dart';
 import 'package:jakislife/widgets/widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -21,46 +22,26 @@ part 'card_back.dart';
 part 'card_front.dart';
 
 @RoutePage()
-class LobbyMultiplayerPage extends StatefulWidget {
+class LobbyMultiplayerPage extends StatelessWidget {
   const LobbyMultiplayerPage({super.key, this.invitedId});
 
   final String? invitedId;
-
-  @override
-  State<LobbyMultiplayerPage> createState() => _LobbyMultiplayerPageState();
-}
-
-class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
-  // late bool _isUnlocked;
-  @override
-  void initState() {
-    log('invitedId wkwk ${widget.invitedId}');
-    // final state = context.read<PlayerBloc>().state;
-    // _isUnlocked = state.isMultiplayerUnlocked;
-    // log('state ${state.currentUser}');
-    // log('_isUnlocked $_isUnlocked');
-    // showFlutterNotification();
-    flutterLocalNotificationsPlugin.show(
-      100101,
-      'notification.title',
-      'notification.body',
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          icon: 'mipmap/ic_launcher',
-        ),
-      ),
-    );
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // if (_isUnlocked) {}
     // return const _LobbyMultiplayerLockedView();
-    return const _LobbyMultiplayerView();
+    return BlocProvider(
+      create: (_) {
+        log('invitedId $invitedId');
+        final bloc = LobbyMultiplayerBloc();
+        if (invitedId != null) {
+          bloc.add(StartMultiplayerSession(invitedId: invitedId!));
+        }
+        return bloc;
+      },
+      lazy: false,
+      child: const _LobbyMultiplayerView(),
+    );
   }
 }
 

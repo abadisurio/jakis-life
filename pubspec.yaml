@@ -15,6 +15,7 @@ dependencies:
   cloud_firestore: ^4.15.7
   cloud_functions: ^4.6.7
   equatable: ^2.0.5
+  firebase_analytics: ^10.8.9
   firebase_auth: ^4.17.7
   firebase_core: ^2.25.5
   firebase_messaging: ^14.7.18

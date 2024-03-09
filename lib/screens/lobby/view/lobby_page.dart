@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +25,6 @@ class _LobbyView extends StatelessWidget {
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
         final invitedId = state.appLinkQuery?['start-multiplayer'];
-        log('invitedId $invitedId');
         context.router.push(LobbyMultiplayerRoute(invitedId: invitedId));
       },
       listenWhen: (prev, curr) =>
@@ -63,7 +60,11 @@ class _LobbyView extends StatelessWidget {
                       children: [
                         KJButton(
                           onPressed: () {
-                            context.router.push(LobbyMultiplayerRoute());
+                            context.router.push(
+                              LobbyMultiplayerRoute(
+                                invitedId: 'Y935X8whcEQ0Ns1KT3OwO37bPUq1',
+                              ),
+                            );
                           },
                           child: Text(
                             'Multiplayer',

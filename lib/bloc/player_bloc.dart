@@ -121,6 +121,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         });
       } else {
         await createNewPlayer();
+        await writeToFirestore(jakisLifePlayer);
       }
     }
 

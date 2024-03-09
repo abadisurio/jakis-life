@@ -23,8 +23,6 @@ mixin _$JakisLifePlayer {
   String get id => throw _privateConstructorUsedError;
   int? get score => throw _privateConstructorUsedError;
   String? get fcmToken => throw _privateConstructorUsedError;
-  @JsonKey(defaultValue: false)
-  bool? get showOnePiece => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,11 +36,7 @@ abstract class $JakisLifePlayerCopyWith<$Res> {
           JakisLifePlayer value, $Res Function(JakisLifePlayer) then) =
       _$JakisLifePlayerCopyWithImpl<$Res, JakisLifePlayer>;
   @useResult
-  $Res call(
-      {String id,
-      int? score,
-      String? fcmToken,
-      @JsonKey(defaultValue: false) bool? showOnePiece});
+  $Res call({String id, int? score, String? fcmToken});
 }
 
 /// @nodoc
@@ -61,7 +55,6 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
     Object? id = null,
     Object? score = freezed,
     Object? fcmToken = freezed,
-    Object? showOnePiece = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -76,10 +69,6 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
           ? _value.fcmToken
           : fcmToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      showOnePiece: freezed == showOnePiece
-          ? _value.showOnePiece
-          : showOnePiece // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ) as $Val);
   }
 }
@@ -92,11 +81,7 @@ abstract class _$$JakisLifePlayerImplCopyWith<$Res>
       __$$JakisLifePlayerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      int? score,
-      String? fcmToken,
-      @JsonKey(defaultValue: false) bool? showOnePiece});
+  $Res call({String id, int? score, String? fcmToken});
 }
 
 /// @nodoc
@@ -113,7 +98,6 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
     Object? id = null,
     Object? score = freezed,
     Object? fcmToken = freezed,
-    Object? showOnePiece = freezed,
   }) {
     return _then(_$JakisLifePlayerImpl(
       id: null == id
@@ -128,10 +112,6 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
           ? _value.fcmToken
           : fcmToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      showOnePiece: freezed == showOnePiece
-          ? _value.showOnePiece
-          : showOnePiece // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ));
   }
 }
@@ -139,13 +119,9 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(
-    explicitToJson: true, includeIfNull: false, fieldRename: FieldRename.snake)
+    explicitToJson: true, includeIfNull: false, fieldRename: FieldRename.none)
 class _$JakisLifePlayerImpl implements _JakisLifePlayer {
-  _$JakisLifePlayerImpl(
-      {required this.id,
-      this.score,
-      this.fcmToken,
-      @JsonKey(defaultValue: false) this.showOnePiece});
+  _$JakisLifePlayerImpl({required this.id, this.score, this.fcmToken});
 
   factory _$JakisLifePlayerImpl.fromJson(Map<String, dynamic> json) =>
       _$$JakisLifePlayerImplFromJson(json);
@@ -156,13 +132,10 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
   final int? score;
   @override
   final String? fcmToken;
-  @override
-  @JsonKey(defaultValue: false)
-  final bool? showOnePiece;
 
   @override
   String toString() {
-    return 'JakisLifePlayer(id: $id, score: $score, fcmToken: $fcmToken, showOnePiece: $showOnePiece)';
+    return 'JakisLifePlayer(id: $id, score: $score, fcmToken: $fcmToken)';
   }
 
   @override
@@ -173,15 +146,12 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.score, score) || other.score == score) &&
             (identical(other.fcmToken, fcmToken) ||
-                other.fcmToken == fcmToken) &&
-            (identical(other.showOnePiece, showOnePiece) ||
-                other.showOnePiece == showOnePiece));
+                other.fcmToken == fcmToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, score, fcmToken, showOnePiece);
+  int get hashCode => Object.hash(runtimeType, id, score, fcmToken);
 
   @JsonKey(ignore: true)
   @override
@@ -200,11 +170,9 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
 
 abstract class _JakisLifePlayer implements JakisLifePlayer {
   factory _JakisLifePlayer(
-          {required final String id,
-          final int? score,
-          final String? fcmToken,
-          @JsonKey(defaultValue: false) final bool? showOnePiece}) =
-      _$JakisLifePlayerImpl;
+      {required final String id,
+      final int? score,
+      final String? fcmToken}) = _$JakisLifePlayerImpl;
 
   factory _JakisLifePlayer.fromJson(Map<String, dynamic> json) =
       _$JakisLifePlayerImpl.fromJson;
@@ -215,9 +183,6 @@ abstract class _JakisLifePlayer implements JakisLifePlayer {
   int? get score;
   @override
   String? get fcmToken;
-  @override
-  @JsonKey(defaultValue: false)
-  bool? get showOnePiece;
   @override
   @JsonKey(ignore: true)
   _$$JakisLifePlayerImplCopyWith<_$JakisLifePlayerImpl> get copyWith =>
