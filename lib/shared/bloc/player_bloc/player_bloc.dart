@@ -131,43 +131,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       await writeToFirestore(jakisLifePlayer);
     }
 
-    // if (stringJakisLifePlayer == null) {
-    //   final snapshot = await doc.get();
-    //   if (snapshot.exists) {
-    //     jakisLifePlayer = JakisLifePlayer.fromJson({
-    //       'id': currentUser?.uid,
-    //       ...snapshot.data() ?? {},
-    //     });
-    //   } else {
-    //     const playerId = 'jakislife';
-    //     final fcmToken = await FirebaseMessaging.instance.getToken();
-    //     // if (stringJakisLifePlayer == null) return null;
-    //     jakisLifePlayer = JakisLifePlayer(
-    //       id: playerId,
-    //       score: 0,
-    //       fcmToken: fcmToken,
-    //     );
-    //     unawaited(
-    //       Future(() async {
-    //         await doc.set(
-    //           jakisLifePlayer.toJson()..remove('id'),
-    //           SetOptions(merge: true),
-    //         );
-
-    //         await _storage.write(
-    //           key: _keyStoredUserJakisLife,
-    //           value: json.encode(jakisLifePlayer.toJson()),
-    //           aOptions: _secureStorageAndroidOptions,
-    //         );
-    //       }),
-    //     );
-    //   }
-    // } else {
-    //   jakisLifePlayer = JakisLifePlayer.fromJson(
-    //     json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
-    //   );
-    // }
-
     log('jakisLifePlayer $jakisLifePlayer');
     return jakisLifePlayer;
   }

@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/flutter_google_wallet_plugin.dart';
 import 'package:flutter_google_wallet/widget/add_to_google_wallet_button.dart';
 
-import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
@@ -68,6 +68,19 @@ class _LobbyMultiplayerView extends StatelessWidget {
               },
               child: Text(
                 'Start Grinding!',
+                style: TextStyleTheme(context).titleSmall?.copyWith(
+                      color: Colors.black,
+                    ),
+              ),
+            ),
+          ),
+          Center(
+            child: KJButton(
+              onPressed: () {
+                context.read<LobbyMultiplayerBloc>().add(const StandbyGame());
+              },
+              child: Text(
+                'Standby',
                 style: TextStyleTheme(context).titleSmall?.copyWith(
                       color: Colors.black,
                     ),

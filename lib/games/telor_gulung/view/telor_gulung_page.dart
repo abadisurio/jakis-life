@@ -4,7 +4,7 @@ import 'dart:math' as math;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/games/telor_gulung/telor_gulung.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';

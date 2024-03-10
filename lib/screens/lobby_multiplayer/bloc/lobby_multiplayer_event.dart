@@ -11,3 +11,33 @@ class StartMultiplayerSession extends LobbyMultiplayerEvent {
 
   final String invitedId;
 }
+
+class StandbyGame extends LobbyMultiplayerEvent {
+  const StandbyGame();
+}
+
+class UpdateScore extends LobbyMultiplayerEvent {
+  const UpdateScore({required this.score});
+
+  final int score;
+}
+
+class UpdateState extends LobbyMultiplayerEvent {
+  const UpdateState({required this.playersState});
+
+  final String playersState;
+}
+
+class UpdatePlayerData extends LobbyMultiplayerEvent {
+  const UpdatePlayerData({
+    this.playersScore,
+    this.playersState,
+  });
+
+  final int? playersScore;
+  final String? playersState;
+}
+
+class StartGame extends LobbyMultiplayerEvent {
+  const StartGame();
+}

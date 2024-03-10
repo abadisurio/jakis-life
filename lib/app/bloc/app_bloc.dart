@@ -5,8 +5,6 @@ import 'package:app_links/app_links.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:jakislife/flutter_notifications.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';

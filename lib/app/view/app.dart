@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jakislife/app/app.dart';
-import 'package:jakislife/bloc/player_bloc.dart';
+import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/l10n/l10n.dart';
 import 'package:jakislife/router/jakislife_route.dart';
 import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
