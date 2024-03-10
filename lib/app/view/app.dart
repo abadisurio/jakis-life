@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jakislife/app/app.dart';
+import 'package:jakislife/shared/bloc/multiplayer_bloc/multiplayer_bloc.dart';
 import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/l10n/l10n.dart';
 import 'package:jakislife/router/jakislife_route.dart';
@@ -39,6 +40,9 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (_) => PlayerBloc()..add(const PlayerInitialize()),
           lazy: false,
+        ),
+        BlocProvider(
+          create: (_) => MultiplayerBloc(),
         ),
       ],
       child: MaterialApp.router(

@@ -8,11 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/flutter_google_wallet_plugin.dart';
 import 'package:flutter_google_wallet/widget/add_to_google_wallet_button.dart';
 
-import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
-
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
-import 'package:jakislife/screens/lobby_multiplayer/bloc/lobby_multiplayer_bloc.dart';
+import 'package:jakislife/shared/bloc/multiplayer_bloc/multiplayer_bloc.dart';
+import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/utils/text_theme.dart';
 import 'package:jakislife/widgets/widgets.dart';
 import 'package:uuid/uuid.dart';
@@ -33,7 +32,7 @@ class LobbyMultiplayerPage extends StatelessWidget {
     return BlocProvider(
       create: (_) {
         log('invitedId $invitedId');
-        final bloc = LobbyMultiplayerBloc();
+        final bloc = context.read<MultiplayerBloc>();
         if (invitedId != null) {
           bloc.add(StartMultiplayerSession(invitedId: invitedId!));
         }
@@ -77,7 +76,7 @@ class _LobbyMultiplayerView extends StatelessWidget {
           Center(
             child: KJButton(
               onPressed: () {
-                context.read<LobbyMultiplayerBloc>().add(const StandbyGame());
+                context.read<MultiplayerBloc>().add(const StandbyGame());
               },
               child: Text(
                 'Standby',
