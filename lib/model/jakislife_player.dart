@@ -16,6 +16,7 @@ class JakisLifePlayer with _$JakisLifePlayer {
     String? displayName,
     String? fcmToken,
     String? photoUrl,
+    String? playerState,
     int? badgeSeries,
   }) = _JakisLifePlayer;
 

@@ -5,29 +5,32 @@ class MultiplayerState {
     this.challengeId,
     this.opponentIds,
     this.playersState,
-    this.opponentDisplayName,
-    this.opponentPhotoUrl,
+    this.players,
   });
 
   final String? challengeId;
   final String? opponentIds;
   final String? playersState;
-  final String? opponentDisplayName;
-  final String? opponentPhotoUrl;
+
+  final List<JakisLifePlayer>? players;
+
+  JakisLifePlayer? get self => players
+      ?.where((player) => player.id == FirebaseAuth.instance.currentUser?.uid)
+      .firstOrNull;
+  List<JakisLifePlayer>? get opponents =>
+      players?.where((player) => player.id != self?.id).toList();
 
   MultiplayerState copyWith({
     String? challengeId,
     String? opponentIds,
     String? playersState,
-    String? opponentDisplayName,
-    String? opponentPhotoUrl,
+    List<JakisLifePlayer>? players,
   }) {
     return MultiplayerState(
       challengeId: challengeId ?? this.challengeId,
       opponentIds: opponentIds ?? this.opponentIds,
       playersState: playersState ?? this.playersState,
-      opponentDisplayName: opponentDisplayName ?? this.opponentPhotoUrl,
-      opponentPhotoUrl: opponentPhotoUrl ?? this.opponentPhotoUrl,
+      players: players ?? this.players,
     );
   }
 }

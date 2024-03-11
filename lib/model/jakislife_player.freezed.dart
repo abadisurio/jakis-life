@@ -25,6 +25,7 @@ mixin _$JakisLifePlayer {
   String? get displayName => throw _privateConstructorUsedError;
   String? get fcmToken => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
+  String? get playerState => throw _privateConstructorUsedError;
   int? get badgeSeries => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $JakisLifePlayerCopyWith<$Res> {
       String? displayName,
       String? fcmToken,
       String? photoUrl,
+      String? playerState,
       int? badgeSeries});
 }
 
@@ -66,6 +68,7 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
     Object? displayName = freezed,
     Object? fcmToken = freezed,
     Object? photoUrl = freezed,
+    Object? playerState = freezed,
     Object? badgeSeries = freezed,
   }) {
     return _then(_value.copyWith(
@@ -89,6 +92,10 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      playerState: freezed == playerState
+          ? _value.playerState
+          : playerState // ignore: cast_nullable_to_non_nullable
+              as String?,
       badgeSeries: freezed == badgeSeries
           ? _value.badgeSeries
           : badgeSeries // ignore: cast_nullable_to_non_nullable
@@ -111,6 +118,7 @@ abstract class _$$JakisLifePlayerImplCopyWith<$Res>
       String? displayName,
       String? fcmToken,
       String? photoUrl,
+      String? playerState,
       int? badgeSeries});
 }
 
@@ -130,6 +138,7 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
     Object? displayName = freezed,
     Object? fcmToken = freezed,
     Object? photoUrl = freezed,
+    Object? playerState = freezed,
     Object? badgeSeries = freezed,
   }) {
     return _then(_$JakisLifePlayerImpl(
@@ -153,6 +162,10 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      playerState: freezed == playerState
+          ? _value.playerState
+          : playerState // ignore: cast_nullable_to_non_nullable
+              as String?,
       badgeSeries: freezed == badgeSeries
           ? _value.badgeSeries
           : badgeSeries // ignore: cast_nullable_to_non_nullable
@@ -172,6 +185,7 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
       this.displayName,
       this.fcmToken,
       this.photoUrl,
+      this.playerState,
       this.badgeSeries});
 
   factory _$JakisLifePlayerImpl.fromJson(Map<String, dynamic> json) =>
@@ -188,11 +202,13 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
   @override
   final String? photoUrl;
   @override
+  final String? playerState;
+  @override
   final int? badgeSeries;
 
   @override
   String toString() {
-    return 'JakisLifePlayer(id: $id, highScore: $highScore, displayName: $displayName, fcmToken: $fcmToken, photoUrl: $photoUrl, badgeSeries: $badgeSeries)';
+    return 'JakisLifePlayer(id: $id, highScore: $highScore, displayName: $displayName, fcmToken: $fcmToken, photoUrl: $photoUrl, playerState: $playerState, badgeSeries: $badgeSeries)';
   }
 
   @override
@@ -209,14 +225,16 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
                 other.fcmToken == fcmToken) &&
             (identical(other.photoUrl, photoUrl) ||
                 other.photoUrl == photoUrl) &&
+            (identical(other.playerState, playerState) ||
+                other.playerState == playerState) &&
             (identical(other.badgeSeries, badgeSeries) ||
                 other.badgeSeries == badgeSeries));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, highScore, displayName, fcmToken, photoUrl, badgeSeries);
+  int get hashCode => Object.hash(runtimeType, id, highScore, displayName,
+      fcmToken, photoUrl, playerState, badgeSeries);
 
   @JsonKey(ignore: true)
   @override
@@ -240,6 +258,7 @@ abstract class _JakisLifePlayer implements JakisLifePlayer {
       final String? displayName,
       final String? fcmToken,
       final String? photoUrl,
+      final String? playerState,
       final int? badgeSeries}) = _$JakisLifePlayerImpl;
 
   factory _JakisLifePlayer.fromJson(Map<String, dynamic> json) =
@@ -255,6 +274,8 @@ abstract class _JakisLifePlayer implements JakisLifePlayer {
   String? get fcmToken;
   @override
   String? get photoUrl;
+  @override
+  String? get playerState;
   @override
   int? get badgeSeries;
   @override

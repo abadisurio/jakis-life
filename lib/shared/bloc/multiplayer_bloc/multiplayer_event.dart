@@ -14,6 +14,12 @@ class StartMultiplayerSession extends MultiplayerEvent {
   final String? challengeId;
 }
 
+class UpdatePlayers extends MultiplayerEvent {
+  const UpdatePlayers({required this.players});
+
+  final List<JakisLifePlayer> players;
+}
+
 class StandbyGame extends MultiplayerEvent {
   const StandbyGame();
 }

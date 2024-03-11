@@ -20,6 +20,10 @@ class LobbyPage extends StatelessWidget {
 class _LobbyView extends StatelessWidget {
   const _LobbyView();
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return LifeCountPage();
+  // }
   @override
   Widget build(BuildContext context) {
     return BlocListener<AppBloc, AppState>(

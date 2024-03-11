@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math' show pi;
 
 import 'package:auto_route/auto_route.dart';
@@ -64,16 +65,6 @@ class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
           children: [
             BlocBuilder<PlayerBloc, PlayerState>(
               builder: (context, state) {
-                // late Widget page;
-                // if (state.isMultiplayerUnlocked ||
-                //     state.authState == AuthState.signedIn) {
-                //   if (widget.invitedId != null || widget.challengeId != null) {
-                //     page = const _LobbyMultiplayerStandby();
-                //   }
-                //   // if()
-                //   page = const _LobbyMultiplayerView();
-                // }
-                // page = const _LobbyMultiplayerLockedView();
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 700),
                   switchInCurve: Curves.easeOutCirc,
@@ -167,7 +158,7 @@ class _LobbyMultiplayerLockedView extends StatelessWidget {
                   const SizedBox(height: 32),
                   KJButton(
                     onPressed: () {
-                      context.router.push(const GameRandomizerRoute());
+                      context.router.replace(const GameRandomizerRoute());
                     },
                     child: Text(
                       'Start Grinding!',
@@ -191,10 +182,21 @@ class _LobbyMultiplayerStandby extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MultiplayerBloc, MultiplayerState>(
+    return BlocConsumer<MultiplayerBloc, MultiplayerState>(
+      listener: (context, state) {
+        final readyToStart = state.players
+                ?.where((player) => player.playerState == PlayersState.standby)
+                .length ==
+            state.players?.length;
+        log('readyToStart $readyToStart');
+        if (readyToStart) {
+          context.router.replace(const GameRandomizerRoute());
+        }
+      },
       builder: (context, state) {
+        log('opponents ${state.opponents}');
         final text =
-            'Get ready to play ${state.opponentDisplayName == null ? '' : 'with ${state.opponentDisplayName}'}';
+            'Get ready to play ${state.opponents?.first.displayName == null ? '' : 'with ${state.opponents?.first.displayName}'}';
         return ConstrainedBox(
           constraints: BoxConstraints.tight(
             Size(
@@ -213,7 +215,8 @@ class _LobbyMultiplayerStandby extends StatelessWidget {
                 CircleAvatar(
                   radius: 96,
                   foregroundImage: CachedNetworkImageProvider(
-                    state.opponentPhotoUrl ?? 'https://picsum.photos/200',
+                    state.opponents?.first.photoUrl ??
+                        'https://picsum.photos/200',
                   ),
                 ),
                 const SizedBox(height: 48),
@@ -223,17 +226,20 @@ class _LobbyMultiplayerStandby extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
-                KJButton(
-                  onPressed: () {
-                    context.read<MultiplayerBloc>().add(const StandbyGame());
-                  },
-                  child: Text(
-                    'Start Game',
-                    style: TextStyleTheme(context).titleSmall?.copyWith(
-                          color: Colors.black,
-                        ),
+                if (state.self?.playerState == PlayersState.standby)
+                  const CircularProgressIndicator(),
+                if (state.self?.playerState == PlayersState.waiting)
+                  KJButton(
+                    onPressed: () {
+                      context.read<MultiplayerBloc>().add(const StandbyGame());
+                    },
+                    child: Text(
+                      'Start Game',
+                      style: TextStyleTheme(context).titleSmall?.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
                   ),
-                ),
               ],
             ),
           ),
