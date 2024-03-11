@@ -50,17 +50,8 @@ class $AssetsRiveGen {
   RiveGenImage get monasTest =>
       const RiveGenImage('assets/rive/monas_test.riv');
 
-  /// File path: assets/rive/telor_gulung.riv
-  RiveGenImage get telorGulung =>
-      const RiveGenImage('assets/rive/telor_gulung.riv');
-
-  /// File path: assets/rive/telor_gulung_success.riv
-  RiveGenImage get telorGulungSuccess =>
-      const RiveGenImage('assets/rive/telor_gulung_success.riv');
-
   /// List of all assets
-  List<RiveGenImage> get values =>
-      [jaki, monasTest, telorGulung, telorGulungSuccess];
+  List<RiveGenImage> get values => [jaki, monasTest];
 }
 
 class $AssetsSoundsGen {

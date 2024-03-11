@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +30,7 @@ class _PlayerCardState extends State<PlayerCard> {
                 prev.authState != curr.authState ||
                 prev.highScore != curr.highScore,
             builder: (context, state) {
-              log('authState ${state.authState}');
+              // log('authState ${state.authState}');
               if (state.authState == AuthState.loading) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),

@@ -49,7 +49,7 @@ class _CommuterRushView extends StatelessWidget {
             children: [
               GameProgress(
                 onTimeOut: () {
-                  context.router.replace(CutSceneRoute(isWin: false));
+                  // context.router.replace(CutSceneRoute(isWin: false));
                 },
                 duration: const Duration(seconds: 10),
               ),

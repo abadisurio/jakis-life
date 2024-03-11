@@ -32,7 +32,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final initialUri = await _appLinks.getInitialAppLink();
     log('uri1 ${initialUri?.queryParameters['start-multiplayer']}');
     add(AppLinkUpdateQuery(query: initialUri?.queryParameters));
-    // _appLinks.
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
       add(const AppLinkUpdateQuery(query: {}));
       log('uri2 ${uri.queryParameters['start-multiplayer']}');
@@ -50,28 +49,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  // Future<void> _setupNotification() async {
-  //   final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-  //   log('initialMessage $initialMessage');
-
-  //   FirebaseMessaging.onMessage.listen(showFlutterNotification);
-
-  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-  //     log('message $message');
-  //     // Navigator.pushNamed(
-  //     //   context,
-  //     //   '/message',
-  //     //   arguments: MessageArguments(message, true),
-  //     // );
-  //   });
-  // }
-
   void _onAppInitialize(
     AppInitialize event,
     Emitter<AppState> emit,
   ) {
-    // _startBacksound();
-    // _setupNotification();
     _initializeAppLink();
   }
 

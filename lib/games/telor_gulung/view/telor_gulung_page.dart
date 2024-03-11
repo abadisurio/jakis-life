@@ -77,7 +77,7 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                   },
                   duration: Duration(milliseconds: 10000 - _level * 20),
                 ),
-                Assets.rive.telorGulung.rive(
+                Assets.rive.jaki.rive(
                   onInit: _onRiveInit,
                 ),
                 const Positioned(top: 50, right: 25, child: PauseButton()),

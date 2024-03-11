@@ -1,6 +1,5 @@
 part of 'battery_parry_bloc.dart';
 
-@freezed
 class BatteryParryState {
   const BatteryParryState({
     this.isWin,

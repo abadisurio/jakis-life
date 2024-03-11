@@ -15,7 +15,7 @@ class AppState extends Equatable {
   }) =>
       AppState(
         isBacksoundPaused: isBacksoundPaused ?? this.isBacksoundPaused,
-        appLinkQuery: appLinkQuery ?? this.appLinkQuery,
+        appLinkQuery: appLinkQuery ?? {},
       );
 
   @override
