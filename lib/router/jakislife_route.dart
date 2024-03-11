@@ -11,10 +11,12 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
+          path: '/',
           page: LobbyRoute.page,
           initial: true,
         ),
         AutoRoute(
+          path: '/lobby-multiplayer/:challengeId',
           page: LobbyMultiplayerRoute.page,
           // initial: true,
         ),

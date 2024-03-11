@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_google_wallet/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jakislife/app/app.dart';
+import 'package:jakislife/flutter_notifications.dart';
 import 'package:jakislife/shared/bloc/multiplayer_bloc/multiplayer_bloc.dart';
 import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/l10n/l10n.dart';
@@ -12,8 +16,43 @@ import 'package:jakislife/utils/text_theme.dart';
 
 final _jakisLifeRouter = AppRouter();
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    /// Receive a notification when the app is in the foreground
+    // ignore: unnecessary_lambdas
+    FirebaseMessaging.onMessage.listen((remoteMessage) {
+      log('remoteMessage onMessage $remoteMessage');
+      showFlutterNotification(remoteMessage);
+    });
+
+    /// Open apps with remote message when app is opened
+    /// and running in the background but not terminated
+    FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) async {
+      final payload = remoteMessage.data['routeName'] as String?;
+      log('payload $payload');
+      if (payload != null) {
+        await _jakisLifeRouter.pushNamed(payload);
+      }
+      // showFlutterNotification(remoteMessage);
+    });
+
+    selectNotificationStream.stream.listen((String? payload) async {
+      log('payload $payload');
+      if (payload != null) {
+        await _jakisLifeRouter.pushNamed(payload);
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,5 +127,11 @@ class App extends StatelessWidget {
         // home: const EventPage(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    selectNotificationStream.close();
+    super.dispose();
   }
 }

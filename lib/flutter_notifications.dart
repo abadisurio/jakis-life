@@ -77,19 +77,6 @@ Future<void> setupFlutterNotifications() async {
     _firebaseMessagingOnBackgroundReceive,
   );
 
-  /// Receive a notification when the app is in the foreground
-  FirebaseMessaging.onMessage.listen((remoteMessage) {
-    log('remoteMessage onMessage $remoteMessage');
-    showFlutterNotification(remoteMessage);
-  });
-
-  /// Open apps with remote message when app is opened
-  /// and running in the background but not terminated
-  FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) {
-    log('remoteMessage onMessageOpenedApp $remoteMessage');
-    showFlutterNotification(remoteMessage);
-  });
-
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
@@ -114,6 +101,7 @@ void showFlutterNotification(RemoteMessage message) {
           icon: 'mipmap/ic_launcher',
         ),
       ),
+      payload: message.data['routeName'] as String?,
     );
   }
 }

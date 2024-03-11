@@ -66,8 +66,12 @@ abstract class $AppRouter extends _i10.RootStackRouter {
       );
     },
     LobbyMultiplayerRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<LobbyMultiplayerRouteArgs>(
-          orElse: () => const LobbyMultiplayerRouteArgs());
+          orElse: () => LobbyMultiplayerRouteArgs(
+                invitedId: pathParams.optString('invitedId'),
+                challengeId: pathParams.optString('challengeId'),
+              ));
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.LobbyMultiplayerPage(
@@ -232,6 +236,10 @@ class LobbyMultiplayerRoute
             invitedId: invitedId,
             challengeId: challengeId,
           ),
+          rawPathParams: {
+            'invitedId': invitedId,
+            'challengeId': challengeId,
+          },
           initialChildren: children,
         );
 

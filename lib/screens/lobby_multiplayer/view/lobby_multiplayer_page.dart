@@ -23,8 +23,8 @@ part 'card_front.dart';
 class LobbyMultiplayerPage extends StatefulWidget {
   const LobbyMultiplayerPage({
     super.key,
-    this.invitedId,
-    this.challengeId,
+    @PathParam('invitedId') this.invitedId,
+    @PathParam('challengeId') this.challengeId,
   });
 
   final String? invitedId;
