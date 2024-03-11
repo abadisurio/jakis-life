@@ -40,6 +40,8 @@ class _CommuterRushView extends StatelessWidget {
           );
         }
       },
+      listenWhen: (prev, curr) =>
+          curr.leftOffset >= 70 && curr.rightOffset >= 70,
       child: Material(
         color: Colors.blue.shade100,
         child: SafeArea(

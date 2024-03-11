@@ -66,9 +66,8 @@ class _BatteryState extends State<_Battery> with TickerProviderStateMixin {
 
   void _failGame() {
     _gravityController.stop();
-    context.router.replace(
-      CutSceneRoute(isWin: false),
-    );
+    context.read<BatteryParryBloc>().add(const EndGame(isWin: false));
+    dispose();
   }
 
   void _flickBattery(DragUpdateDetails detail) {

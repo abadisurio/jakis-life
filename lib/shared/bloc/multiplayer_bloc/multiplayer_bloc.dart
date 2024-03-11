@@ -17,6 +17,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
     on<UpdateScore>(_onUpdateScore);
     on<UpdateState>(_onUpdateState);
     on<UpdatePlayerData>(_onUpdatePlayerData);
+    on<ResetMultiplayer>(_onResetMultiplayer);
   }
 
   DocumentReference? _challengeRef;
@@ -90,8 +91,6 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
       ),
     );
 
-    log('players ${state.players}');
-
     _challengeRef?.snapshots().listen((snapshot) {
       if (snapshot.exists) {
         final players = <JakisLifePlayer>[];
@@ -117,37 +116,36 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
             );
           }
         }
-        log('players $players');
         add(UpdatePlayers(players: players));
       }
     });
   }
 
-  Future<void> _onUpdatePlayers(
+  void _onUpdatePlayers(
     UpdatePlayers event,
     Emitter<MultiplayerState> emit,
-  ) async {
+  ) {
     emit(state.copyWith(players: event.players));
   }
 
-  Future<void> _onStandbyGame(
+  void _onStandbyGame(
     StandbyGame event,
     Emitter<MultiplayerState> emit,
-  ) async {
+  ) {
     add(const UpdateState(playersState: PlayersState.standby));
   }
 
-  Future<void> _onUpdateState(
+  void _onUpdateState(
     UpdateState event,
     Emitter<MultiplayerState> emit,
-  ) async {
+  ) {
     add(UpdatePlayerData(playersState: event.playersState));
   }
 
-  Future<void> _onUpdateScore(
+  void _onUpdateScore(
     UpdateScore event,
     Emitter<MultiplayerState> emit,
-  ) async {
+  ) {
     add(UpdatePlayerData(playersScore: event.score));
   }
 
@@ -194,5 +192,12 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
       );
     }
     //
+  }
+
+  void _onResetMultiplayer(
+    ResetMultiplayer event,
+    Emitter<MultiplayerState> emit,
+  ) {
+    emit(const MultiplayerState());
   }
 }

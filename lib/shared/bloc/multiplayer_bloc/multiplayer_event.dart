@@ -24,6 +24,10 @@ class StandbyGame extends MultiplayerEvent {
   const StandbyGame();
 }
 
+class ResetMultiplayer extends MultiplayerEvent {
+  const ResetMultiplayer();
+}
+
 class UpdateScore extends MultiplayerEvent {
   const UpdateScore({required this.score});
 

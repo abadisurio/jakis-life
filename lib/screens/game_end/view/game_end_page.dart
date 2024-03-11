@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
+import 'package:jakislife/shared/bloc/multiplayer_bloc/multiplayer_bloc.dart';
 import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/utils/text_theme.dart';
 import 'package:jakislife/widgets/widgets.dart';
@@ -42,6 +43,7 @@ class _GameEndView extends StatelessWidget {
             onPressed: () {
               context.router
                   .popUntil((route) => route.data?.name == LobbyRoute.name);
+              context.read<MultiplayerBloc>().add(const ResetMultiplayer());
             },
             child: Text(
               'Back to Lobby',

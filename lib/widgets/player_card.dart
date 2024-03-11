@@ -28,7 +28,9 @@ class _PlayerCardState extends State<PlayerCard> {
           duration: const Duration(milliseconds: 700),
           curve: Curves.easeOutCirc,
           child: BlocBuilder<PlayerBloc, PlayerState>(
-            buildWhen: (prev, curr) => prev.authState != curr.authState,
+            buildWhen: (prev, curr) =>
+                prev.authState != curr.authState ||
+                prev.highScore != curr.highScore,
             builder: (context, state) {
               log('authState ${state.authState}');
               if (state.authState == AuthState.loading) {

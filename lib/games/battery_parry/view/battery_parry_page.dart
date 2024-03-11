@@ -5,6 +5,7 @@ import 'dart:math' hide log;
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jakislife/games/battery_parry/battery_parry.dart';
 import 'package:jakislife/shared/bloc/player_bloc/player_bloc.dart';
 import 'package:jakislife/gen/assets.gen.dart';
 import 'package:jakislife/router/router.dart';
@@ -20,7 +21,10 @@ class BatteryParry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _BatteryParryView();
+    return BlocProvider(
+      create: (_) => BatteryParryBloc(),
+      child: const _BatteryParryView(),
+    );
   }
 }
 
@@ -62,11 +66,7 @@ class _BatteryParryViewState extends State<_BatteryParryView> {
   void _flickBattery() {
     _flickCount += 1;
     if (_flickCount == _batteriesCount) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        context.router.replace(
-          CutSceneRoute(isWin: true),
-        );
-      });
+      context.read<BatteryParryBloc>().add(const EndGame(isWin: true));
     }
   }
 
@@ -80,15 +80,29 @@ class _BatteryParryViewState extends State<_BatteryParryView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PauseBloc, PauseState>(
-      listener: (context, state) {
-        if (state.isPaused) {
-          _streamSubscription.pause();
-        } else {
-          _streamSubscription.resume();
-        }
-      },
-      listenWhen: (prev, curr) => prev.isPaused != curr.isPaused,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PauseBloc, PauseState>(
+          listener: (context, state) {
+            if (state.isPaused) {
+              _streamSubscription.pause();
+            } else {
+              _streamSubscription.resume();
+            }
+          },
+          listenWhen: (prev, curr) => prev.isPaused != curr.isPaused,
+        ),
+        BlocListener<BatteryParryBloc, BatteryParryState>(
+          listener: (context, state) {
+            Future.delayed(const Duration(milliseconds: 500), () {
+              context.router.replace(
+                CutSceneRoute(isWin: state.isWin ?? false),
+              );
+            });
+          },
+          listenWhen: (prev, curr) => curr.isWin != null,
+        ),
+      ],
       child: Material(
         color: Colors.blue.shade100,
         child: SafeArea(
