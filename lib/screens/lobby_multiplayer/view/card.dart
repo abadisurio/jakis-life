@@ -14,7 +14,6 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
   double _swipeOffset = 0;
   bool _isSwiping = false;
   bool _isShowBack = false;
-  int badgeSeries = 0;
 
   late final _animationController = AnimationController(
     vsync: this,
@@ -37,6 +36,7 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    final badgeSeries = context.read<PlayerBloc>().state.badgeSeries ?? 0;
     setState(() {
       badge = badges[badgeSeries];
       cardBack = _CardBack(

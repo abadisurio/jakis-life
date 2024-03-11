@@ -78,12 +78,17 @@ class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
                   duration: const Duration(milliseconds: 700),
                   switchInCurve: Curves.easeOutCirc,
                   switchOutCurve: Curves.easeOutCirc,
-                  child: state.isMultiplayerUnlocked ||
-                          state.authState == AuthState.signedIn
-                      ? widget.invitedId != null || widget.challengeId != null
-                          ? const _LobbyMultiplayerStandby()
-                          : const _LobbyMultiplayerView()
-                      : const _LobbyMultiplayerLockedView(),
+                  child: () {
+                    if (state.authState == AuthState.signedIn) {
+                      if (widget.invitedId != null ||
+                          widget.challengeId != null) {
+                        return const _LobbyMultiplayerStandby();
+                      } else if (state.isMultiplayerUnlocked) {
+                        return const _LobbyMultiplayerView();
+                      }
+                    }
+                    return const _LobbyMultiplayerLockedView();
+                  }(),
                 );
               },
             ),

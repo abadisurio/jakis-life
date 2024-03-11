@@ -165,12 +165,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     if ((player?.highScore ?? 0) >= PlayerState.minimumHighScore) {
       emit(state.copyWith(isMultiplayerUnlocked: true));
     }
+    log('player?.badgeSeries ${player?.badgeSeries}');
     emit(
       state.copyWith(
         highScore: player?.highScore,
         authState: FirebaseAuth.instance.currentUser != null
             ? AuthState.signedIn
             : AuthState.signedOut,
+        badgeSeries: player?.badgeSeries,
       ),
     );
   }
@@ -265,6 +267,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       credential = _currentCredential!;
     }
     await FirebaseAuth.instance.signInWithCredential(credential);
+
+    await _storage.delete(
+      key: _keyStoredUserJakisLife,
+      aOptions: _secureStorageAndroidOptions,
+    );
+    await _updateJakisLifePlayer();
+
     emit(state.copyWith(authState: AuthState.signedIn));
   }
 
@@ -288,6 +297,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     emit(state.copyWith(authState: AuthState.loading));
     await _googleSignIn.disconnect();
     await FirebaseAuth.instance.signOut();
+
+    await _storage.delete(
+      key: _keyStoredUserJakisLife,
+      aOptions: _secureStorageAndroidOptions,
+    );
 
     await _storage.delete(
       key: _keyStoredUserGoogle,
