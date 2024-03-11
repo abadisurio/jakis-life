@@ -34,7 +34,7 @@ class _GameEndView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'You Lost',
+            'Game Ended',
             style: TextStyleTheme(context).titleMedium,
           ),
           const SizedBox(height: 40),
@@ -48,6 +48,7 @@ class _GameEndView extends StatelessWidget {
               style: TextStyleTheme(context).titleSmall,
             ),
           ),
+          const MultiplayerScores(),
         ],
       ),
     );
