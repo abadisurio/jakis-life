@@ -15,7 +15,7 @@ class LitterPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final level = context.read<PlayerBloc>().state.point ~/ 100;
+    final level = context.read<PlayerBloc>().state.latestScore ~/ 100;
     return BlocProvider(
       create: (_) => LitterPickerBloc(level: level),
       child: const _LitterPickerView(),
@@ -33,7 +33,7 @@ class _LitterPickerView extends StatefulWidget {
 class _LitterPickerViewState extends State<_LitterPickerView> {
   @override
   Widget build(BuildContext context) {
-    final level = context.read<PlayerBloc>().state.point ~/ 100;
+    final level = context.read<PlayerBloc>().state.latestScore ~/ 100;
     return Material(
       color: Colors.green.shade100,
       child: SafeArea(

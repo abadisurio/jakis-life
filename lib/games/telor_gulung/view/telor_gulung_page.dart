@@ -32,7 +32,7 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
   double _prevAtan = 0;
   double _totalAngle = 0;
   SMINumber? _numSize;
-  late final _level = context.read<PlayerBloc>().state.point ~/ 100;
+  late final _level = context.read<PlayerBloc>().state.latestScore ~/ 100;
   static const double _radius = 120;
 
   void _onRiveInit(Artboard artboard) {

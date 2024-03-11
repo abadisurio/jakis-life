@@ -21,8 +21,10 @@ JakisLifePlayer _$JakisLifePlayerFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$JakisLifePlayer {
   String get id => throw _privateConstructorUsedError;
-  int? get score => throw _privateConstructorUsedError;
+  int? get highScore => throw _privateConstructorUsedError;
+  String? get displayName => throw _privateConstructorUsedError;
   String? get fcmToken => throw _privateConstructorUsedError;
+  String? get photoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,12 @@ abstract class $JakisLifePlayerCopyWith<$Res> {
           JakisLifePlayer value, $Res Function(JakisLifePlayer) then) =
       _$JakisLifePlayerCopyWithImpl<$Res, JakisLifePlayer>;
   @useResult
-  $Res call({String id, int? score, String? fcmToken});
+  $Res call(
+      {String id,
+      int? highScore,
+      String? displayName,
+      String? fcmToken,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -53,21 +60,31 @@ class _$JakisLifePlayerCopyWithImpl<$Res, $Val extends JakisLifePlayer>
   @override
   $Res call({
     Object? id = null,
-    Object? score = freezed,
+    Object? highScore = freezed,
+    Object? displayName = freezed,
     Object? fcmToken = freezed,
+    Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      score: freezed == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
+      highScore: freezed == highScore
+          ? _value.highScore
+          : highScore // ignore: cast_nullable_to_non_nullable
               as int?,
+      displayName: freezed == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
       fcmToken: freezed == fcmToken
           ? _value.fcmToken
           : fcmToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -81,7 +98,12 @@ abstract class _$$JakisLifePlayerImplCopyWith<$Res>
       __$$JakisLifePlayerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, int? score, String? fcmToken});
+  $Res call(
+      {String id,
+      int? highScore,
+      String? displayName,
+      String? fcmToken,
+      String? photoUrl});
 }
 
 /// @nodoc
@@ -96,21 +118,31 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? score = freezed,
+    Object? highScore = freezed,
+    Object? displayName = freezed,
     Object? fcmToken = freezed,
+    Object? photoUrl = freezed,
   }) {
     return _then(_$JakisLifePlayerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      score: freezed == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
+      highScore: freezed == highScore
+          ? _value.highScore
+          : highScore // ignore: cast_nullable_to_non_nullable
               as int?,
+      displayName: freezed == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
       fcmToken: freezed == fcmToken
           ? _value.fcmToken
           : fcmToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -121,7 +153,12 @@ class __$$JakisLifePlayerImplCopyWithImpl<$Res>
 @JsonSerializable(
     explicitToJson: true, includeIfNull: false, fieldRename: FieldRename.none)
 class _$JakisLifePlayerImpl implements _JakisLifePlayer {
-  _$JakisLifePlayerImpl({required this.id, this.score, this.fcmToken});
+  _$JakisLifePlayerImpl(
+      {required this.id,
+      this.highScore,
+      this.displayName,
+      this.fcmToken,
+      this.photoUrl});
 
   factory _$JakisLifePlayerImpl.fromJson(Map<String, dynamic> json) =>
       _$$JakisLifePlayerImplFromJson(json);
@@ -129,13 +166,17 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
   @override
   final String id;
   @override
-  final int? score;
+  final int? highScore;
+  @override
+  final String? displayName;
   @override
   final String? fcmToken;
+  @override
+  final String? photoUrl;
 
   @override
   String toString() {
-    return 'JakisLifePlayer(id: $id, score: $score, fcmToken: $fcmToken)';
+    return 'JakisLifePlayer(id: $id, highScore: $highScore, displayName: $displayName, fcmToken: $fcmToken, photoUrl: $photoUrl)';
   }
 
   @override
@@ -144,14 +185,20 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
         (other.runtimeType == runtimeType &&
             other is _$JakisLifePlayerImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.score, score) || other.score == score) &&
+            (identical(other.highScore, highScore) ||
+                other.highScore == highScore) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
             (identical(other.fcmToken, fcmToken) ||
-                other.fcmToken == fcmToken));
+                other.fcmToken == fcmToken) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, score, fcmToken);
+  int get hashCode =>
+      Object.hash(runtimeType, id, highScore, displayName, fcmToken, photoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -171,8 +218,10 @@ class _$JakisLifePlayerImpl implements _JakisLifePlayer {
 abstract class _JakisLifePlayer implements JakisLifePlayer {
   factory _JakisLifePlayer(
       {required final String id,
-      final int? score,
-      final String? fcmToken}) = _$JakisLifePlayerImpl;
+      final int? highScore,
+      final String? displayName,
+      final String? fcmToken,
+      final String? photoUrl}) = _$JakisLifePlayerImpl;
 
   factory _JakisLifePlayer.fromJson(Map<String, dynamic> json) =
       _$JakisLifePlayerImpl.fromJson;
@@ -180,9 +229,13 @@ abstract class _JakisLifePlayer implements JakisLifePlayer {
   @override
   String get id;
   @override
-  int? get score;
+  int? get highScore;
+  @override
+  String? get displayName;
   @override
   String? get fcmToken;
+  @override
+  String? get photoUrl;
   @override
   @JsonKey(ignore: true)
   _$$JakisLifePlayerImplCopyWith<_$JakisLifePlayerImpl> get copyWith =>

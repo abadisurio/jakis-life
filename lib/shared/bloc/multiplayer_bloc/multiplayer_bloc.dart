@@ -14,38 +14,75 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
     on<StandbyGame>(_onStandbyGame);
     on<UpdateScore>(_onUpdateScore);
     on<UpdateState>(_onUpdateState);
-    on<UpdateRemotePlayerData>(_onUpdateRemotePlayerData);
+    on<UpdatePlayerData>(_onUpdatePlayerData);
   }
+
+  DocumentReference? _challengeRef;
 
   Future<void> _onStartMultiplayerSession(
     StartMultiplayerSession event,
     Emitter<MultiplayerState> emit,
   ) async {
     final currentUser = FirebaseAuth.instance.currentUser;
-    try {
-      final response = await FirebaseFunctions.instance
-          .httpsCallable('createMultiplayer')
-          .call<Map<String, dynamic>>(
-        {
-          'inviterId': currentUser?.uid,
-          'invitedId': event.invitedId,
-        },
-      );
-      // log('response ${response.data}');
-      final challengeId = response.data['challengeId'] as String?;
-      emit(state.copyWith(challengeId: challengeId));
-      final docRef =
-          FirebaseFirestore.instance.collection('challenges').doc(challengeId);
-      // .doc('CZExHdv58WW8kAHyEpV7');
-      docRef.snapshots().listen((snapshot) {
-        if (snapshot.exists) {
-          final data = snapshot.data();
-          log('data123 $data');
-        }
-      });
-    } catch (e) {
-      log('eee $e');
+    late String opponentId;
+    late String challengeId;
+
+    if (event.invitedId != null) {
+      try {
+        final response = await FirebaseFunctions.instance
+            .httpsCallable('createMultiplayer')
+            .call<Map<String, dynamic>>(
+          {
+            'inviterId': currentUser?.uid,
+            'invitedId': event.invitedId,
+          },
+        );
+        log('response ${response.data}');
+        final remoteChallengeId =
+            (response.data['data'] as Map)['challengeId'] as String?;
+        // final inviterId = response.data['inviterId'] as String?;
+        _challengeRef = FirebaseFirestore.instance
+            .collection('challenges')
+            .doc(remoteChallengeId);
+        opponentId = event.invitedId!;
+        challengeId = remoteChallengeId!;
+      } catch (e) {
+        log('eee $e');
+      }
+    } else if (event.challengeId != null) {
+      _challengeRef = FirebaseFirestore.instance
+          .collection('challenges')
+          .doc(event.challengeId);
+      final challengeSnapshot = await _challengeRef?.get();
+      final remoteOpponentId = (challengeSnapshot?.data()
+          as Map<String, dynamic>?)?['inviterId'] as String?;
+
+      opponentId = remoteOpponentId!;
+      challengeId = event.challengeId!;
     }
+
+    final opponentRef = FirebaseFirestore.instance.collection('players').doc(
+          opponentId,
+        );
+    final opponentSnapshot = await opponentRef.get();
+    final data = opponentSnapshot.data();
+    final opponentDisplayName = data?['displayName'] as String?;
+    final opponentPhotoUrl = data?['photoUrl'] as String?;
+    emit(
+      state.copyWith(
+        challengeId: challengeId,
+        opponentIds: opponentId,
+        opponentDisplayName: opponentDisplayName,
+        opponentPhotoUrl: opponentPhotoUrl,
+      ),
+    );
+
+    _challengeRef?.snapshots().listen((snapshot) {
+      if (snapshot.exists) {
+        final data = snapshot.data();
+        log('data123 $data');
+      }
+    });
   }
 
   Future<void> _onStandbyGame(
@@ -59,18 +96,18 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
     UpdateState event,
     Emitter<MultiplayerState> emit,
   ) async {
-    add(UpdateRemotePlayerData(playersState: event.playersState));
+    add(UpdatePlayerData(playersState: event.playersState));
   }
 
   Future<void> _onUpdateScore(
     UpdateScore event,
     Emitter<MultiplayerState> emit,
   ) async {
-    add(UpdateRemotePlayerData(playersScore: event.score));
+    add(UpdatePlayerData(playersScore: event.score));
   }
 
-  Future<void> _onUpdateRemotePlayerData(
-    UpdateRemotePlayerData event,
+  Future<void> _onUpdatePlayerData(
+    UpdatePlayerData event,
     Emitter<MultiplayerState> emit,
   ) async {
     if (state.challengeId == null) {

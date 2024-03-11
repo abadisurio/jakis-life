@@ -34,7 +34,7 @@ class _BatteryParryView extends StatefulWidget {
 class _BatteryParryViewState extends State<_BatteryParryView> {
   final _batteries = <_Battery>[];
   int _flickCount = 0;
-  late final _level = context.read<PlayerBloc>().state.point ~/ 200;
+  late final _level = context.read<PlayerBloc>().state.latestScore ~/ 200;
   late int _batteriesCount;
   late Stream<int> _stream;
   late StreamSubscription<void> _streamSubscription;

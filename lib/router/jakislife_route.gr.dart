@@ -43,9 +43,14 @@ abstract class $AppRouter extends _i10.RootStackRouter {
       );
     },
     GameEndRoute.name: (routeData) {
+      final args = routeData.argsAs<GameEndRouteArgs>(
+          orElse: () => const GameEndRouteArgs());
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.GameEndPage(),
+        child: _i3.GameEndPage(
+          key: args.key,
+          showBadge: args.showBadge,
+        ),
       );
     },
     GameRandomizerRoute.name: (routeData) {
@@ -146,16 +151,40 @@ class CutSceneRouteArgs {
 
 /// generated route for
 /// [_i3.GameEndPage]
-class GameEndRoute extends _i10.PageRouteInfo<void> {
-  const GameEndRoute({List<_i10.PageRouteInfo>? children})
-      : super(
+class GameEndRoute extends _i10.PageRouteInfo<GameEndRouteArgs> {
+  GameEndRoute({
+    _i11.Key? key,
+    bool? showBadge = false,
+    List<_i10.PageRouteInfo>? children,
+  }) : super(
           GameEndRoute.name,
+          args: GameEndRouteArgs(
+            key: key,
+            showBadge: showBadge,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'GameEndRoute';
 
-  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+  static const _i10.PageInfo<GameEndRouteArgs> page =
+      _i10.PageInfo<GameEndRouteArgs>(name);
+}
+
+class GameEndRouteArgs {
+  const GameEndRouteArgs({
+    this.key,
+    this.showBadge = false,
+  });
+
+  final _i11.Key? key;
+
+  final bool? showBadge;
+
+  @override
+  String toString() {
+    return 'GameEndRouteArgs{key: $key, showBadge: $showBadge}';
+  }
 }
 
 /// generated route for

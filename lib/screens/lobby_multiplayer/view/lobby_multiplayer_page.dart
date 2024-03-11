@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' show pi;
 
 import 'package:auto_route/auto_route.dart';
@@ -21,31 +20,34 @@ part 'card_back.dart';
 part 'card_front.dart';
 
 @RoutePage()
-class LobbyMultiplayerPage extends StatelessWidget {
-  const LobbyMultiplayerPage({super.key, this.invitedId});
+class LobbyMultiplayerPage extends StatefulWidget {
+  const LobbyMultiplayerPage({
+    super.key,
+    this.invitedId,
+    this.challengeId,
+  });
 
   final String? invitedId;
+  final String? challengeId;
+
   @override
-  Widget build(BuildContext context) {
-    // if (_isUnlocked) {}
-    // return const _LobbyMultiplayerLockedView();
-    return BlocProvider(
-      create: (_) {
-        log('invitedId $invitedId');
-        final bloc = context.read<MultiplayerBloc>();
-        if (invitedId != null) {
-          bloc.add(StartMultiplayerSession(invitedId: invitedId!));
-        }
-        return bloc;
-      },
-      lazy: false,
-      child: const _LobbyMultiplayerView(),
-    );
-  }
+  State<LobbyMultiplayerPage> createState() => _LobbyMultiplayerPageState();
 }
 
-class _LobbyMultiplayerView extends StatelessWidget {
-  const _LobbyMultiplayerView();
+class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
+  @override
+  void initState() {
+    if (widget.invitedId != null) {
+      context
+          .read<MultiplayerBloc>()
+          .add(StartMultiplayerSession(invitedId: widget.invitedId));
+    } else if (widget.challengeId != null) {
+      context
+          .read<MultiplayerBloc>()
+          .add(StartMultiplayerSession(challengeId: widget.challengeId));
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,51 +58,41 @@ class _LobbyMultiplayerView extends StatelessWidget {
         title: const Text('Play with your friends!'),
       ),
       backgroundColor: Colors.blue.shade100,
-      body: ListView(
-        children: [
-          const SizedBox(height: 32),
-          const _Card(),
-          Center(
-            child: KJButton(
-              onPressed: () {
-                context.read<PlayerBloc>().add(const PlayerSignIn());
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            BlocBuilder<PlayerBloc, PlayerState>(
+              builder: (context, state) {
+                if (state.isMultiplayerUnlocked ||
+                    state.authState == AuthState.signedIn) {
+                  if (widget.invitedId != null || widget.challengeId != null) {
+                    return const _LobbyMultiplayerStandby();
+                  }
+                  // if()
+                  return const _LobbyMultiplayerView();
+                }
+                return const _LobbyMultiplayerLockedView();
               },
-              child: Text(
-                'Start Grinding!',
-                style: TextStyleTheme(context).titleSmall?.copyWith(
-                      color: Colors.black,
-                    ),
-              ),
             ),
-          ),
-          Center(
-            child: KJButton(
-              onPressed: () {
-                context.read<MultiplayerBloc>().add(const StandbyGame());
-              },
-              child: Text(
-                'Standby',
-                style: TextStyleTheme(context).titleSmall?.copyWith(
-                      color: Colors.black,
-                    ),
-              ),
-            ),
-          ),
-          Center(
-            child: KJButton(
-              onPressed: () {
-                context.read<PlayerBloc>().add(const PlayerSignOut());
-              },
-              child: Text(
-                'Sign Out',
-                style: TextStyleTheme(context).titleSmall?.copyWith(
-                      color: Colors.black,
-                    ),
-              ),
-            ),
-          ),
-        ],
+            const PlayerCard(),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _LobbyMultiplayerView extends StatelessWidget {
+  const _LobbyMultiplayerView();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: const [
+        SizedBox(height: 32),
+        _Card(),
+      ],
     );
   }
 }
@@ -110,47 +102,126 @@ class _LobbyMultiplayerLockedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      backgroundColor: Colors.blue.shade100,
-      body: ListView(
-        children: [
-          Center(
-            child: Text(
-              'Play with your friends',
-              style: TextStyleTheme(context).titleMedium,
-              textAlign: TextAlign.center,
-            ),
+    final highScore = context.read<PlayerBloc>().state.highScore;
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints.tight(
+          Size(
+            MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height -
+                (kToolbarHeight +
+                    MediaQuery.of(context).padding.top +
+                    MediaQuery.of(context).padding.bottom),
           ),
-          Center(
-            child: Assets.images.jakiRound.image(),
-          ),
-          Center(
-            child: Text(
-              'Get your score pass 1000 and get badge to play with your friend',
-              style: TextStyleTheme(context).bodyLarge,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 48),
-          Center(
-            child: KJButton(
-              onPressed: () {
-                context.router.push(const GameRandomizerRoute());
-              },
-              child: Text(
-                'Start Grinding!',
-                style: TextStyleTheme(context).titleSmall?.copyWith(
-                      color: Colors.black,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: BlocBuilder<PlayerBloc, PlayerState>(
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 48),
+                  Text(
+                    'Play with your friends',
+                    style: TextStyleTheme(context).titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  Assets.images.jakiRound.image(),
+                  const SizedBox(height: 32),
+                  Text(
+                    'Get your score pass ${PlayerState.minimumHighScore} and get badge to play with your friend',
+                    style: TextStyleTheme(context).bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  Text(
+                    'Your current high score is',
+                    style: TextStyleTheme(context).titleSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '$highScore',
+                    style: TextStyleTheme(context).titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  KJButton(
+                    onPressed: () {
+                      context.router.push(const GameRandomizerRoute());
+                    },
+                    child: Text(
+                      'Start Grinding!',
+                      style: TextStyleTheme(context).titleSmall?.copyWith(
+                            color: Colors.black,
+                          ),
                     ),
-              ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LobbyMultiplayerStandby extends StatelessWidget {
+  const _LobbyMultiplayerStandby();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MultiplayerBloc, MultiplayerState>(
+      builder: (context, state) {
+        final text =
+            'Get ready to play ${state.opponentDisplayName == null ? '' : 'with ${state.opponentDisplayName}'}';
+        return ConstrainedBox(
+          constraints: BoxConstraints.tight(
+            Size(
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height -
+                  (kToolbarHeight +
+                      MediaQuery.of(context).padding.top +
+                      MediaQuery.of(context).padding.bottom),
             ),
           ),
-        ],
-      ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 96,
+                  foregroundImage: CachedNetworkImageProvider(
+                    state.opponentPhotoUrl ?? 'https://picsum.photos/200',
+                  ),
+                ),
+                const SizedBox(height: 48),
+                Text(
+                  text,
+                  style: TextStyleTheme(context).titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                KJButton(
+                  onPressed: () {
+                    context.read<MultiplayerBloc>().add(const StandbyGame());
+                  },
+                  child: Text(
+                    'Start Game',
+                    style: TextStyleTheme(context).titleSmall?.copyWith(
+                          color: Colors.black,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

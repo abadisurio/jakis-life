@@ -10,7 +10,7 @@ class _CarDoorLeft extends StatefulWidget {
 class _CarDoorLeftState extends State<_CarDoorLeft> {
   double _swipeOffset = 10;
   late Timer timer;
-  late final _level = context.read<PlayerBloc>().state.point ~/ 200;
+  late final _level = context.read<PlayerBloc>().state.latestScore ~/ 200;
   final doorCase = const _DoorCase();
 
   @override

@@ -6,44 +6,58 @@ class PlayerState extends Equatable {
     this.life = 3,
     this.isCurrentGameWin = false,
     this.isMultiplayerUnlocked = false,
-    this.point = 0,
-    this.isSignedIn = false,
+    this.latestScore = 0,
+    this.highScore = 0,
+    this.authState = AuthState.loading,
   });
+
+  static const minimumHighScore = 1000;
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
 
   final int life;
-  final int point;
+  final int highScore;
+  final int latestScore;
   final bool isCurrentGameWin;
   final bool isMultiplayerUnlocked;
   final String? currentGame;
-  final bool isSignedIn;
+  final AuthState authState;
 
   PlayerState copyWith({
     int? life,
-    int? point,
+    int? latestScore,
+    int? highScore,
     String? currentGame,
     bool? isCurrentGameWin,
     bool? isMultiplayerUnlocked,
-    bool? isSignedIn,
+    AuthState? authState,
   }) =>
       PlayerState(
         life: life ?? this.life,
-        point: point ?? this.point,
+        latestScore: latestScore ?? this.latestScore,
+        highScore: highScore ?? this.highScore,
         currentGame: currentGame ?? this.currentGame,
         isCurrentGameWin: isCurrentGameWin ?? this.isCurrentGameWin,
         isMultiplayerUnlocked:
             isMultiplayerUnlocked ?? this.isMultiplayerUnlocked,
-        isSignedIn: isSignedIn ?? this.isSignedIn,
+        authState: authState ?? this.authState,
       );
 
   @override
   List<Object?> get props => [
         life,
-        point,
+        latestScore,
+        highScore,
         currentGame,
         isCurrentGameWin,
-        isSignedIn,
+        authState,
         isMultiplayerUnlocked,
       ];
+}
+
+enum AuthState {
+  loading,
+  signedIn,
+  signedOut,
+  unknown,
 }

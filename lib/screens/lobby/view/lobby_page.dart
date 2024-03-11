@@ -61,9 +61,7 @@ class _LobbyView extends StatelessWidget {
                         KJButton(
                           onPressed: () {
                             context.router.push(
-                              LobbyMultiplayerRoute(
-                                invitedId: 'Y935X8whcEQ0Ns1KT3OwO37bPUq1',
-                              ),
+                              LobbyMultiplayerRoute(),
                             );
                           },
                           child: Text(
@@ -79,6 +77,12 @@ class _LobbyView extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ),
+            const SafeArea(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: PlayerCard(),
               ),
             ),
           ],

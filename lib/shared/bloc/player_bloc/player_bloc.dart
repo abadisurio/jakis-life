@@ -37,7 +37,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     encryptedSharedPreferences: true,
   );
   OAuthCredential? _currentCredential;
-  // JakisLifePlayer? _jakisLifePlayer;
+  JakisLifePlayer? _localJakislifePlayer;
 
   Future<void> _initialize() async {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -64,16 +64,31 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<JakisLifePlayer?> _updateJakisLifePlayer() async {
-    final stringJakisLifePlayer = await _storage.read(
-      key: _keyStoredUserJakisLife,
-      aOptions: _secureStorageAndroidOptions,
-    );
-    final localJakislifePlayer = stringJakisLifePlayer == null
-        ? null
-        : JakisLifePlayer.fromJson(
-            json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
-          );
+  Future<JakisLifePlayer?> _updateJakisLifePlayer({
+    JakisLifePlayer? newJakisLifePlayer,
+  }) async {
+    if (newJakisLifePlayer != null) {
+      await _storage.write(
+        key: _keyStoredUserJakisLife,
+        value: json.encode(newJakisLifePlayer.toJson()),
+        aOptions: _secureStorageAndroidOptions,
+      );
+      _localJakislifePlayer = newJakisLifePlayer;
+    } else {
+      // await _storage.delete(
+      //   key: _keyStoredUserJakisLife,
+      //   aOptions: _secureStorageAndroidOptions,
+      // );
+      final stringJakisLifePlayer = await _storage.read(
+        key: _keyStoredUserJakisLife,
+        aOptions: _secureStorageAndroidOptions,
+      );
+      _localJakislifePlayer = stringJakisLifePlayer == null
+          ? null
+          : JakisLifePlayer.fromJson(
+              json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
+            );
+    }
 
     final currentUser = FirebaseAuth.instance.currentUser;
     final col = FirebaseFirestore.instance.collection('players');
@@ -91,7 +106,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       const playerId = 'jakislife';
       jakisLifePlayer = JakisLifePlayer(
         id: playerId,
-        score: 0,
+        highScore: 0,
       );
       await _storage.write(
         key: _keyStoredUserJakisLife,
@@ -100,16 +115,16 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       );
     }
 
-    log('stringJakisLifePlayer $stringJakisLifePlayer');
+    // log('stringJakisLifePlayer $stringJakisLifePlayer');
     log('currentUser $currentUser');
-    if (currentUser == null && localJakislifePlayer == null) {
+    if (currentUser == null && _localJakislifePlayer == null) {
       await createNewPlayer();
     }
-    if (currentUser == null && localJakislifePlayer != null) {
-      jakisLifePlayer = localJakislifePlayer;
+    if (currentUser == null && _localJakislifePlayer != null) {
+      jakisLifePlayer = _localJakislifePlayer!;
     }
 
-    if (currentUser != null && localJakislifePlayer == null) {
+    if (currentUser != null && _localJakislifePlayer == null) {
       final doc = col.doc(currentUser.uid);
       final snapshot = await doc.get();
       final fcmToken = await FirebaseMessaging.instance.getToken();
@@ -125,9 +140,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       }
     }
 
-    if (currentUser != null && localJakislifePlayer != null) {
+    if (currentUser != null && _localJakislifePlayer != null) {
       final fcmToken = await FirebaseMessaging.instance.getToken();
-      jakisLifePlayer = localJakislifePlayer.copyWith(fcmToken: fcmToken);
+      jakisLifePlayer = _localJakislifePlayer!.copyWith(
+        fcmToken: fcmToken,
+        photoUrl: currentUser.photoURL,
+        displayName: currentUser.displayName,
+      );
       await writeToFirestore(jakisLifePlayer);
     }
 
@@ -141,10 +160,16 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   ) async {
     await _initialize();
     final player = await _updateJakisLifePlayer();
+
+    if ((player?.highScore ?? 0) >= PlayerState.minimumHighScore) {
+      emit(state.copyWith(isMultiplayerUnlocked: true));
+    }
     emit(
       state.copyWith(
-        point: player?.score,
-        isSignedIn: FirebaseAuth.instance.currentUser != null,
+        highScore: player?.highScore,
+        authState: FirebaseAuth.instance.currentUser != null
+            ? AuthState.signedIn
+            : AuthState.signedOut,
       ),
     );
   }
@@ -153,7 +178,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     IncreasePoint event,
     Emitter<PlayerState> emit,
   ) {
-    emit(state.copyWith(point: state.point + Random().nextInt(80) + 50));
+    emit(
+      state.copyWith(
+        latestScore: state.latestScore + Random().nextInt(80) + 50,
+      ),
+    );
   }
 
   void _onDecreaseLife(
@@ -167,7 +196,27 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     ResetLife event,
     Emitter<PlayerState> emit,
   ) {
-    emit(state.copyWith(life: 3, point: 0));
+    if (state.latestScore > state.highScore) {
+      _updateJakisLifePlayer(
+        newJakisLifePlayer: _localJakislifePlayer?.copyWith(
+          highScore: state.latestScore,
+        ),
+      );
+      emit(
+        state.copyWith(
+          life: 3,
+          latestScore: 0,
+          highScore: state.latestScore,
+        ),
+      );
+      return;
+    }
+    emit(
+      state.copyWith(
+        life: 3,
+        latestScore: 0,
+      ),
+    );
   }
 
   void _onUpdateCurrentGame(
@@ -188,6 +237,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     PlayerSignIn event,
     Emitter<PlayerState> emit,
   ) async {
+    emit(state.copyWith(authState: AuthState.loading));
     late OAuthCredential credential;
     if (_currentCredential == null) {
       // Trigger the authentication flow
@@ -214,13 +264,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       credential = _currentCredential!;
     }
     await FirebaseAuth.instance.signInWithCredential(credential);
-    emit(state.copyWith(isSignedIn: true));
+    emit(state.copyWith(authState: AuthState.signedIn));
   }
 
   Future<void> _onPlayerSignOut(
     PlayerSignOut event,
     Emitter<PlayerState> emit,
   ) async {
+    emit(state.copyWith(authState: AuthState.loading));
     await _googleSignIn.disconnect();
     await FirebaseAuth.instance.signOut();
 
@@ -228,6 +279,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       key: _keyStoredUserGoogle,
       aOptions: _secureStorageAndroidOptions,
     );
-    emit(state.copyWith(isSignedIn: false));
+    emit(state.copyWith(authState: AuthState.signedOut));
   }
 }

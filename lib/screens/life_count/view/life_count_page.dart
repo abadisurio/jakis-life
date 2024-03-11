@@ -42,7 +42,12 @@ class _LifeCountViewState extends State<_LifeCountView> {
       Future.delayed(const Duration(seconds: 3), () {
         if (_lifeCount <= 0) {
           context.read<PlayerBloc>().add(const ResetLife());
-          context.router.replace(const GameEndRoute());
+          context.router.replace(
+            GameEndRoute(
+              showBadge: state.highScore < PlayerState.minimumHighScore &&
+                  state.latestScore >= PlayerState.minimumHighScore,
+            ),
+          );
         } else {
           context.router.replace(const GameRandomizerRoute());
         }
@@ -84,7 +89,7 @@ class _PointCountState extends State<_PointCount>
   @override
   void initState() {
     final state = context.read<PlayerBloc>().state;
-    _point = state.point;
+    _point = state.latestScore;
     _prevPoint = _point;
     super.initState();
   }
@@ -95,7 +100,7 @@ class _PointCountState extends State<_PointCount>
     return BlocListener<PlayerBloc, PlayerState>(
       listener: (context, state) {
         setState(() {
-          _point = state.point;
+          _point = state.latestScore;
         });
         _animationController.forward();
       },

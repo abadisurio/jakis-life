@@ -15,7 +15,7 @@ class StableSidewalk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final level = context.read<PlayerBloc>().state.point ~/ 100;
+    final level = context.read<PlayerBloc>().state.latestScore ~/ 100;
     return BlocProvider(
       create: (_) => StableSidewalkBloc(level: level),
       child: const _StableSidewalkView(),
@@ -29,7 +29,7 @@ class _StableSidewalkView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<StableSidewalkBloc>();
-    final level = context.read<PlayerBloc>().state.point ~/ 100;
+    final level = context.read<PlayerBloc>().state.latestScore ~/ 100;
     return Material(
       color: Colors.blue.shade100,
       child: SizedBox.fromSize(

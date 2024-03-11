@@ -14,7 +14,7 @@ class _Battery extends StatefulWidget {
 }
 
 class _BatteryState extends State<_Battery> with TickerProviderStateMixin {
-  late final _level = context.read<PlayerBloc>().state.point;
+  late final _level = context.read<PlayerBloc>().state.latestScore;
   static const _totalDuration = 5000;
   late final duration = (_totalDuration - _level * 2).clamp(1000, 5000);
   Offset? _flick;

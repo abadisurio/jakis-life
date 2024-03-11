@@ -28,7 +28,7 @@ class _CardBackState extends State<_CardBack> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(
-      buildWhen: (prev, curr) => prev.isSignedIn != curr.isSignedIn,
+      buildWhen: (prev, curr) => prev.authState != curr.authState,
       builder: (context, state) {
         return Container(
           decoration: BoxDecoration(
@@ -38,7 +38,7 @@ class _CardBackState extends State<_CardBack> {
           padding: const EdgeInsets.all(32),
           height: _Card.height,
           width: _Card.width,
-          child: !state.isSignedIn
+          child: state.authState == AuthState.signedOut
               ? null
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,

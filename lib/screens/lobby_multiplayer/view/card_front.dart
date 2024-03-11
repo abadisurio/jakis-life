@@ -6,7 +6,8 @@ class _CardFront extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(
       buildWhen: (prev, curr) =>
-          prev.isSignedIn != curr.isSignedIn || prev.point != curr.point,
+          prev.authState != curr.authState ||
+          prev.latestScore != curr.latestScore,
       builder: (context, state) {
         return Container(
           decoration: BoxDecoration(
@@ -34,13 +35,14 @@ class _CardFront extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Top Score',
+                'High Score',
                 style: TextStyleTheme(context)
                     .bodyLarge
                     ?.copyWith(color: Colors.white),
               ),
+              const SizedBox(height: 8),
               Text(
-                '${state.point}',
+                '${state.highScore}',
                 style: TextStyleTheme(context)
                     .titleMedium
                     ?.copyWith(color: Colors.white),

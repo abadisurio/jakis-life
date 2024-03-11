@@ -57,7 +57,7 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
 
   @override
   Widget build(BuildContext context) {
-    late final level = context.read<PlayerBloc>().state.point ~/ 200;
+    late final level = context.read<PlayerBloc>().state.latestScore ~/ 200;
     return Material(
       color: Colors.green.shade100,
       child: SafeArea(

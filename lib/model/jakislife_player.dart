@@ -12,8 +12,10 @@ class JakisLifePlayer with _$JakisLifePlayer {
   )
   factory JakisLifePlayer({
     required String id,
-    int? score,
+    int? highScore,
+    String? displayName,
     String? fcmToken,
+    String? photoUrl,
   }) = _JakisLifePlayer;
 
   factory JakisLifePlayer.fromJson(Map<String, dynamic> json) =>

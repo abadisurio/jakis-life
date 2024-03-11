@@ -25,15 +25,15 @@ class TextStyleTheme {
       );
   TextStyle? get bodyLarge => _textTheme.bodyLarge?.copyWith(
         color: Colors.grey.shade900,
-        fontSize: 22,
+        fontSize: 24,
       );
   TextStyle? get bodyMedium => _textTheme.bodyMedium?.copyWith(
         color: Colors.grey.shade900,
-        fontSize: 14,
+        fontSize: 18,
       );
   TextStyle? get bodySmall => _textTheme.bodySmall?.copyWith(
         color: Colors.grey.shade900,
-        fontSize: 6,
+        fontSize: 12,
       );
   TextStyle? get labelLarge => _textTheme.labelLarge?.copyWith(
         color: Colors.grey.shade900,

@@ -6,7 +6,20 @@ import 'package:jakislife/widgets/widgets.dart';
 
 @RoutePage()
 class GameEndPage extends StatelessWidget {
-  const GameEndPage({super.key});
+  const GameEndPage({super.key, this.showBadge = false});
+
+  final bool? showBadge;
+
+  @override
+  Widget build(BuildContext context) {
+    return (showBadge ?? false)
+        ? const _GameEndBadgeUnlocked()
+        : const _GameEndView();
+  }
+}
+
+class _GameEndView extends StatelessWidget {
+  const _GameEndView();
 
   @override
   Widget build(BuildContext context) {
@@ -33,5 +46,14 @@ class GameEndPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _GameEndBadgeUnlocked extends StatelessWidget {
+  const _GameEndBadgeUnlocked();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

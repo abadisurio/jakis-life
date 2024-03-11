@@ -6,10 +6,12 @@ class MultiplayerEvent {
 
 class StartMultiplayerSession extends MultiplayerEvent {
   const StartMultiplayerSession({
-    required this.invitedId,
+    this.invitedId,
+    this.challengeId,
   });
 
-  final String invitedId;
+  final String? invitedId;
+  final String? challengeId;
 }
 
 class StandbyGame extends MultiplayerEvent {
@@ -28,8 +30,8 @@ class UpdateState extends MultiplayerEvent {
   final String playersState;
 }
 
-class UpdateRemotePlayerData extends MultiplayerEvent {
-  const UpdateRemotePlayerData({
+class UpdatePlayerData extends MultiplayerEvent {
+  const UpdatePlayerData({
     this.playersScore,
     this.playersState,
   });

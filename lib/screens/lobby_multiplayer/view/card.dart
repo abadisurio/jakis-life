@@ -111,7 +111,7 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
               Text(
                 'See ',
                 style: TextStyleTheme(context)
-                    .bodyMedium
+                    .titleSmall
                     ?.copyWith(color: Colors.black),
               ),
               AnimatedSize(
@@ -120,7 +120,7 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
                 child: Text(
                   _isShowBack ? 'Profile' : 'QR',
                   style: TextStyleTheme(context)
-                      .bodyMedium
+                      .titleSmall
                       ?.copyWith(color: Colors.black),
                 ),
               ),

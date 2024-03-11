@@ -10,8 +10,10 @@ _$JakisLifePlayerImpl _$$JakisLifePlayerImplFromJson(
         Map<String, dynamic> json) =>
     _$JakisLifePlayerImpl(
       id: json['id'] as String,
-      score: json['score'] as int?,
+      highScore: json['highScore'] as int?,
+      displayName: json['displayName'] as String?,
       fcmToken: json['fcmToken'] as String?,
+      photoUrl: json['photoUrl'] as String?,
     );
 
 Map<String, dynamic> _$$JakisLifePlayerImplToJson(
@@ -26,7 +28,9 @@ Map<String, dynamic> _$$JakisLifePlayerImplToJson(
     }
   }
 
-  writeNotNull('score', instance.score);
+  writeNotNull('highScore', instance.highScore);
+  writeNotNull('displayName', instance.displayName);
   writeNotNull('fcmToken', instance.fcmToken);
+  writeNotNull('photoUrl', instance.photoUrl);
   return val;
 }
