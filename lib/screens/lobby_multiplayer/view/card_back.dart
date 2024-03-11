@@ -1,7 +1,9 @@
 part of 'lobby_multiplayer_page.dart';
 
 class _CardBack extends StatefulWidget {
-  const _CardBack();
+  const _CardBack({this.background});
+
+  final Widget? background;
 
   @override
   State<_CardBack> createState() => _CardBackState();
@@ -30,45 +32,53 @@ class _CardBackState extends State<_CardBack> {
     return BlocBuilder<PlayerBloc, PlayerState>(
       buildWhen: (prev, curr) => prev.authState != curr.authState,
       builder: (context, state) {
-        return Container(
-          decoration: BoxDecoration(
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
             color: Colors.grey.shade700,
-            borderRadius: BorderRadius.circular(16),
+            height: _Card.height,
+            width: _Card.width,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (widget.background != null)
+                  Transform.flip(
+                    flipX: true,
+                    child: widget.background,
+                  ),
+                if (state.authState == AuthState.signedIn)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://jakislife-dev.web.app/?start-multiplayer=${state.currentUser?.uid}',
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      // Text(
+                      //   'Back',
+                      //   style: TextStyleTheme(context)
+                      //       .titleMedium
+                      //       ?.copyWith(color: Colors.white),
+                      // ),
+                      if (_isWalletAvailable ?? false)
+                        AddToGoogleWalletButton(
+                          locale: const Locale('en', 'US'),
+                          onPress: () {
+                            _flutterGoogleWalletPlugin.savePasses(
+                              jsonPass: _exampleJsonPass,
+                              addToGoogleWalletRequestCode: 2,
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+              ],
+            ),
           ),
-          padding: const EdgeInsets.all(32),
-          height: _Card.height,
-          width: _Card.width,
-          child: state.authState == AuthState.signedOut
-              ? null
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://jakislife-dev.web.app/?start-multiplayer=${state.currentUser?.uid}',
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    // Text(
-                    //   'Back',
-                    //   style: TextStyleTheme(context)
-                    //       .titleMedium
-                    //       ?.copyWith(color: Colors.white),
-                    // ),
-                    if (_isWalletAvailable ?? false)
-                      AddToGoogleWalletButton(
-                        locale: const Locale('en', 'US'),
-                        onPress: () {
-                          _flutterGoogleWalletPlugin.savePasses(
-                            jsonPass: _exampleJsonPass,
-                            addToGoogleWalletRequestCode: 2,
-                          );
-                        },
-                      ),
-                  ],
-                ),
         );
       },
     );

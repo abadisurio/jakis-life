@@ -3,8 +3,8 @@ part of 'lobby_multiplayer_page.dart';
 class _Card extends StatefulWidget {
   const _Card();
 
-  static const double height = 450;
-  static const double width = 350;
+  static const double width = 300 * 1.2;
+  static const double height = width * 4 / 3;
 
   @override
   State<_Card> createState() => _CardState();
@@ -14,6 +14,8 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
   double _swipeOffset = 0;
   bool _isSwiping = false;
   bool _isShowBack = false;
+  int badgeSeries = 0;
+
   late final _animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 400),
@@ -23,8 +25,27 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
     curve: Curves.easeInOutCirc,
   );
 
+  late SvgGenImage badge;
+  late Widget cardFront;
+  late Widget cardBack;
+
+  final badges = [
+    Assets.svg.jakisBadge1,
+    Assets.svg.jakisBadge2,
+    Assets.svg.jakisBadge3,
+  ];
+
   @override
   void initState() {
+    setState(() {
+      badge = badges[badgeSeries];
+      cardBack = _CardBack(
+        background: badge.svg(),
+      );
+      cardFront = _CardFront(
+        background: badge.svg(),
+      );
+    });
     _curvedAnimation.addListener(() {
       setState(() {
         _isShowBack = _curvedAnimation.value > 0.5;
@@ -86,8 +107,8 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
                   );
                 },
                 child: _isShowBack
-                    ? Transform.flip(flipX: true, child: const _CardBack())
-                    : const _CardFront(),
+                    ? Transform.flip(flipX: true, child: cardBack)
+                    : cardFront,
               ),
             ),
           ),

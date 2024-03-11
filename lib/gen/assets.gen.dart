@@ -101,8 +101,20 @@ class $AssetsSvgGen {
   /// File path: assets/svg/b3_cigs.svg
   SvgGenImage get b3Cigs => const SvgGenImage('assets/svg/b3_cigs.svg');
 
-  /// File path: assets/svg/jaki_title.svg
-  SvgGenImage get jakiTitle => const SvgGenImage('assets/svg/jaki_title.svg');
+  /// File path: assets/svg/jakis_badge_1.svg
+  SvgGenImage get jakisBadge1 =>
+      const SvgGenImage('assets/svg/jakis_badge_1.svg');
+
+  /// File path: assets/svg/jakis_badge_2.svg
+  SvgGenImage get jakisBadge2 =>
+      const SvgGenImage('assets/svg/jakis_badge_2.svg');
+
+  /// File path: assets/svg/jakis_badge_3.svg
+  SvgGenImage get jakisBadge3 =>
+      const SvgGenImage('assets/svg/jakis_badge_3.svg');
+
+  /// File path: assets/svg/jakis_title.svg
+  SvgGenImage get jakisTitle => const SvgGenImage('assets/svg/jakis_title.svg');
 
   /// File path: assets/svg/organic_apple.svg
   SvgGenImage get organicApple =>
@@ -129,7 +141,10 @@ class $AssetsSvgGen {
         b3Battery,
         b3Bulb,
         b3Cigs,
-        jakiTitle,
+        jakisBadge1,
+        jakisBadge2,
+        jakisBadge3,
+        jakisTitle,
         organicApple,
         organicBone,
         organicEggShell,

@@ -35,7 +35,7 @@ class _LobbyView extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Assets.rive.monasTest.rive(),
-            Assets.svg.jakiTitle.svg(width: 300),
+            Assets.svg.jakisTitle.svg(width: 300),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(

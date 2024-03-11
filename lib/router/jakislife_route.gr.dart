@@ -73,6 +73,7 @@ abstract class $AppRouter extends _i10.RootStackRouter {
         child: _i6.LobbyMultiplayerPage(
           key: args.key,
           invitedId: args.invitedId,
+          challengeId: args.challengeId,
         ),
       );
     },
@@ -222,12 +223,14 @@ class LobbyMultiplayerRoute
   LobbyMultiplayerRoute({
     _i11.Key? key,
     String? invitedId,
+    String? challengeId,
     List<_i10.PageRouteInfo>? children,
   }) : super(
           LobbyMultiplayerRoute.name,
           args: LobbyMultiplayerRouteArgs(
             key: key,
             invitedId: invitedId,
+            challengeId: challengeId,
           ),
           initialChildren: children,
         );
@@ -242,15 +245,18 @@ class LobbyMultiplayerRouteArgs {
   const LobbyMultiplayerRouteArgs({
     this.key,
     this.invitedId,
+    this.challengeId,
   });
 
   final _i11.Key? key;
 
   final String? invitedId;
 
+  final String? challengeId;
+
   @override
   String toString() {
-    return 'LobbyMultiplayerRouteArgs{key: $key, invitedId: $invitedId}';
+    return 'LobbyMultiplayerRouteArgs{key: $key, invitedId: $invitedId, challengeId: $challengeId}';
   }
 }
 

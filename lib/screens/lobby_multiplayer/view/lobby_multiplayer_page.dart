@@ -1,4 +1,5 @@
 import 'dart:math' show pi;
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -90,7 +91,7 @@ class _LobbyMultiplayerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: const [
-        SizedBox(height: 32),
+        SizedBox(height: 100),
         _Card(),
       ],
     );
