@@ -14,6 +14,7 @@ _$JakisLifePlayerImpl _$$JakisLifePlayerImplFromJson(
       displayName: json['displayName'] as String?,
       fcmToken: json['fcmToken'] as String?,
       photoUrl: json['photoUrl'] as String?,
+      badgeSeries: json['badgeSeries'] as int?,
     );
 
 Map<String, dynamic> _$$JakisLifePlayerImplToJson(
@@ -32,5 +33,6 @@ Map<String, dynamic> _$$JakisLifePlayerImplToJson(
   writeNotNull('displayName', instance.displayName);
   writeNotNull('fcmToken', instance.fcmToken);
   writeNotNull('photoUrl', instance.photoUrl);
+  writeNotNull('badgeSeries', instance.badgeSeries);
   return val;
 }

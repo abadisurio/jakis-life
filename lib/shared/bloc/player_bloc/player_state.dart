@@ -3,6 +3,7 @@ part of 'player_bloc.dart';
 class PlayerState extends Equatable {
   const PlayerState({
     this.currentGame,
+    this.badgeSeries,
     this.life = 3,
     this.isCurrentGameWin = false,
     this.isMultiplayerUnlocked = false,
@@ -16,8 +17,9 @@ class PlayerState extends Equatable {
   User? get currentUser => FirebaseAuth.instance.currentUser;
 
   final int life;
-  final int highScore;
   final int latestScore;
+  final int highScore;
+  final int? badgeSeries;
   final bool isCurrentGameWin;
   final bool isMultiplayerUnlocked;
   final String? currentGame;
@@ -27,6 +29,7 @@ class PlayerState extends Equatable {
     int? life,
     int? latestScore,
     int? highScore,
+    int? badgeSeries,
     String? currentGame,
     bool? isCurrentGameWin,
     bool? isMultiplayerUnlocked,
@@ -36,6 +39,7 @@ class PlayerState extends Equatable {
         life: life ?? this.life,
         latestScore: latestScore ?? this.latestScore,
         highScore: highScore ?? this.highScore,
+        badgeSeries: badgeSeries ?? this.badgeSeries,
         currentGame: currentGame ?? this.currentGame,
         isCurrentGameWin: isCurrentGameWin ?? this.isCurrentGameWin,
         isMultiplayerUnlocked:
@@ -48,6 +52,7 @@ class PlayerState extends Equatable {
         life,
         latestScore,
         highScore,
+        badgeSeries,
         currentGame,
         isCurrentGameWin,
         authState,

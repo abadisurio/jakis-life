@@ -27,6 +27,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<ResetLife>(_onResetLife);
     on<UpdateCurrentGame>(_onUpdateCurrentGame);
     on<UpdateCurrentGameWin>(_onUpdateCurrentGameWin);
+    on<EarnBadge>(_onEarnBadge);
   }
 
   static const _keyStoredUserGoogle = 'stored_user_google';
@@ -83,11 +84,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         key: _keyStoredUserJakisLife,
         aOptions: _secureStorageAndroidOptions,
       );
-      _localJakislifePlayer = stringJakisLifePlayer == null
-          ? null
-          : JakisLifePlayer.fromJson(
-              json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
-            );
+      if (stringJakisLifePlayer != null) {
+        _localJakislifePlayer = JakisLifePlayer.fromJson(
+          json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
+        );
+      }
     }
 
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -265,6 +266,19 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
     await FirebaseAuth.instance.signInWithCredential(credential);
     emit(state.copyWith(authState: AuthState.signedIn));
+  }
+
+  Future<void> _onEarnBadge(
+    EarnBadge event,
+    Emitter<PlayerState> emit,
+  ) async {
+    final badgeSeries = Random().nextInt(3);
+    emit(state.copyWith(badgeSeries: badgeSeries));
+    await _updateJakisLifePlayer(
+      newJakisLifePlayer: _localJakislifePlayer?.copyWith(
+        badgeSeries: badgeSeries,
+      ),
+    );
   }
 
   Future<void> _onPlayerSignOut(

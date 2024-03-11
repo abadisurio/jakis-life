@@ -1,5 +1,4 @@
 import 'dart:math' show pi;
-import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -65,15 +64,27 @@ class _LobbyMultiplayerPageState extends State<LobbyMultiplayerPage> {
           children: [
             BlocBuilder<PlayerBloc, PlayerState>(
               builder: (context, state) {
-                if (state.isMultiplayerUnlocked ||
-                    state.authState == AuthState.signedIn) {
-                  if (widget.invitedId != null || widget.challengeId != null) {
-                    return const _LobbyMultiplayerStandby();
-                  }
-                  // if()
-                  return const _LobbyMultiplayerView();
-                }
-                return const _LobbyMultiplayerLockedView();
+                // late Widget page;
+                // if (state.isMultiplayerUnlocked ||
+                //     state.authState == AuthState.signedIn) {
+                //   if (widget.invitedId != null || widget.challengeId != null) {
+                //     page = const _LobbyMultiplayerStandby();
+                //   }
+                //   // if()
+                //   page = const _LobbyMultiplayerView();
+                // }
+                // page = const _LobbyMultiplayerLockedView();
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 700),
+                  switchInCurve: Curves.easeOutCirc,
+                  switchOutCurve: Curves.easeOutCirc,
+                  child: state.isMultiplayerUnlocked ||
+                          state.authState == AuthState.signedIn
+                      ? widget.invitedId != null || widget.challengeId != null
+                          ? const _LobbyMultiplayerStandby()
+                          : const _LobbyMultiplayerView()
+                      : const _LobbyMultiplayerLockedView(),
+                );
               },
             ),
             const PlayerCard(),

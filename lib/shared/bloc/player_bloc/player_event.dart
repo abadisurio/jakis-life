@@ -43,3 +43,7 @@ class UpdateCurrentGameWin extends PlayerEvent {
 class UpdatePoint extends PlayerEvent {
   const UpdatePoint();
 }
+
+class EarnBadge extends PlayerEvent {
+  const EarnBadge();
+}

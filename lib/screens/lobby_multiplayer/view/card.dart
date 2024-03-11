@@ -139,7 +139,7 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutCirc,
                 child: Text(
-                  _isShowBack ? 'Profile' : 'QR',
+                  _isShowBack ? 'Badge' : 'QR',
                   style: TextStyleTheme(context)
                       .titleSmall
                       ?.copyWith(color: Colors.black),

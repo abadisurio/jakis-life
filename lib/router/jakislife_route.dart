@@ -6,9 +6,7 @@ export 'jakislife_route.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
   @override
-  RouteType get defaultRouteType => const RouteType.custom(
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-      );
+  RouteType get defaultRouteType => const RouteType.material();
 
   @override
   List<AutoRoute> get routes => [

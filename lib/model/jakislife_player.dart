@@ -16,6 +16,7 @@ class JakisLifePlayer with _$JakisLifePlayer {
     String? displayName,
     String? fcmToken,
     String? photoUrl,
+    int? badgeSeries,
   }) = _JakisLifePlayer;
 
   factory JakisLifePlayer.fromJson(Map<String, dynamic> json) =>
