@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'dart:math' show Random;
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,6 +26,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<UpdateCurrentGame>(_onUpdateCurrentGame);
     on<UpdateCurrentGameWin>(_onUpdateCurrentGameWin);
     on<EarnBadge>(_onEarnBadge);
+
+    _curentUser = FirebaseAuth.instance.currentUser;
+    _userCol = FirebaseFirestore.instance.collection('players');
+    _userDoc = _userCol.doc(_curentUser?.uid);
   }
 
   static const _keyStoredUserGoogle = 'stored_user_google';
@@ -37,7 +40,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     encryptedSharedPreferences: true,
   );
   OAuthCredential? _currentCredential;
-  JakisLifePlayer? _localJakislifePlayer;
+  JakisLifePlayer? _remotePlayer;
+  JakisLifePlayer? _localPlayer;
+  JakisLifePlayer? _currentJakisLifePlayer;
+  User? _curentUser;
+  bool? _overrideFromFirestore;
+  late DocumentReference _userDoc;
+  late CollectionReference _userCol;
 
   Future<void> _initialize() async {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -63,91 +72,86 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
+  Future<void> _initializePlayer() async {
+    _localPlayer = await _readFromStorage();
+    _remotePlayer = await _readFromFirestore();
+
+    final player =
+        (_overrideFromFirestore ?? false) ? _remotePlayer : _localPlayer;
+    _currentJakisLifePlayer = player ?? await _createNewPlayer();
+    await _updateJakisLifePlayer();
+
+    await _writeToFirestore(_currentJakisLifePlayer!);
+  }
+
+  Future<JakisLifePlayer?> _readFromFirestore() async {
+    final snapshot = await _userDoc.get();
+    final remoteData = snapshot.data() as Map<String, dynamic>?;
+    if (snapshot.exists) {
+      _overrideFromFirestore = remoteData?['overrideFromFirestore'] as bool?;
+      return JakisLifePlayer.fromJson({
+        'id': _userDoc.id,
+        ...remoteData ?? {},
+      });
+    }
+    return null;
+  }
+
+  Future<void> _writeToFirestore(JakisLifePlayer jakisLifePlayer) async {
+    await _userDoc.set(
+      jakisLifePlayer.toJson()..remove('id'),
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> _writeToStorage(JakisLifePlayer jakisLifePlayer) async {
+    await _storage.write(
+      key: _keyStoredUserJakisLife,
+      value: json.encode(jakisLifePlayer.toJson()),
+      aOptions: _secureStorageAndroidOptions,
+    );
+  }
+
+  Future<JakisLifePlayer?> _readFromStorage() async {
+    final stringJakisLifePlayer = await _storage.read(
+      key: _keyStoredUserJakisLife,
+      aOptions: _secureStorageAndroidOptions,
+    );
+    if (stringJakisLifePlayer != null) {
+      return JakisLifePlayer.fromJson(
+        json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
+      );
+    }
+    return null;
+  }
+
+  Future<JakisLifePlayer> _createNewPlayer() async {
+    const playerId = 'jakislife';
+    return JakisLifePlayer(
+      id: playerId,
+      highScore: 0,
+    );
+  }
+
   Future<JakisLifePlayer?> _updateJakisLifePlayer({
     JakisLifePlayer? newJakisLifePlayer,
   }) async {
+    final fcmToken = await FirebaseMessaging.instance.getToken();
     if (newJakisLifePlayer != null) {
-      await _storage.write(
-        key: _keyStoredUserJakisLife,
-        value: json.encode(newJakisLifePlayer.toJson()),
-        aOptions: _secureStorageAndroidOptions,
-      );
-      _localJakislifePlayer = newJakisLifePlayer;
-    } else {
-      // await _storage.delete(
-      //   key: _keyStoredUserJakisLife,
-      //   aOptions: _secureStorageAndroidOptions,
-      // );
-      final stringJakisLifePlayer = await _storage.read(
-        key: _keyStoredUserJakisLife,
-        aOptions: _secureStorageAndroidOptions,
-      );
-      if (stringJakisLifePlayer != null) {
-        _localJakislifePlayer = JakisLifePlayer.fromJson(
-          json.decode(stringJakisLifePlayer) as Map<String, dynamic>,
-        );
-      }
+      _currentJakisLifePlayer = newJakisLifePlayer;
     }
-
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final col = FirebaseFirestore.instance.collection('players');
-    final doc = col.doc(currentUser?.uid);
-    late JakisLifePlayer jakisLifePlayer;
-
-    Future<void> writeToFirestore(JakisLifePlayer jakisLifePlayer) async {
-      await doc.set(
-        jakisLifePlayer.toJson()..remove('id'),
-        SetOptions(merge: true),
-      );
-    }
-
-    Future<void> createNewPlayer() async {
-      const playerId = 'jakislife';
-      jakisLifePlayer = JakisLifePlayer(
-        id: playerId,
-        highScore: 0,
-      );
-      await _storage.write(
-        key: _keyStoredUserJakisLife,
-        value: json.encode(jakisLifePlayer.toJson()),
-        aOptions: _secureStorageAndroidOptions,
-      );
-    }
-
-    if (currentUser == null && _localJakislifePlayer == null) {
-      await createNewPlayer();
-    }
-    if (currentUser == null && _localJakislifePlayer != null) {
-      jakisLifePlayer = _localJakislifePlayer!;
-    }
-
-    if (currentUser != null && _localJakislifePlayer == null) {
-      final doc = col.doc(currentUser.uid);
-      final snapshot = await doc.get();
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      if (snapshot.exists) {
-        jakisLifePlayer = JakisLifePlayer.fromJson({
-          'id': currentUser.uid,
-          'fcmToken': fcmToken,
-          ...snapshot.data() ?? {},
-        });
-      } else {
-        await createNewPlayer();
-        await writeToFirestore(jakisLifePlayer);
-      }
-    }
-
-    if (currentUser != null && _localJakislifePlayer != null) {
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      jakisLifePlayer = _localJakislifePlayer!.copyWith(
+    if (_curentUser != null) {
+      _currentJakisLifePlayer = _currentJakisLifePlayer!.copyWith(
         fcmToken: fcmToken,
-        photoUrl: currentUser.photoURL,
-        displayName: currentUser.displayName,
+        photoUrl: _curentUser?.photoURL,
+        displayName: _curentUser?.displayName,
       );
-      await writeToFirestore(jakisLifePlayer);
     }
 
-    return jakisLifePlayer;
+    unawaited(_writeToStorage(_currentJakisLifePlayer!));
+    unawaited(_writeToFirestore(_currentJakisLifePlayer!));
+
+    return _currentJakisLifePlayer;
   }
 
   Future<void> _onPlayerInitialize(
@@ -155,18 +159,16 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     Emitter<PlayerState> emit,
   ) async {
     await _initialize();
-    final player = await _updateJakisLifePlayer();
-
-    if ((player?.highScore ?? 0) >= PlayerState.minimumHighScore) {
-      emit(state.copyWith(isMultiplayerUnlocked: true));
-    }
+    await _initializePlayer();
     emit(
       state.copyWith(
-        highScore: player?.highScore,
+        highScore: _currentJakisLifePlayer?.highScore,
+        badgeSeries: _currentJakisLifePlayer?.badgeSeries,
+        isMultiplayerUnlocked: (_currentJakisLifePlayer?.highScore ?? 0) >=
+            PlayerState.minimumHighScore,
         authState: FirebaseAuth.instance.currentUser != null
             ? AuthState.signedIn
             : AuthState.signedOut,
-        badgeSeries: player?.badgeSeries,
       ),
     );
   }
@@ -195,7 +197,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   ) {
     if (state.latestScore > state.highScore) {
       _updateJakisLifePlayer(
-        newJakisLifePlayer: _localJakislifePlayer?.copyWith(
+        newJakisLifePlayer: _currentJakisLifePlayer?.copyWith(
           highScore: state.latestScore,
         ),
       );
@@ -262,11 +264,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
     await FirebaseAuth.instance.signInWithCredential(credential);
 
-    await _storage.delete(
-      key: _keyStoredUserJakisLife,
-      aOptions: _secureStorageAndroidOptions,
-    );
-    await _updateJakisLifePlayer();
+    await _initializePlayer();
 
     emit(state.copyWith(authState: AuthState.signedIn));
   }
@@ -278,7 +276,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final badgeSeries = Random().nextInt(3);
     emit(state.copyWith(badgeSeries: badgeSeries));
     await _updateJakisLifePlayer(
-      newJakisLifePlayer: _localJakislifePlayer?.copyWith(
+      newJakisLifePlayer: _currentJakisLifePlayer?.copyWith(
         badgeSeries: badgeSeries,
       ),
     );
