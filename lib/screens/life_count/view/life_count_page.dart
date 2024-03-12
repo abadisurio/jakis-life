@@ -34,15 +34,17 @@ class _LifeCountViewState extends State<_LifeCountView> {
 
     if (state.isCurrentGameWin) {
       context.read<PlayerBloc>().add(const IncreasePoint());
-      final latestScore = context.read<PlayerBloc>().state.latestScore;
-      context.read<MultiplayerBloc>().add(UpdateScore(score: latestScore));
+      final state = context.read<PlayerBloc>().state;
+      context
+          .read<MultiplayerBloc>()
+          .add(UpdateScore(score: state.latestScore));
     } else {
       context.read<PlayerBloc>().add(const DecreaseLife());
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
-        if (_lifeCount <= 1) {
+        if (_lifeCount <= 0) {
           context.read<PlayerBloc>().add(const ResetLife());
           context.router.replace(
             GameEndRoute(

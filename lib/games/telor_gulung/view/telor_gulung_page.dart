@@ -83,8 +83,14 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                   },
                   duration: Duration(milliseconds: 10000 - _level * 20),
                 ),
+                Center(
+                  child: CircleAvatar(
+                    radius: _radius * 1.8,
+                    backgroundColor: Colors.orange.shade600,
+                  ),
+                ),
                 Assets.rive.jaki.rive(
-                  artboard: 'telor_gulung_rev',
+                  artboard: 'telor_gulung',
                   onInit: _onRiveInit,
                 ),
                 const Positioned(top: 50, right: 25, child: PauseButton()),
@@ -93,12 +99,12 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Gulung Telornya',
+                        'Roll the pan',
                         style: TextStyleTheme(context).titleLarge,
                       ),
                       const SizedBox(height: _radius * 3.5),
                       Text(
-                        '''Putar sumpit sampai\ntelur matang''',
+                        '''Swipe your finger clockwise\nto roll the egg''',
                         style: TextStyleTheme(context).bodyLarge,
                         textAlign: TextAlign.center,
                       ),
@@ -140,9 +146,9 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                               ),
                             );
                           },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: _radius * 1.8,
-                      backgroundColor: Colors.yellow.shade100.withOpacity(0.3),
+                      backgroundColor: Colors.transparent,
                     ),
                     // child: const _Telor(),
                   ),
