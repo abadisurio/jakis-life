@@ -193,14 +193,14 @@ class _LitterKind extends StatefulWidget {
 
 class _LitterKindState extends State<_LitterKind> {
   final litters = [
-    {Assets.svg.anorganicBottleGlass: false},
-    {Assets.svg.anorganicPlasticBag: false},
-    {Assets.svg.anorganicTunaCan: false},
-    {Assets.svg.anorganicSodaCan: false},
-    {Assets.svg.organicApple: true},
-    {Assets.svg.organicBone: true},
-    {Assets.svg.organicEggShell: true},
-    {Assets.svg.organicFishBone: true},
+    {Assets.svg.anorganicBottleGlassPlain: false},
+    {Assets.svg.anorganicPlasticBagPlain: false},
+    {Assets.svg.anorganicTunaCanPlain: false},
+    {Assets.svg.anorganicPlasticBottlePlain: false},
+    {Assets.svg.organicApplePlain: true},
+    {Assets.svg.organicBonePlain: true},
+    {Assets.svg.organicEggShellPlain: true},
+    {Assets.svg.organicFishBonePlain: true},
   ];
 
   @override
@@ -215,15 +215,15 @@ class _LitterKindState extends State<_LitterKind> {
 }
 
 final littersAnorganic = [
-  Assets.svg.anorganicBottleGlass,
-  Assets.svg.anorganicPlasticBag,
-  Assets.svg.anorganicTunaCan,
-  Assets.svg.anorganicSodaCan,
+  Assets.svg.anorganicBottleGlassPlain,
+  Assets.svg.anorganicPlasticBagPlain,
+  Assets.svg.anorganicTunaCanPlain,
+  Assets.svg.anorganicPlasticBottlePlain,
 ];
 
 final littersOrganic = [
-  Assets.svg.organicApple,
-  Assets.svg.organicBone,
-  Assets.svg.organicEggShell,
-  Assets.svg.organicFishBone,
+  Assets.svg.organicApplePlain,
+  Assets.svg.organicBonePlain,
+  Assets.svg.organicEggShellPlain,
+  Assets.svg.organicFishBonePlain,
 ];

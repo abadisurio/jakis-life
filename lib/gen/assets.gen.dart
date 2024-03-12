@@ -63,30 +63,41 @@ class $AssetsSoundsGen {
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
-  /// File path: assets/svg/anorganic_bottle_glass.svg
-  SvgGenImage get anorganicBottleGlass =>
-      const SvgGenImage('assets/svg/anorganic_bottle_glass.svg');
+  /// File path: assets/svg/anorganic_bottle_glass_plain.svg
+  SvgGenImage get anorganicBottleGlassPlain =>
+      const SvgGenImage('assets/svg/anorganic_bottle_glass_plain.svg');
 
-  /// File path: assets/svg/anorganic_plastic_bag.svg
-  SvgGenImage get anorganicPlasticBag =>
-      const SvgGenImage('assets/svg/anorganic_plastic_bag.svg');
+  /// File path: assets/svg/anorganic_can_plain.svg
+  SvgGenImage get anorganicCanPlain =>
+      const SvgGenImage('assets/svg/anorganic_can_plain.svg');
 
-  /// File path: assets/svg/anorganic_soda_can.svg
-  SvgGenImage get anorganicSodaCan =>
-      const SvgGenImage('assets/svg/anorganic_soda_can.svg');
+  /// File path: assets/svg/anorganic_milk_plain.svg
+  SvgGenImage get anorganicMilkPlain =>
+      const SvgGenImage('assets/svg/anorganic_milk_plain.svg');
 
-  /// File path: assets/svg/anorganic_tuna_can.svg
-  SvgGenImage get anorganicTunaCan =>
-      const SvgGenImage('assets/svg/anorganic_tuna_can.svg');
+  /// File path: assets/svg/anorganic_plastic_bag_plain.svg
+  SvgGenImage get anorganicPlasticBagPlain =>
+      const SvgGenImage('assets/svg/anorganic_plastic_bag_plain.svg');
 
-  /// File path: assets/svg/b3_battery.svg
-  SvgGenImage get b3Battery => const SvgGenImage('assets/svg/b3_battery.svg');
+  /// File path: assets/svg/anorganic_plastic_bottle_plain.svg
+  SvgGenImage get anorganicPlasticBottlePlain =>
+      const SvgGenImage('assets/svg/anorganic_plastic_bottle_plain.svg');
 
-  /// File path: assets/svg/b3_bulb.svg
-  SvgGenImage get b3Bulb => const SvgGenImage('assets/svg/b3_bulb.svg');
+  /// File path: assets/svg/anorganic_tuna_can_plain.svg
+  SvgGenImage get anorganicTunaCanPlain =>
+      const SvgGenImage('assets/svg/anorganic_tuna_can_plain.svg');
 
-  /// File path: assets/svg/b3_cigs.svg
-  SvgGenImage get b3Cigs => const SvgGenImage('assets/svg/b3_cigs.svg');
+  /// File path: assets/svg/b3_battery_plain.svg
+  SvgGenImage get b3BatteryPlain =>
+      const SvgGenImage('assets/svg/b3_battery_plain.svg');
+
+  /// File path: assets/svg/b3_bulb_plain.svg
+  SvgGenImage get b3BulbPlain =>
+      const SvgGenImage('assets/svg/b3_bulb_plain.svg');
+
+  /// File path: assets/svg/b3_cigs_plain.svg
+  SvgGenImage get b3CigsPlain =>
+      const SvgGenImage('assets/svg/b3_cigs_plain.svg');
 
   /// File path: assets/svg/jakis_badge_1.svg
   SvgGenImage get jakisBadge1 =>
@@ -103,39 +114,41 @@ class $AssetsSvgGen {
   /// File path: assets/svg/jakis_title.svg
   SvgGenImage get jakisTitle => const SvgGenImage('assets/svg/jakis_title.svg');
 
-  /// File path: assets/svg/organic_apple.svg
-  SvgGenImage get organicApple =>
-      const SvgGenImage('assets/svg/organic_apple.svg');
+  /// File path: assets/svg/organic_apple_plain.svg
+  SvgGenImage get organicApplePlain =>
+      const SvgGenImage('assets/svg/organic_apple_plain.svg');
 
-  /// File path: assets/svg/organic_bone.svg
-  SvgGenImage get organicBone =>
-      const SvgGenImage('assets/svg/organic_bone.svg');
+  /// File path: assets/svg/organic_bone_plain.svg
+  SvgGenImage get organicBonePlain =>
+      const SvgGenImage('assets/svg/organic_bone_plain.svg');
 
-  /// File path: assets/svg/organic_egg_shell.svg
-  SvgGenImage get organicEggShell =>
-      const SvgGenImage('assets/svg/organic_egg_shell.svg');
+  /// File path: assets/svg/organic_egg_shell_plain.svg
+  SvgGenImage get organicEggShellPlain =>
+      const SvgGenImage('assets/svg/organic_egg_shell_plain.svg');
 
-  /// File path: assets/svg/organic_fish_bone.svg
-  SvgGenImage get organicFishBone =>
-      const SvgGenImage('assets/svg/organic_fish_bone.svg');
+  /// File path: assets/svg/organic_fish_bone_plain.svg
+  SvgGenImage get organicFishBonePlain =>
+      const SvgGenImage('assets/svg/organic_fish_bone_plain.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
-        anorganicBottleGlass,
-        anorganicPlasticBag,
-        anorganicSodaCan,
-        anorganicTunaCan,
-        b3Battery,
-        b3Bulb,
-        b3Cigs,
+        anorganicBottleGlassPlain,
+        anorganicCanPlain,
+        anorganicMilkPlain,
+        anorganicPlasticBagPlain,
+        anorganicPlasticBottlePlain,
+        anorganicTunaCanPlain,
+        b3BatteryPlain,
+        b3BulbPlain,
+        b3CigsPlain,
         jakisBadge1,
         jakisBadge2,
         jakisBadge3,
         jakisTitle,
-        organicApple,
-        organicBone,
-        organicEggShell,
-        organicFishBone
+        organicApplePlain,
+        organicBonePlain,
+        organicEggShellPlain,
+        organicFishBonePlain
       ];
 }
 

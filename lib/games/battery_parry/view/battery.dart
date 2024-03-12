@@ -124,7 +124,7 @@ class _BatteryState extends State<_Battery> with TickerProviderStateMixin {
             width: _iconSize,
             child: Transform.rotate(
               angle: Random().nextDouble() * 2,
-              child: Assets.svg.b3Battery.svg(),
+              child: Assets.svg.b3BatteryPlain.svg(),
             ),
           ),
         ),
