@@ -12,7 +12,7 @@ class StableSidewalkBloc
   })  : _level = level,
         super(
           StableSidewalkState(
-            weight: math.Random().nextDouble() + level * 0.5,
+            weight: math.Random().nextDouble() + level * 0.2,
           ),
         ) {
     on<AddWeight>(_onAddWeight);
@@ -26,14 +26,14 @@ class StableSidewalkBloc
     WeightLeft event,
     Emitter<StableSidewalkState> emit,
   ) {
-    emit(state.copyWith(weight: state.weight - (2 + _level * 0.2)));
+    emit(state.copyWith(weight: state.weight - (2 + _level * 0.1)));
   }
 
   void _onWeightRight(
     WeightRight event,
     Emitter<StableSidewalkState> emit,
   ) {
-    emit(state.copyWith(weight: state.weight + (2 + _level * 0.2)));
+    emit(state.copyWith(weight: state.weight + (2 + _level * 0.1)));
   }
 
   void _onAddWeight(

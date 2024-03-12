@@ -16,6 +16,15 @@ class GameRandomizerPage extends StatefulWidget {
   State<GameRandomizerPage> createState() => _GameRandomizerPageState();
 }
 
+final games = {
+  0: const TelorGulung(),
+  1: const StableSidewalk(),
+  2: const CommuterRush(),
+  3: const LitterPicker(),
+  4: const CollectSocket(),
+  5: const BatteryParry(),
+};
+
 class _GameRandomizerPageState extends State<GameRandomizerPage> {
   late Widget game;
   late PlayerBloc _playerBloc;
@@ -35,15 +44,8 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
   }
 
   Widget _randomizeGame() {
-    return switch (math.Random().nextInt(6)) {
-      0 => const TelorGulung(),
-      1 => const StableSidewalk(),
-      2 => const CommuterRush(),
-      3 => const LitterPicker(),
-      4 => const CollectSocket(),
-      5 => const BatteryParry(),
-      int() => const SizedBox.shrink(),
-    };
+    final gameNumber = math.Random().nextInt(6);
+    return games[gameNumber] ?? const SizedBox.shrink();
   }
 
   @override
@@ -52,13 +54,13 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
       canPop: false,
       onPopInvoked: (_) => false,
       // child: const BatteryParry(),
-      child: const TelorGulung(),
+      // child: const TelorGulung(),
       // child: const StableSidewalk(),
       // child: const CommuterRush(),
       // child: const LitterPicker(),
       // child: const CollectSocket(),
       // child: const CutScenePage(isWin: true),
-      // child: game,
+      child: game,
     );
     // return game;
   }

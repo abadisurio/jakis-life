@@ -27,6 +27,14 @@ class $AssetsImagesGen {
   AssetGenImage get aboutKrl =>
       const AssetGenImage('assets/images/about_krl.png');
 
+  /// File path: assets/images/about_sidewalk.png
+  AssetGenImage get aboutSidewalk =>
+      const AssetGenImage('assets/images/about_sidewalk.png');
+
+  /// File path: assets/images/about_socket.png
+  AssetGenImage get aboutSocket =>
+      const AssetGenImage('assets/images/about_socket.png');
+
   /// File path: assets/images/about_telor.png
   AssetGenImage get aboutTelor =>
       const AssetGenImage('assets/images/about_telor.png');
@@ -36,8 +44,15 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/jaki_round.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [aboutHazard, aboutInorganic, aboutKrl, aboutTelor, jakiRound];
+  List<AssetGenImage> get values => [
+        aboutHazard,
+        aboutInorganic,
+        aboutKrl,
+        aboutSidewalk,
+        aboutSocket,
+        aboutTelor,
+        jakiRound
+      ];
 }
 
 class $AssetsRiveGen {

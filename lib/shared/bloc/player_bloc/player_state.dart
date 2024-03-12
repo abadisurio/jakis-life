@@ -12,7 +12,7 @@ class PlayerState extends Equatable {
     this.authState = AuthState.loading,
   });
 
-  static const minimumHighScore = 500;
+  static const minimumHighScore = 496;
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
 

@@ -10,6 +10,7 @@ import 'package:jakislife/router/router.dart';
 import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
 import 'package:jakislife/utils/text_theme.dart';
 import 'package:jakislife/widgets/widgets.dart';
+import 'package:rive/rive.dart';
 
 class StableSidewalk extends StatelessWidget {
   const StableSidewalk({super.key});
@@ -278,15 +279,15 @@ class _Character extends StatefulWidget {
 }
 
 class __CharacterState extends State<_Character> {
-  // SMINumber? _numSize;
+  SMINumber? _numSize;
 
-  // void _onRiveInit(Artboard artboard) {
-  //   final controller =
-  //       StateMachineController.fromArtboard(artboard, 'State Machine 1');
-  //   artboard.addController(controller!);
-  //   _numSize = controller.findInput<double>('NumSize') as SMINumber?;
-  //   _numSize?.change(0);
-  // }
+  void _onRiveInit(Artboard artboard) {
+    final controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    artboard.addController(controller!);
+    _numSize = controller.findInput<double>('NumSize') as SMINumber?;
+    _numSize?.change(0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -301,22 +302,15 @@ class __CharacterState extends State<_Character> {
         // );
       },
       listenWhen: (prev, curr) => curr.isWin == false,
-      child: BlocBuilder<StableSidewalkBloc, StableSidewalkState>(
-        builder: (context, sidewalkState) {
-          return BlocBuilder<PauseBloc, PauseState>(
-            builder: (context, pauseState) {
-              return AnimatedRotation(
-                turns: 0.01 * sidewalkState.weight * 3.14,
-                duration: pauseState.isPaused
-                    ? Duration.zero
-                    : const Duration(milliseconds: 500),
-                // angle: 0.1 * state.weight,
-                alignment: Alignment.bottomCenter,
-                child: Assets.rive.jaki.rive(artboard: 'stable_sidewalk'),
-              );
-            },
-          );
+      child: BlocListener<StableSidewalkBloc, StableSidewalkState>(
+        listener: (context, state) {
+          _numSize?.change(state.weight * 5);
         },
+        listenWhen: (prev, curr) => prev.weight != curr.weight,
+        child: Assets.rive.jaki.rive(
+          artboard: 'stable_sidewalk',
+          onInit: _onRiveInit,
+        ),
       ),
     );
   }

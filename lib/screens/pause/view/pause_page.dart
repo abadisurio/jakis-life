@@ -46,14 +46,14 @@ class _PausePageState extends State<PausePage> {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (content != null)
+                        if (content != null) ...[
                           ClipRRect(
                             borderRadius: BorderRadius.circular(16),
                             child: SizedBox(
                               height: 400,
                               width: 300,
                               child: ListView(
-                                padding: EdgeInsets.zero,
+                                padding: const EdgeInsets.only(bottom: 16),
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(16),
@@ -65,6 +65,8 @@ class _PausePageState extends State<PausePage> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 16),
+                        ],
                         Row(
                           children: [
                             Expanded(
@@ -80,7 +82,24 @@ class _PausePageState extends State<PausePage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 16),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: KJButton(
+                                onPressed: () {
+                                  context.router.pushWidget(
+                                    const _ConfirmQuit(),
+                                    opaque: false,
+                                    transitionBuilder:
+                                        TransitionsBuilders.fadeIn,
+                                  );
+                                },
+                                child: Text(
+                                  'Quit',
+                                  style: TextStyleTheme(context).bodyMedium,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
                             const BacksoundPauseButton(),
                           ],
                         ),
@@ -90,6 +109,49 @@ class _PausePageState extends State<PausePage> {
                 ),
               );
       },
+    );
+  }
+}
+
+class _ConfirmQuit extends StatelessWidget {
+  const _ConfirmQuit();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.black26,
+      child: Center(
+        child: AlertDialog(
+          title: Text(
+            'Are you sure you want to quit?',
+            style: TextStyleTheme(context).titleSmall,
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            KJButton(
+              onPressed: () {
+                context.router.pop();
+              },
+              child: Text(
+                'Nope',
+                style: TextStyleTheme(context).bodyMedium,
+              ),
+            ),
+            const SizedBox(width: 8),
+            KJButton(
+              onPressed: () {
+                context.read<PauseBloc>().add(const PauseGame(isPaused: false));
+                context.read<PlayerBloc>().add(const ResetLife());
+                context.router.popUntilRoot();
+              },
+              child: Text(
+                'Quit',
+                style: TextStyleTheme(context).bodyMedium,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -105,19 +167,21 @@ final Map<String, Content> _content = {
     description:
         '''Telur Gulung or Telor Gulung, a traditional Indonesian dish, is a variation of fried egg where an egg is fried and rolled using a skewer typically made from bamboo wood. This food is famously sold in schools, especially in elementary schools, and is considered a legendary snack because it has been around since the 90s.''',
   ),
-  // 'StableSidewalk': (
-  //   assetGenImage: Assets.images.aboutKrl,
-  //   description: '''''',
-  // ),
+  'StableSidewalk': (
+    assetGenImage: Assets.images.aboutSidewalk,
+    description:
+        '''Sidewalks help combat climate change by promoting walking and biking, reducing urban heat with reflective materials, managing stormwater, supporting urban greening, connecting to public transit, enhancing resilience, and facilitating mixed-use development. Sidewalk availability and quality vary greatly across Indonesia. Major cities like Jakarta tend to have more extensive sidewalk networks, but even in these areas, sidewalks can be uneven, poorly maintained, or obstructed by street vendors, parked vehicles, or other obstacles. However, the Indonesian government has implemented various initiatives in recent years to improve sidewalks, including pedestrianization projects in certain areas and stricter enforcement of regulations against sidewalk encroachment.''',
+  ),
   'LitterPicker': (
     assetGenImage: Assets.images.aboutInorganic,
     description:
-        '''Inorganic waste, consisting of non-biodegradable materials that do not break down easily in the environment. This category includes materials like plastics, metals, glass, ceramics, and synthetic fibers. This waste can persist in the environment for long periods, contributing to pollution and taking up valuable space in landfills. Recycling is a key strategy for managing this type of waste, as it allows materials to be collected, processed, and reused in the production of new products, reducing the need for virgin materials and minimizing environmental impact.''',
+        '''Indonesia generates a significant amount of waste daily, with Jakarta alone producing over 9,000 tons. However, the country faces significant challenges in waste management due to its large population, inadequate infrastructure, and lack of awareness about proper waste disposal practices. Although regulations exist mandating waste sorting, approximately 81% of Indonesians do not actually sort their waste at the source. Currently, most waste separation occurs at temporary storage sites (TPS) and landfills by scavengers, rather than at individual homes.''',
   ),
-  // 'CollectSocket': (
-  //   assetGenImage: Assets.images.aboutKrl,
-  //   description: '''''',
-  // ),
+  'CollectSocket': (
+    assetGenImage: Assets.images.aboutSocket,
+    description:
+        '''Do you know that leaving electronic devices plugged in unnecessarily can lead to unnecessary energy consumption, called standby power? Standby power, also known as vampire power, is the energy consumed by electronic devices when they are turned off or in standby mode. This includes common household and office devices such as TVs, computers, chargers, and game consoles. Even small devices like phone chargers draw standby power when left plugged in. While the power usage of each device may seem small, it adds up significantly, accounting for up to 10% or more of total residential electricity consumption worldwide. This contributes to higher electricity bills, energy waste, and greenhouse gas emissions.''',
+  ),
   'BatteryParry': (
     assetGenImage: Assets.images.aboutHazard,
     description:
