@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' show pi;
 
 import 'package:auto_route/auto_route.dart';
@@ -188,13 +187,12 @@ class _LobbyMultiplayerStandby extends StatelessWidget {
                 ?.where((player) => player.playerState == PlayersState.standby)
                 .length ==
             state.players?.length;
-        log('readyToStart $readyToStart');
+
         if (readyToStart) {
           context.router.replace(const GameRandomizerRoute());
         }
       },
       builder: (context, state) {
-        log('opponents ${state.opponents}');
         final text =
             'Get ready to play ${state.opponents?.first.displayName == null ? '' : 'with ${state.opponents?.first.displayName}'}';
         return ConstrainedBox(

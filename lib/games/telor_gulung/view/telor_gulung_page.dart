@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:auto_route/auto_route.dart';
@@ -52,11 +51,14 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
       child: BlocListener<TelorGulungBloc, TelorGulungState>(
         bloc: bloc,
         listener: (context, state) {
-          log('isWin: ${state.isWin}');
           if (state.isWin ?? false) {
-            context.router.replace(
-              CutSceneRoute(isWin: true),
-            );
+            context
+                .read<PlayerBloc>()
+                .add(const UpdateCurrentGameWin(isWin: true));
+            context.router.replace(const LifeCountRoute());
+            // context.router.replace(
+            //   CutSceneRoute(isWin: true),
+            // );
           }
         },
         listenWhen: (prev, curr) =>
@@ -68,9 +70,13 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
               children: [
                 GameProgress(
                   onTimeOut: () {
-                    context.router.replace(
-                      CutSceneRoute(isWin: false),
-                    );
+                    context
+                        .read<PlayerBloc>()
+                        .add(const UpdateCurrentGameWin(isWin: false));
+                    context.router.replace(const LifeCountRoute());
+                    // context.router.replace(
+                    //   CutSceneRoute(isWin: false),
+                    // );
                   },
                   onProgress: () {
                     bloc.add(AddWeight());
@@ -78,6 +84,7 @@ class _TelurGulungViewState extends State<_TelurGulungView> {
                   duration: Duration(milliseconds: 10000 - _level * 20),
                 ),
                 Assets.rive.jaki.rive(
+                  artboard: 'telor_gulung_rev',
                   onInit: _onRiveInit,
                 ),
                 const Positioned(top: 50, right: 25, child: PauseButton()),

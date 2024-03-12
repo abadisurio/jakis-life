@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -124,36 +123,5 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 Future<void> _firebaseMessagingOnBackgroundReceive(
   RemoteMessage remoteMessage,
 ) async {
-  log('remoteMessage onBackgroundReceive $remoteMessage');
   showFlutterNotification(remoteMessage);
-  // final prefs = await SharedPreferences.getInstance();
-  // final env = Environment.values.elementAt(prefs.getInt('env') ?? 0);
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform(env),
-  // );
-  // final data = remoteMessage.data;
-  // final analyticsLabel = data['analytics_label'] as String?;
-  // if (remoteMessage.data['route_name'] != null) {
-  //   await prefs.setString(
-  //     SharedPreferenceKey.redirectRoute,
-  //     remoteMessage.data['route_name'].toString(),
-  //   );
-  // }
-
-  // // Prevent analytics called within dev env
-  // if (env != Environment.development) {
-  //   await Amplitude.getInstance().init(AnalyticsConstants.amplitudeKey);
-  //   try {
-  //     if (analyticsLabel != null) {
-  //       await AnalyticsUtil.trackEvent(
-  //         AnalyticsConstants.evNotificationBackgroundReceiveCustom,
-  //         {
-  //           AnalyticsConstants.epMessage: analyticsLabel,
-  //         },
-  //       );
-  //     }
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
 }

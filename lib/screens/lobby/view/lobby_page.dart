@@ -38,7 +38,10 @@ class _LobbyView extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Assets.rive.monasTest.rive(),
+            Assets.rive.jaki.rive(
+              artboard: 'home',
+              fit: BoxFit.cover,
+            ),
             Assets.svg.jakisTitle.svg(width: 300),
             Align(
               alignment: Alignment.bottomCenter,

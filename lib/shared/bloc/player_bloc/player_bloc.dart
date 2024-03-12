@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'dart:math' show Random;
 import 'package:bloc/bloc.dart';
@@ -47,7 +46,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         key: _keyStoredUserGoogle,
         aOptions: _secureStorageAndroidOptions,
       );
-      log('credential $credential');
       if (credential != null) {
         final credentialJson = json.decode(credential) as Map;
         final providerId = credentialJson['providerId'] as String?;
@@ -116,8 +114,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       );
     }
 
-    // log('stringJakisLifePlayer $stringJakisLifePlayer');
-    log('currentUser $currentUser');
     if (currentUser == null && _localJakislifePlayer == null) {
       await createNewPlayer();
     }
@@ -151,7 +147,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       await writeToFirestore(jakisLifePlayer);
     }
 
-    log('jakisLifePlayer $jakisLifePlayer');
     return jakisLifePlayer;
   }
 
@@ -165,7 +160,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     if ((player?.highScore ?? 0) >= PlayerState.minimumHighScore) {
       emit(state.copyWith(isMultiplayerUnlocked: true));
     }
-    log('player?.badgeSeries ${player?.badgeSeries}');
     emit(
       state.copyWith(
         highScore: player?.highScore,

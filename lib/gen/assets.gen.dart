@@ -46,19 +46,15 @@ class $AssetsRiveGen {
   /// File path: assets/rive/jaki.riv
   RiveGenImage get jaki => const RiveGenImage('assets/rive/jaki.riv');
 
-  /// File path: assets/rive/monas_test.riv
-  RiveGenImage get monasTest =>
-      const RiveGenImage('assets/rive/monas_test.riv');
-
   /// List of all assets
-  List<RiveGenImage> get values => [jaki, monasTest];
+  List<RiveGenImage> get values => [jaki];
 }
 
 class $AssetsSoundsGen {
   const $AssetsSoundsGen();
 
   /// File path: assets/sounds/jakis_theme.mp3
-  String get jakisTheme => 'assets/sounds/jakis_theme.mp3';
+  String get jakisTheme => 'sounds/jakis_theme.mp3';
 
   /// List of all assets
   List<String> get values => [jakisTheme];

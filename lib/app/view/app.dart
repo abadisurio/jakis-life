@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +27,6 @@ class _AppState extends State<App> {
     /// Receive a notification when the app is in the foreground
     // ignore: unnecessary_lambdas
     FirebaseMessaging.onMessage.listen((remoteMessage) {
-      log('remoteMessage onMessage $remoteMessage');
       showFlutterNotification(remoteMessage);
     });
 
@@ -37,7 +34,6 @@ class _AppState extends State<App> {
     /// and running in the background but not terminated
     FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) {
       final payload = remoteMessage.data['routeName'] as String?;
-      log('payload $payload');
       if (payload != null) {
         _jakisLifeRouter.pushNamed(payload);
       }
@@ -45,7 +41,6 @@ class _AppState extends State<App> {
     });
 
     selectNotificationStream.stream.listen((String? payload) async {
-      log('payload $payload');
       if (payload != null) {
         await _jakisLifeRouter.pushNamed(payload);
       }

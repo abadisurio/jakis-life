@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'dart:math' hide log;
 
 import 'package:auto_route/auto_route.dart';
@@ -95,9 +95,13 @@ class _BatteryParryViewState extends State<_BatteryParryView> {
         BlocListener<BatteryParryBloc, BatteryParryState>(
           listener: (context, state) {
             Future.delayed(const Duration(milliseconds: 500), () {
-              context.router.replace(
-                CutSceneRoute(isWin: state.isWin ?? false),
-              );
+              // context.router.replace(
+              //   CutSceneRoute(isWin: state.isWin ?? false),
+              // );
+              context
+                  .read<PlayerBloc>()
+                  .add(UpdateCurrentGameWin(isWin: state.isWin ?? false));
+              context.router.replace(const LifeCountRoute());
             });
           },
           listenWhen: (prev, curr) => curr.isWin != null,

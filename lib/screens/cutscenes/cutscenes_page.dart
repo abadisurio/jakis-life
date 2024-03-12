@@ -24,9 +24,9 @@ class _CutScenePageState extends State<CutScenePage> {
     final bloc = context.read<PlayerBloc>()
       ..add(UpdateCurrentGameWin(isWin: widget.isWin));
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        context.router.replace(const LifeCountRoute());
-      });
+      context.router.replace(const LifeCountRoute());
+      // Future.delayed(const Duration(seconds: 3), () {
+      // });
     });
     currentGameName = bloc.state.currentGame;
     super.initState();

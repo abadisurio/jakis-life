@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:auto_route/auto_route.dart';
@@ -32,7 +31,6 @@ class _GameRandomizerPageState extends State<GameRandomizerPage> {
     context
         .read<PlayerBloc>()
         .add(UpdateCurrentGame(gameName: game.runtimeType.toString()));
-    log('game.runtimeType.toString() ${game.runtimeType}');
     super.initState();
   }
 

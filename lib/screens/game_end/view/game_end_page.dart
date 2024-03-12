@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +93,6 @@ class _GameEndBadgeUnlockedState extends State<_GameEndBadgeUnlocked>
 
   @override
   Widget build(BuildContext context) {
-    log('_isMounted $_isMounted');
     return Material(
       color: Colors.blue.shade200,
       child: Stack(

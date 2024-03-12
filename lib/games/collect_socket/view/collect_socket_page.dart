@@ -49,9 +49,11 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
       _removedPlugs.add(index);
     });
     if (_removedPlugs.length == _pluggedSocketCount) {
-      context.router.replace(
-        CutSceneRoute(isWin: true),
-      );
+      context.read<PlayerBloc>().add(const UpdateCurrentGameWin(isWin: true));
+      context.router.replace(const LifeCountRoute());
+      // context.router.replace(
+      //   CutSceneRoute(isWin: true),
+      // );
     }
   }
 
@@ -65,9 +67,13 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
           children: [
             GameProgress(
               onTimeOut: () {
-                context.router.replace(
-                  CutSceneRoute(isWin: false),
-                );
+                context
+                    .read<PlayerBloc>()
+                    .add(const UpdateCurrentGameWin(isWin: false));
+                context.router.replace(const LifeCountRoute());
+                // context.router.replace(
+                //   CutSceneRoute(isWin: false),
+                // );
               },
               duration: Duration(seconds: (10 - level).clamp(1, 10)),
             ),

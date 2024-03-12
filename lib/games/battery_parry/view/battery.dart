@@ -43,7 +43,6 @@ class _BatteryState extends State<_Battery> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    log('_distanceController ${_distanceController.duration}');
     _distanceController.forward();
     _gravityController.forward();
     _initialY = Random().nextInt(50) * 10 + 200.0;

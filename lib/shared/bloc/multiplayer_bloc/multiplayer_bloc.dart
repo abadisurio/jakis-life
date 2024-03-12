@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -41,7 +39,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
             'invitedId': event.invitedId,
           },
         );
-        log('response ${response.data}');
+
         final remoteChallengeId =
             (response.data['data'] as Map)['challengeId'] as String?;
         // final inviterId = response.data['inviterId'] as String?;
@@ -52,7 +50,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
         challengeId = remoteChallengeId!;
       } catch (e) {
-        log('eee $e');
+        rethrow;
       }
     } else if (event.challengeId != null) {
       _challengeRef = FirebaseFirestore.instance
@@ -66,7 +64,6 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
       challengeId = event.challengeId!;
     }
 
-    log('challengeId $challengeId');
     final opponentRef = FirebaseFirestore.instance.collection('players').doc(
           opponentId,
         );
@@ -95,9 +92,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
       if (snapshot.exists) {
         final players = <JakisLifePlayer>[];
         final data = snapshot.data() as Map<String, dynamic>?;
-        log('data $data');
         final playersId = data?['players'] as List<dynamic>?;
-        log('playersId $playersId');
         if (playersId != null) {
           for (final (id as String) in playersId) {
             final localPlayer =

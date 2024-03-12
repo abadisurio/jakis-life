@@ -41,9 +41,13 @@ class _StableSidewalkView extends StatelessWidget {
             children: [
               GameProgress(
                 onTimeOut: () {
-                  context.router.replace(
-                    CutSceneRoute(isWin: true),
-                  );
+                  context
+                      .read<PlayerBloc>()
+                      .add(const UpdateCurrentGameWin(isWin: true));
+                  context.router.replace(const LifeCountRoute());
+                  // context.router.replace(
+                  //   CutSceneRoute(isWin: true),
+                  // );
                 },
                 onProgress: () {
                   bloc.add(AddWeight());
@@ -289,9 +293,13 @@ class __CharacterState extends State<_Character> {
   Widget build(BuildContext context) {
     return BlocListener<StableSidewalkBloc, StableSidewalkState>(
       listener: (context, state) {
-        context.router.replace(
-          CutSceneRoute(isWin: false),
-        );
+        context
+            .read<PlayerBloc>()
+            .add(const UpdateCurrentGameWin(isWin: false));
+        context.router.replace(const LifeCountRoute());
+        // context.router.replace(
+        //   CutSceneRoute(isWin: false),
+        // );
       },
       listenWhen: (prev, curr) => curr.isWin == false,
       child: BlocListener<StableSidewalkBloc, StableSidewalkState>(

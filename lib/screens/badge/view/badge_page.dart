@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_wallet/flutter_google_wallet_plugin.dart';
@@ -43,7 +41,6 @@ class _BadgeViewState extends State<_BadgeView> {
 
   @override
   Widget build(BuildContext context) {
-    log('_isWalletAvailable $_isWalletAvailable');
     return Scaffold(
       appBar: AppBar(
         title: const Text('text'),

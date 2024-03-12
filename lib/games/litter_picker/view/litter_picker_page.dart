@@ -41,9 +41,13 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
           listener: (context, state) {
             if (state.litterPickedCount >=
                 state.litterCount - state.organicCount) {
-              context.router.replace(
-                CutSceneRoute(isWin: true),
-              );
+              context
+                  .read<PlayerBloc>()
+                  .add(const UpdateCurrentGameWin(isWin: true));
+              context.router.replace(const LifeCountRoute());
+              // context.router.replace(
+              //   CutSceneRoute(isWin: true),
+              // );
             }
           },
           child: BlocBuilder<LitterPickerBloc, LitterPickerState>(
@@ -63,9 +67,13 @@ class _LitterPickerViewState extends State<_LitterPickerView> {
                   ),
                   GameProgress(
                     onTimeOut: () {
-                      context.router.replace(
-                        CutSceneRoute(isWin: false),
-                      );
+                      context
+                          .read<PlayerBloc>()
+                          .add(const UpdateCurrentGameWin(isWin: false));
+                      context.router.replace(const LifeCountRoute());
+                      // context.router.replace(
+                      //   CutSceneRoute(isWin: false),
+                      // );
                     },
                     duration: Duration(seconds: (10 - level).clamp(2, 10)),
                   ),
@@ -147,9 +155,13 @@ class _LitterState extends State<_Litter> {
                   .read<LitterPickerBloc>()
                   .add(PickLitter(litterIndex: widget.litterIndex));
             } else {
-              context.router.replace(
-                CutSceneRoute(isWin: false),
-              );
+              context
+                  .read<PlayerBloc>()
+                  .add(const UpdateCurrentGameWin(isWin: false));
+              context.router.replace(const LifeCountRoute());
+              // context.router.replace(
+              //   CutSceneRoute(isWin: false),
+              // );
             }
           },
           child: BlocBuilder<LitterPickerBloc, LitterPickerState>(

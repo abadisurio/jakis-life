@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +29,6 @@ class _LifeCountViewState extends State<_LifeCountView> {
 
   @override
   void initState() {
-    log('LifeCountPage mounted');
     final state = context.read<PlayerBloc>().state;
     _lifeCount = state.life;
 
@@ -91,10 +88,8 @@ class _LifeCountState extends State<_LifeCount> {
     final state = context.read<PlayerBloc>().state;
     _lifeCount = state.life;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 300), () {
-        setState(() {
-          _lifeDifference = state.isCurrentGameWin ? 0 : -1;
-        });
+      setState(() {
+        _lifeDifference = state.isCurrentGameWin ? 0 : -1;
       });
     });
 
@@ -154,7 +149,6 @@ class _PointCountState extends State<_PointCount>
 
   @override
   Widget build(BuildContext context) {
-    log('_point $_point');
     return BlocListener<PlayerBloc, PlayerState>(
       listener: (context, state) {
         setState(() {

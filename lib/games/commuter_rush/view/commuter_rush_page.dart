@@ -35,9 +35,13 @@ class _CommuterRushView extends StatelessWidget {
         final isWin = state.leftOffset >= 70 && state.rightOffset >= 70;
         // if (state.isWin ?? false) {
         if (isWin) {
-          context.router.replace(
-            CutSceneRoute(isWin: true),
-          );
+          context
+              .read<PlayerBloc>()
+              .add(const UpdateCurrentGameWin(isWin: true));
+          context.router.replace(const LifeCountRoute());
+          // context.router.replace(
+          //   CutSceneRoute(isWin: true),
+          // );
         }
       },
       listenWhen: (prev, curr) =>
@@ -49,6 +53,10 @@ class _CommuterRushView extends StatelessWidget {
             children: [
               GameProgress(
                 onTimeOut: () {
+                  context
+                      .read<PlayerBloc>()
+                      .add(const UpdateCurrentGameWin(isWin: false));
+                  context.router.replace(const LifeCountRoute());
                   // context.router.replace(CutSceneRoute(isWin: false));
                 },
                 duration: const Duration(seconds: 10),

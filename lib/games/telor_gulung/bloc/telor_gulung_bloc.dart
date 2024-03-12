@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 part 'telor_gulung_event.dart';
@@ -38,7 +36,6 @@ class TelorGulungBloc extends Bloc<TelorGulungEvent, TelorGulungState> {
     AddProgress event,
     Emitter<TelorGulungState> emit,
   ) {
-    log('event.progress ${event.progress}');
     emit(state.copyWith(progress: event.progress));
   }
 }
