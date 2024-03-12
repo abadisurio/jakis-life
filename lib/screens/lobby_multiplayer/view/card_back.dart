@@ -69,7 +69,10 @@ class _CardBackState extends State<_CardBack> {
                           locale: const Locale('en', 'US'),
                           onPress: () {
                             _flutterGoogleWalletPlugin.savePasses(
-                              jsonPass: _exampleJsonPass,
+                              jsonPass: getPassString(
+                                state.badgeSeries ?? 0,
+                                state.currentUser!.uid,
+                              ),
                               addToGoogleWalletRequestCode: 2,
                             );
                           },
@@ -90,7 +93,24 @@ const String _passClass = 'jakislifegeneric';
 const String _issuerId = '3388000000022326911';
 const String _issuerEmail = 'abadisuryosetiyo@gmail.com';
 
-final _exampleJsonPass = '''
+final imageHero = [
+  'https://storage.googleapis.com/jakislife-bucket/assets/card/jakis_badge_hero_1.png',
+  'https://storage.googleapis.com/jakislife-bucket/assets/card/jakis_badge_hero_2.png',
+  'https://storage.googleapis.com/jakislife-bucket/assets/card/jakis_badge_hero_3.png',
+];
+final imageCard = [
+  'https://storage.googleapis.com/jakislife-bucket/assets/card/jakis_badge_card_1.png',
+  'https://storage.googleapis.com/jakislife-bucket/assets/card/jakis_badge_card_2.png',
+  'https://storage.googleapis.com/jakislife-bucket/assets/card/jakis_badge_card_3.png',
+];
+final color = [
+  'B3A4EE',
+  'B4E080',
+  'F199CE',
+];
+
+String getPassString(int series, String userId) {
+  return '''
 {
   "aud": "google",
   "origins": [],
@@ -100,87 +120,67 @@ final _exampleJsonPass = '''
   "payload": {
     "genericObjects": [
       {
-          "id": "$_issuerId.$_passId",
-          "classId": "$_issuerId.$_passClass",
-          "state": "ACTIVE",
-          "heroImage": {
-            "sourceUri": {
-              "uri": "https://farm4.staticflickr.com/3723/11177041115_6e6a3b6f49_o.jpg"
-            },
-            "contentDescription": {
-              "defaultValue": {
-                "language": "en-US",
-                "value": "Hero image description"
-              }
-            }
+        "id": "$_issuerId.$_passId",
+        "classId": "$_issuerId.$_passClass",
+        "state": "ACTIVE",
+        "heroImage": {
+          "sourceUri": {
+            "uri": "${imageHero[series]}"
           },
-          "textModulesData": [
-            {
-              "header": "Text module header",
-              "body": "Text module body",
-              "id": "TEXT_MODULE_ID"
+          "contentDescription": {
+            "defaultValue": {
+              "language": "en-US",
+              "value": "Characters inside Jaki's life as representation of Jakarta"
             }
-          ],
-          "linksModuleData": {
-            "uris": [
-              {
-                "uri": "http://maps.google.com/",
-                "description": "Link module URI description",
-                "id": "LINK_MODULE_URI_ID"
+          }
+        },
+        "imageModulesData": [
+          {
+            "mainImage": {
+              "sourceUri": {
+                "uri": "${imageCard[series]}"
               },
-              {
-                "uri": "tel:6505555555",
-                "description": "Link module tel description",
-                "id": "LINK_MODULE_TEL_ID"
-              }
-            ]
-          },
-          "imageModulesData": [
-            {
-              "mainImage": {
-                "sourceUri": {
-                  "uri": "http://farm4.staticflickr.com/3738/12440799783_3dc3c20606_b.jpg"
-                },
-                "contentDescription": {
-                  "defaultValue": {
-                    "language": "en-US",
-                    "value": "Image module description"
-                  }
+              "contentDescription": {
+                "defaultValue": {
+                  "language": "en-US",
+                  "value": "Jaki's card image"
                 }
-              },
-              "id": "IMAGE_MODULE_ID"
-            }
-          ],
-          "barcode": {
-            "type": "QR_CODE",
-            "value": "QR code"
-          },
-          "cardTitle": {
-            "defaultValue": {
-              "language": "en-US",
-              "value": "Generic card title"
-            }
-          },
-          "header": {
-            "defaultValue": {
-              "language": "en-US",
-              "value": "Generic header"
-            }
-          },
-          "hexBackgroundColor": "#4285f4",
-          "logo": {
-            "sourceUri": {
-              "uri": "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
-            },
-            "contentDescription": {
-              "defaultValue": {
-                "language": "en-US",
-                "value": "Generic card logo"
               }
+            },
+            "id": "IMAGE_MODULE_ID"
+          }
+        ],
+        "barcode": {
+          "type": "QR_CODE",
+          "value": "https://jakislife-dev.web.app/?start-multiplayer=$userId"
+        },
+        "cardTitle": {
+          "defaultValue": {
+            "language": "en-US",
+            "value": "Achievement and QR code badge"
+          }
+        },
+        "header": {
+          "defaultValue": {
+            "language": "en-US",
+            "value": "Jaki's Badge"
+          }
+        },
+        "hexBackgroundColor": "#${color[series]}",
+        "logo": {
+          "sourceUri": {
+            "uri": "https://storage.googleapis.com/jakislife-bucket/assets/ic_launcher_round.png"
+          },
+          "contentDescription": {
+            "defaultValue": {
+              "language": "en-US",
+              "value": "Jaki's card logo"
             }
           }
         }
+      }
     ]
   }
 }
 ''';
+}

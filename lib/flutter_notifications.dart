@@ -27,7 +27,7 @@ Future<void> setupFlutterNotifications() async {
     return;
   }
   channel = const AndroidNotificationChannel(
-    'high_importance_channel',
+    'jakis_life_high_importance_channel',
     'High Importance Notifications',
     description: "Used for important notifications for Jaki's Life.",
     importance: Importance.high,

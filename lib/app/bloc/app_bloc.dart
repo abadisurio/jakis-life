@@ -30,7 +30,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _initializeAppLink() async {
     // String host = Platform.isAndroid ? 'https://127.0.0.1:5001' : 'localhost';
     final initialUri = await _appLinks.getInitialAppLink();
-    log('uri1 ${initialUri?.queryParameters['start-multiplayer']}');
+    log('uri1 $initialUri');
     add(AppLinkUpdateQuery(query: initialUri?.queryParameters));
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
       add(const AppLinkUpdateQuery(query: {}));

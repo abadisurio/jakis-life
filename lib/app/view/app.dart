@@ -35,11 +35,11 @@ class _AppState extends State<App> {
 
     /// Open apps with remote message when app is opened
     /// and running in the background but not terminated
-    FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) async {
+    FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) {
       final payload = remoteMessage.data['routeName'] as String?;
       log('payload $payload');
       if (payload != null) {
-        await _jakisLifeRouter.pushNamed(payload);
+        _jakisLifeRouter.pushNamed(payload);
       }
       // showFlutterNotification(remoteMessage);
     });
@@ -48,6 +48,13 @@ class _AppState extends State<App> {
       log('payload $payload');
       if (payload != null) {
         await _jakisLifeRouter.pushNamed(payload);
+      }
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then((remoteMessage) {
+      final payload = remoteMessage?.data['routeName'] as String?;
+      if (payload != null) {
+        _jakisLifeRouter.pushNamed(payload);
       }
     });
 
