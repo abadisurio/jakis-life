@@ -66,7 +66,7 @@ class _StableSidewalkView extends StatelessWidget {
                         style: TextStyleTheme(context).titleLarge,
                       ),
                       Text(
-                        '''Tap kiri atau kanan untuk menyeimbangkan jalan''',
+                        '''Tap left or right to balance Jaki on the sidewalk''',
                         style: TextStyleTheme(context).bodyLarge,
                         textAlign: TextAlign.center,
                       ),

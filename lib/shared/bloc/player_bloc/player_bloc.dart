@@ -280,6 +280,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         badgeSeries: badgeSeries,
       ),
     );
+    add(const PlayerInitialize());
   }
 
   Future<void> _onPlayerSignOut(

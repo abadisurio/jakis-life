@@ -67,10 +67,10 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
           children: [
             GameProgress(
               onTimeOut: () {
-                context
-                    .read<PlayerBloc>()
-                    .add(const UpdateCurrentGameWin(isWin: false));
-                context.router.replace(const LifeCountRoute());
+                // context
+                //     .read<PlayerBloc>()
+                //     .add(const UpdateCurrentGameWin(isWin: false));
+                // context.router.replace(const LifeCountRoute());
                 // context.router.replace(
                 //   CutSceneRoute(isWin: false),
                 // );

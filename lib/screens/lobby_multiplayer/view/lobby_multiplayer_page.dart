@@ -192,6 +192,8 @@ class _LobbyMultiplayerStandby extends StatelessWidget {
           context.router.replace(const GameRandomizerRoute());
         }
       },
+      listenWhen: (prev, curr) => curr.players?.isNotEmpty ?? false,
+      buildWhen: (prev, curr) => curr.players?.isNotEmpty ?? false,
       builder: (context, state) {
         final text =
             'Get ready to play ${state.opponents?.first.displayName == null ? '' : 'with ${state.opponents?.first.displayName}'}';

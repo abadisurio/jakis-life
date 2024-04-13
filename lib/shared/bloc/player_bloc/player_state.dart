@@ -9,7 +9,7 @@ class PlayerState extends Equatable {
     this.isMultiplayerUnlocked = false,
     this.latestScore = 0,
     this.highScore = 0,
-    this.authState = AuthState.loading,
+    this.authState = AuthState.signedOut,
   });
 
   static const minimumHighScore = 496;

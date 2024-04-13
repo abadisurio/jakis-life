@@ -25,7 +25,8 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
     Emitter<MultiplayerState> emit,
   ) async {
     final currentUser = FirebaseAuth.instance.currentUser;
-    final selfId = currentUser!.uid;
+    if (currentUser == null) return;
+    final selfId = currentUser.uid;
     late String opponentId;
     late String challengeId;
 
