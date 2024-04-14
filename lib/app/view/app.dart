@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +15,8 @@ import 'package:jakislife/screens/pause/bloc/pause_bloc.dart';
 import 'package:jakislife/utils/text_theme.dart';
 
 final _jakisLifeRouter = AppRouter();
+final _firebaseFirestore = FirebaseFirestore.instance;
+final _firebaseAuth = FirebaseAuth.instance;
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -79,7 +83,10 @@ class _AppState extends State<App> {
           create: (_) => PauseBloc(),
         ),
         BlocProvider(
-          create: (_) => PlayerBloc()..add(const PlayerInitialize()),
+          create: (_) => PlayerBloc(
+            firebaseFirestore: _firebaseFirestore,
+            firebaseAuth: _firebaseAuth,
+          )..add(const PlayerInitialize()),
           lazy: false,
         ),
         BlocProvider(

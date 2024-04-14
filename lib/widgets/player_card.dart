@@ -70,13 +70,13 @@ class _PlayerCardState extends State<PlayerCard> {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                 visualDensity: const VisualDensity(vertical: -4),
                 title: Text(
-                  '${state.currentUser?.displayName}',
+                  '${state.user?.displayName}',
                   style: TextStyleTheme(context).bodyMedium,
                 ),
                 subtitle: Text('High Score: ${state.highScore}'),
                 leading: CircleAvatar(
                   backgroundImage: CachedNetworkImageProvider(
-                    '${state.currentUser?.photoURL}',
+                    '${state.user?.photoUrl}',
                   ),
                 ),
                 trailing: IconButton(

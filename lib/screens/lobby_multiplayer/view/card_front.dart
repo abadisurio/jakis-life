@@ -29,13 +29,12 @@ class _CardFront extends StatelessWidget {
                     CircleAvatar(
                       radius: 48,
                       foregroundImage: CachedNetworkImageProvider(
-                        state.currentUser?.photoURL ??
-                            'https://picsum.photos/200',
+                        state.user?.photoUrl ?? 'https://picsum.photos/200',
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      state.currentUser?.displayName ?? 'Jaki',
+                      state.user?.displayName ?? 'Jaki',
                       style: TextStyleTheme(context)
                           .titleMedium
                           ?.copyWith(color: Colors.white),

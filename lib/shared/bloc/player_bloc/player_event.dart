@@ -47,3 +47,9 @@ class UpdatePoint extends PlayerEvent {
 class EarnBadge extends PlayerEvent {
   const EarnBadge();
 }
+
+class RefreshPlayer extends PlayerEvent {
+  const RefreshPlayer({this.newPlayer});
+
+  final JakisLifePlayer? newPlayer;
+}

@@ -54,7 +54,7 @@ class _CardBackState extends State<_CardBack> {
                         borderRadius: BorderRadius.circular(16),
                         child: CachedNetworkImage(
                           imageUrl:
-                              'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://jakislife-dev.web.app/?start-multiplayer=${state.currentUser?.uid}',
+                              'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://jakislife-dev.web.app/?start-multiplayer=${state.user?.id}',
                         ),
                       ),
                       const SizedBox(height: 32),
@@ -71,7 +71,7 @@ class _CardBackState extends State<_CardBack> {
                             _flutterGoogleWalletPlugin.savePasses(
                               jsonPass: getPassString(
                                 state.badgeSeries ?? 0,
-                                state.currentUser!.uid,
+                                state.user!.id,
                               ),
                               addToGoogleWalletRequestCode: 2,
                             );

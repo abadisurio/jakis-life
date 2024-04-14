@@ -1,68 +1,28 @@
 part of 'player_bloc.dart';
 
-class PlayerState extends Equatable {
-  const PlayerState({
-    this.currentGame,
-    this.badgeSeries,
-    this.life = 3,
-    this.isCurrentGameWin = false,
-    this.isMultiplayerUnlocked = false,
-    this.latestScore = 0,
-    this.highScore = 0,
-    this.authState = AuthState.signedOut,
-  });
-
-  static const minimumHighScore = 496;
-
-  User? get currentUser => FirebaseAuth.instance.currentUser;
-
-  final int life;
-  final int latestScore;
-  final int highScore;
-  final int? badgeSeries;
-  final bool isCurrentGameWin;
-  final bool isMultiplayerUnlocked;
-  final String? currentGame;
-  final AuthState authState;
-
-  PlayerState copyWith({
-    int? life,
-    int? latestScore,
-    int? highScore,
+@freezed
+class PlayerState with _$PlayerState {
+  @JsonSerializable(explicitToJson: true)
+  const factory PlayerState({
+    @Default(AuthState.loading) AuthState authState,
+    @Default(3) int life,
+    @Default(0) int latestScore,
+    @Default(0) int highScore,
+    JakisLifePlayer? user,
     int? badgeSeries,
     String? currentGame,
-    bool? isCurrentGameWin,
-    bool? isMultiplayerUnlocked,
-    AuthState? authState,
-  }) =>
-      PlayerState(
-        life: life ?? this.life,
-        latestScore: latestScore ?? this.latestScore,
-        highScore: highScore ?? this.highScore,
-        badgeSeries: badgeSeries ?? this.badgeSeries,
-        currentGame: currentGame ?? this.currentGame,
-        isCurrentGameWin: isCurrentGameWin ?? this.isCurrentGameWin,
-        isMultiplayerUnlocked:
-            isMultiplayerUnlocked ?? this.isMultiplayerUnlocked,
-        authState: authState ?? this.authState,
-      );
+    @Default(false) bool isCurrentGameWin,
+    @Default(false) bool isMultiplayerUnlocked,
+  }) = _PlayerState;
 
-  @override
-  List<Object?> get props => [
-        life,
-        latestScore,
-        highScore,
-        badgeSeries,
-        currentGame,
-        isCurrentGameWin,
-        authState,
-        isMultiplayerUnlocked,
-      ];
+  factory PlayerState.fromJson(Map<String, dynamic> json) =>
+      _$PlayerStateFromJson(json);
+
+  static const minimumHighScore = 496;
 }
 
 enum AuthState {
-  loading,
   signedIn,
+  loading,
   signedOut,
-  unknown,
 }
