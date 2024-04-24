@@ -44,9 +44,9 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
     super.initState();
   }
 
-  void _removePlug(int index) {
+  void _removePlug(DragTargetDetails<int> index) {
     setState(() {
-      _removedPlugs.add(index);
+      _removedPlugs.add(index.data);
     });
     if (_removedPlugs.length == _pluggedSocketCount) {
       context.read<PlayerBloc>().add(const UpdateCurrentGameWin(isWin: true));
@@ -105,7 +105,7 @@ class __CollectSocketViewState extends State<_CollectSocketView> {
               ) {
                 return const SizedBox.expand();
               },
-              onAccept: _removePlug,
+              onAcceptWithDetails: _removePlug,
             ),
             // ...List.generate(4, (index) {
             //   return Positioned.fill(

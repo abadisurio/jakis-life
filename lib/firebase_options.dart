@@ -33,10 +33,14 @@ class DefaultFirebaseOptions {
             return android;
         }
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        switch (env) {
+          case Environment.development:
+            return ios;
+          case Environment.staging:
+            return ios;
+          case Environment.production:
+            return ios;
+        }
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -66,6 +70,42 @@ class DefaultFirebaseOptions {
     messagingSenderId: '596541657923',
     projectId: 'jakislife-dev',
     storageBucket: 'jakislife-dev.appspot.com',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCXKi7KPoaUlfGJXMkxXxjiOkRkEjEuiSk',
+    appId: '1:596541657923:web:ee49db5665bb59e12dd5f6',
+    messagingSenderId: '596541657923',
+    projectId: 'jakislife-dev',
+    authDomain: 'jakislife-dev.firebaseapp.com',
+    storageBucket: 'jakislife-dev.appspot.com',
+    measurementId: 'G-JEB1DMPGYK',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCeo9Lbf5Ej55YeVSRhPEgWy9uJyDlvizc',
+    appId: '1:596541657923:ios:950d9402d23b2abc2dd5f6',
+    messagingSenderId: '596541657923',
+    projectId: 'jakislife-dev',
+    storageBucket: 'jakislife-dev.appspot.com',
+    androidClientId:
+        '596541657923-046r1r9q2vf64l0p1p3phd0a9s0k378h.apps.googleusercontent.com',
+    iosClientId:
+        '596541657923-9efaa11otd230fefq84sm0l8mk39tntj.apps.googleusercontent.com',
+    iosBundleId: 'com.eternalenterprise.jakislife',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCeo9Lbf5Ej55YeVSRhPEgWy9uJyDlvizc',
+    appId: '1:596541657923:ios:474651c69a8b02722dd5f6',
+    messagingSenderId: '596541657923',
+    projectId: 'jakislife-dev',
+    storageBucket: 'jakislife-dev.appspot.com',
+    androidClientId:
+        '596541657923-046r1r9q2vf64l0p1p3phd0a9s0k378h.apps.googleusercontent.com',
+    iosClientId:
+        '596541657923-9s0ppsk9222uk0k1uf9529fa9lqa3iar.apps.googleusercontent.com',
+    iosBundleId: 'com.example.myApp.RunnerTests',
   );
 }
 

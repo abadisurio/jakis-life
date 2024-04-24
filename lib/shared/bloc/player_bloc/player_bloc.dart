@@ -147,13 +147,13 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
   Future<JakisLifePlayer?> _updateJakisLifePlayer({
     JakisLifePlayer? newJakisLifePlayer,
   }) async {
-    final fcmToken = await FirebaseMessaging.instance.getToken();
+    // final fcmToken = await FirebaseMessaging.instance.getToken();
     if (newJakisLifePlayer != null) {
       _currentJakisLifePlayer = newJakisLifePlayer;
     }
     if (_curentUser != null) {
       _currentJakisLifePlayer = _currentJakisLifePlayer!.copyWith(
-        fcmToken: fcmToken,
+        // fcmToken: fcmToken,
         photoUrl: _curentUser?.photoURL,
         displayName: _curentUser?.displayName,
       );
