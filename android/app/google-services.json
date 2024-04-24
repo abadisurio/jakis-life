@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "596541657923-j9km3eq7nd5ipsn72rap3d6ttkrs3k9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eternalenterprise.jakislife",
+            "certificate_hash": "75061fe93ba4baee83e49727633c295acd837d8d"
+          }
+        },
+        {
           "client_id": "596541657923-47fbkd4cnq9omo52r2s76fknum1nuj5m.apps.googleusercontent.com",
           "client_type": 3
         }
