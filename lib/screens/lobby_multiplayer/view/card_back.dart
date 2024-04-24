@@ -50,11 +50,19 @@ class _CardBackState extends State<_CardBack> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://jakislife-dev.web.app/?start-multiplayer=${state.user?.id}',
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        height: 300,
+                        width: 300,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                'https://qrcode.tec-it.com/API/QRCode?data=https://jakislife-dev.web.app/?start-multiplayer=${state.user?.id}',
+                          ),
                         ),
                       ),
                       const SizedBox(height: 32),

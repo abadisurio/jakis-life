@@ -34,6 +34,12 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
     Assets.svg.jakisBadge3,
   ];
 
+  void _copyInvitation() {
+    final url =
+        'https://jakislife-dev.web.app/?start-multiplayer=${context.read<PlayerBloc>().state.user?.id}';
+    Clipboard.setData(ClipboardData(text: url));
+  }
+
   @override
   void initState() {
     final badgeSeries = context.read<PlayerBloc>().state.badgeSeries ?? 0;
@@ -114,39 +120,59 @@ class _CardState extends State<_Card> with TickerProviderStateMixin {
           ),
         ),
         const SizedBox(height: 32),
-        KJButton(
-          onPressed: () async {
-            setState(() {
-              _isSwiping = false;
-              _swipeOffset = _isShowBack ? 0 : 1;
-            });
-            if (_isShowBack) {
-              await _animationController.reverse();
-            } else {
-              await _animationController.forward();
-            }
-          },
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'See ',
-                style: TextStyleTheme(context)
-                    .titleSmall
-                    ?.copyWith(color: Colors.black),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            KJButton(
+              onPressed: () async {
+                setState(() {
+                  _isSwiping = false;
+                  _swipeOffset = _isShowBack ? 0 : 1;
+                });
+                if (_isShowBack) {
+                  await _animationController.reverse();
+                } else {
+                  await _animationController.forward();
+                }
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'See ',
+                    style: TextStyleTheme(context)
+                        .titleSmall
+                        ?.copyWith(color: Colors.black),
+                  ),
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutCirc,
+                    child: Text(
+                      _isShowBack ? 'Badge' : 'QR',
+                      style: TextStyleTheme(context)
+                          .titleSmall
+                          ?.copyWith(color: Colors.black),
+                    ),
+                  ),
+                ],
               ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOutCirc,
-                child: Text(
-                  _isShowBack ? 'Badge' : 'QR',
-                  style: TextStyleTheme(context)
-                      .titleSmall
-                      ?.copyWith(color: Colors.black),
-                ),
+            ),
+            const SizedBox(width: 8),
+            KJButton(
+              onPressed: _copyInvitation,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Copy Invitation Link',
+                    style: TextStyleTheme(context)
+                        .titleSmall
+                        ?.copyWith(color: Colors.black),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
