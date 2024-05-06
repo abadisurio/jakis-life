@@ -33,7 +33,7 @@ dependencies:
   google_sign_in: ^6.2.1
   intl: ^0.18.0
   json_annotation: ^4.8.1
-  rive: ^0.12.4
+  rive: ^0.13.3
   uuid: ^4.3.3
 
 dev_dependencies:
